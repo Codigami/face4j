@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<project name="face4j" basedir="." default="help">
+  <property name="java-src.dir" value="src" />
+  <property name="lib.dir" value="lib" />
+  <property name="build.dir" value="build" />
+  <property name="project.name" value="face4j" />
+  <property name="project.version" value="0.1" />
+  <property name="dist.dir" value="dist" />
+  <property name="archive.name-face4j" value="face4j-${project.version}" />
+  <property name="exclude-classes" value="com/face4j/dummy/**,com/face4j/facebook/test/**"></property>	
+  
+  <path id="classpath">
+    <fileset dir="${lib.dir}"/>
+    <pathelement path="${build.dir}" />
+  </path>
+
+  <target name="help">
+    <echo message="" />
+    <echo message="${project.name} build file" />
+    <echo message="-----------------------------------" />
+    <echo message="" />
+    <echo message="Available targets are:" />
+    <echo message="" />
+    <echo message="clean           --> Deletes compiled classes and JAR" />
+    <echo message="" />
+    <echo message="compile         --> Compile all Java files" />
+    <echo message="jar             --> Package as JAR file" />
+  </target>
+
+  <target name="compile"  description="Compile main source java files">
+    <mkdir dir="${build.dir}/classes" />
+  	<javac destdir="${build.dir}/classes" debug="true" optimize="false" encoding="iso-8859-1" deprecation="false" failonerror="true" excludes="${exclude-classes}">
+	  <src path="${java-src.dir}" />
+	  
+	  <classpath refid="classpath" />
+	</javac>
+  </target>
+
+   <target name="jar" depends="compile" description="packages up the face4j class files into jar files">
+	    <jar destfile="${lib.dir}/${archive.name-face4j}.jar"  basedir="${build.dir}/classes"  />
+		<copy todir="${dist.dir}/dependencies" >
+			<fileset dir="${lib.dir}" includes="commons-codec-1.3.jar,commons-httpclient-3.1.jar,commons-logging-1.1.1.jar,gson-1.3.jar" />
+		</copy>
+		<copy todir="${dist.dir}" >
+			<fileset dir="${lib.dir}" includes="${archive.name-face4j}.jar" />
+		</copy>
+		<delete file="${lib.dir}/${archive.name-face4j}.jar"/>
+	</target>
+ 
+  <target name="clean" description="Clean output directories">
+  	<property name="archive.name" value="${project.name}-${project.version}" />
+  	<delete dir="build" />
+  	<delete  file="${archive.name}.jar" />
+  </target>
+
+</project>

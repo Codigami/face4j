@@ -1,0 +1,1 @@
+The face4j.jar and all the other dependencies are needed.
