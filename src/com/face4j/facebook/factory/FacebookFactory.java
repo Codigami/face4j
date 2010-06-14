@@ -13,6 +13,7 @@ import com.face4j.facebook.Facebook;
 import com.face4j.facebook.OAuthAccessToken;
 import com.face4j.facebook.enums.Display;
 import com.face4j.facebook.enums.Permission;
+import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.http.APICaller;
 import com.face4j.facebook.util.Constants;
 
@@ -91,9 +92,10 @@ public class FacebookFactory extends OAuthFactory implements Serializable {
 	 * 
 	 * @param code As passed by the authenticating site (facebook)
 	 * @return
+	 * @throws FacebookException 
 	 * @throws Exception
 	 */
-	public OAuthAccessToken getOAuthAccessToken(String code, String callbackURL) throws Exception{
+	public OAuthAccessToken getOAuthAccessToken(String code, String callbackURL) throws FacebookException{
 		
 		//We make a call with the provided code, client_id, client_secret and redirect_uri
 		
@@ -115,7 +117,7 @@ public class FacebookFactory extends OAuthFactory implements Serializable {
 														};
 	}
 	
-	private OAuthAccessToken getAccessToken(String rawData) throws Exception{
+	private OAuthAccessToken getAccessToken(String rawData) {
 			OAuthAccessToken accessToken = null;
 			
 			String finalSplit[] = rawData.split("access_token=")[1].split("&expires=");
