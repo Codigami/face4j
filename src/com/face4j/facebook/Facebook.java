@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.NameValuePair;
 
+import com.face4j.facebook.entity.Album;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.http.APICaller;
@@ -59,7 +60,6 @@ public class Facebook implements Serializable {
 			
 		NameValuePair[] nameValuePairs = {new NameValuePair(Constants.PARAM_ACCESS_TOKEN,this.authAccessToken.getAccessToken())};
 			
-		//userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+username+"?"+Constants.PARAM_ACCESS_TOKEN+"="+URLEncoder.encode(this.authAccessToken.getAccessToken(),"UTF-8"));
 		userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+username,nameValuePairs);
 
 		//Once the json string object is obtaind, it is passed to obj transformer and the right object is retrieved
@@ -79,9 +79,23 @@ public class Facebook implements Serializable {
 	}
 	
 	
+	/*public Album getAlbum(long id) throws FacebookException{
+		APICaller caller = APICaller.getInstance();
+		
+		NameValuePair[] nameValuePairs = {getNameValuePairAccessToken()};
+		String albumJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+id, nameValuePairs);
+		//System.out.println(albumJson);
+		
+		return JSONToObjectTransformer.getAlbum(albumJson);
+	}*/
+	
 	
 	public OAuthAccessToken getAuthAccessToken() {
 		return authAccessToken;
+	}
+	
+	private NameValuePair getNameValuePairAccessToken(){
+		return new NameValuePair(Constants.PARAM_ACCESS_TOKEN,this.authAccessToken.getAccessToken());
 	}
 
 

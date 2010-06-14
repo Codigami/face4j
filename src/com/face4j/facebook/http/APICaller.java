@@ -42,7 +42,6 @@ public class APICaller {
 	
 	
 	public String getData(String url, NameValuePair[] nameValuePairs) throws FacebookException{
-		System.out.println(url);
 		HttpClient client = APICaller.getHttpClient();
 		String response = null;
 		

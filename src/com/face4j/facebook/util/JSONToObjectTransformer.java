@@ -1,5 +1,6 @@
 package com.face4j.facebook.util;
 
+import com.face4j.facebook.entity.Album;
 import com.face4j.facebook.entity.User;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -20,8 +21,11 @@ public class JSONToObjectTransformer {
 															.create();
 	
 	public static User getUser(String userJSON){
-		System.out.println("JSON is "+userJSON);
 		return gson.fromJson(userJSON, User.class);
 	}
+	
+	/*public static Album getAlbum(String albumJSON){
+		return gson.fromJson(albumJSON, Album.class);
+	}*/
 
 }
