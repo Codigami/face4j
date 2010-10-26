@@ -13,11 +13,11 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import com.face4j.facebook.exception.FacebookException;
 
 /**
- * APICaller will make http rerquests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
+ * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
  * @author nischal.shetty
  *
  */
-public class APICaller {
+public class APICaller implements APICallerInterface {
 	
 	private static final APICaller caller = new APICaller();
 	private static HttpClient httpClient = null;

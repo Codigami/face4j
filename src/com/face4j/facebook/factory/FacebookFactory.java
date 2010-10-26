@@ -12,9 +12,11 @@ import com.face4j.facebook.Client;
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.OAuthAccessToken;
 import com.face4j.facebook.enums.Display;
+import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.enums.Permission;
 import com.face4j.facebook.exception.FacebookException;
-import com.face4j.facebook.http.APICaller;
+import com.face4j.facebook.http.APICallerFactory;
+import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.util.Constants;
 
 /**
@@ -27,24 +29,40 @@ public class FacebookFactory extends OAuthFactory implements Serializable {
 	private static final long serialVersionUID = 8997415594842693532L;
 	
 	private Client client;
+	private HttpClientType httpClientType;
+	private APICallerInterface caller; 
 	
 	Logger logger = Logger.getLogger(Facebook.class.getName());
 	
 	public FacebookFactory(String clientId, String clientSecret){
-		this(new Client(clientId, clientSecret));
+		this(new Client(clientId, clientSecret), HttpClientType.APACHE_HTTP_CLIENT);
 	}
 	
 	public FacebookFactory(Client client){
-		this.client = client;
+		this(client,HttpClientType.APACHE_HTTP_CLIENT);
 	}
 	
+	public FacebookFactory(String clientId, String clientSecret, HttpClientType clientType){
+		this(new Client(clientId, clientSecret),clientType);
+	}
+	
+	public FacebookFactory(Client client, HttpClientType clientType){
+		this.client = client;
+		this.httpClientType = clientType;
+		caller = APICallerFactory.getAPICallerInstance(clientType);
+	}
+	
+	public HttpClientType getHttpClientType() {
+		return httpClientType;
+	}
+
 	/**
 	 * Returns a new instance of Facebook pertaining to the authenticated user 
 	 * @param accessToken
 	 * @return Facebook instance 
 	 */
 	public Facebook getInstance(OAuthAccessToken accessToken){
-		return new Facebook(accessToken);
+		return new Facebook(accessToken,httpClientType);
 	}
 
 	
@@ -101,8 +119,7 @@ public class FacebookFactory extends OAuthFactory implements Serializable {
 		
 		NameValuePair[] nameValuePairs = getAccessTokenNameValuePairs(code, callbackURL);
 		
-		APICaller client = APICaller.getInstance();
-		String rawData = client.getData(Constants.ACCESS_TOKEN_URL,nameValuePairs);
+		String rawData = caller.getData(Constants.ACCESS_TOKEN_URL,nameValuePairs);
 		
 		return getAccessToken(rawData);
 	}

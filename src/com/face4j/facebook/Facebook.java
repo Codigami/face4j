@@ -5,10 +5,11 @@ import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.NameValuePair;
 
-import com.face4j.facebook.entity.Album;
 import com.face4j.facebook.entity.User;
+import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.exception.FacebookException;
-import com.face4j.facebook.http.APICaller;
+import com.face4j.facebook.http.APICallerFactory;
+import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.util.Constants;
 import com.face4j.facebook.util.JSONToObjectTransformer;
 
@@ -27,15 +28,22 @@ public class Facebook implements Serializable {
 	//private Client client;
 	private OAuthAccessToken authAccessToken;
 	
+	private APICallerInterface caller = null;
+	
 	
 	/**
 	 * @param authAccessToken
 	 */
 	public Facebook(OAuthAccessToken authAccessToken){
-		this.authAccessToken = authAccessToken;
+		this(authAccessToken,HttpClientType.APACHE_HTTP_CLIENT); //apache http client is the default client type
 	}
 
+	public Facebook(OAuthAccessToken authAccessToken, HttpClientType clientType){
+		this.authAccessToken = authAccessToken;
+		caller = APICallerFactory.getAPICallerInstance(clientType);
+	}
 
+	
 	/**
 	 * Returns the current user (for whom the client has been set). 
 	 * @return
@@ -55,7 +63,6 @@ public class Facebook implements Serializable {
 	public User getUser(String username) throws FacebookException{
 		
 		//APICaller would retrieve the json string object from facebook by making a https call
-		APICaller caller = APICaller.getInstance();
 		String userJson = null;
 			
 		NameValuePair[] nameValuePairs = {new NameValuePair(Constants.PARAM_ACCESS_TOKEN,this.authAccessToken.getAccessToken())};
@@ -80,8 +87,6 @@ public class Facebook implements Serializable {
 	
 	
 	/*public Album getAlbum(long id) throws FacebookException{
-		APICaller caller = APICaller.getInstance();
-		
 		NameValuePair[] nameValuePairs = {getNameValuePairAccessToken()};
 		String albumJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+id, nameValuePairs);
 		//System.out.println(albumJson);
