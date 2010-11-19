@@ -38,11 +38,41 @@ public class Constants {
 	 * To get the image pic for any facebook object, the graph url should end with /picture
 	 */
 	public static final String PICTURE = "picture";
+
+    /**
+     * This url is used for posting to the feed or wall of a user
+     */
+    public static final String POST_LINK = "/me/feed";
 	
 	/**
 	 * This parameter needs to be sent along with the picture url to indicate the size of the pic to be returned. Not mandatory
 	 */
 	public static final String PARAM_PICTURE_TYPE = "type";
+
+    /**
+     * A URL to be shared
+     */
+    public static final String LINK = "link";
+
+    /**
+     * The name of the "link"
+     */
+    public static final String NAME = "name";
+
+    /**
+     * The caption of the "link"
+     */
+    public static final String CAPTION = "caption";
+
+    /**
+     * A description of the "link"
+     */
+    public static final String DESCRIPTION = "description";
+
+    /**
+     * The optional message of the user about the "link"
+     */
+    public static final String MESSAGE = "message";
 	
 
 }

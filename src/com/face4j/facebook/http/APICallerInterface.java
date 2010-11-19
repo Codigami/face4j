@@ -7,4 +7,6 @@ import com.face4j.facebook.exception.FacebookException;
 public interface APICallerInterface {
 	
 	public String getData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
+
+    public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
 }
