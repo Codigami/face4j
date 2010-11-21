@@ -9,7 +9,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = -7351804744720611823L;
 
-	private long id;	
+	private String id;	
 
 	private String firstName;	
 
@@ -36,11 +36,11 @@ public class User implements Serializable{
 	/**
 	 * The user's ID
 	 */
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

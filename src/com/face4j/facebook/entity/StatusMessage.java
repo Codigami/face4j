@@ -6,7 +6,7 @@ public class StatusMessage implements Serializable {
 
 	private static final long serialVersionUID = -3087803112563817851L;
 	
-	private long id;
+	private String id;
 	
 	private From from;
 	
@@ -14,7 +14,7 @@ public class StatusMessage implements Serializable {
 	
 	private String updatedTime;
 	
-	public StatusMessage(long id, From from, String message, String updatedTime) {
+	public StatusMessage(String id, From from, String message, String updatedTime) {
 		super();
 		this.id = id;
 		this.from = from;
@@ -22,7 +22,7 @@ public class StatusMessage implements Serializable {
 		this.updatedTime = updatedTime;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -38,7 +38,7 @@ public class StatusMessage implements Serializable {
 		return updatedTime;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
