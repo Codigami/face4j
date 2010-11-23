@@ -6,15 +6,15 @@ public class School implements Serializable{
 	
 	private static final long serialVersionUID = 1652570725506319844L;
 
-	private String id;
+	private long id;
 	
 	private String name;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

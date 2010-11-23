@@ -64,8 +64,7 @@ public class Facebook implements Serializable {
 	 */
 	public User getUser(String username) throws FacebookException {
 
-		// APICaller would retrieve the json string object from facebook by
-		// making a https call
+		// APICaller would retrieve the json string object from facebook by making a https call
 		String userJson = null;
 
 		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
@@ -83,7 +82,7 @@ public class Facebook implements Serializable {
 	/**
 	 * Returns a facebook users available info.
 	 * 
-	 * @param username
+	 * @param id
 	 * @return
 	 * @throws FacebookException
 	 */
@@ -96,6 +95,38 @@ public class Facebook implements Serializable {
 	 * {getNameValuePairAccessToken()}; String albumJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+id,
 	 * nameValuePairs); //System.out.println(albumJson); return JSONToObjectTransformer.getAlbum(albumJson); }
 	 */
+
+	/*
+	 * public Album getAlbum(long id) throws FacebookException{ NameValuePair[] nameValuePairs =
+	 * {getNameValuePairAccessToken()}; String albumJson = caller.getData(Constants.FACEBOOK_GRAPH_URL+"/"+id,
+	 * nameValuePairs); //System.out.println(albumJson); return JSONToObjectTransformer.getAlbum(albumJson); }
+	 */
+	public void postLink(String link, String name, String caption, String description, String message)
+			throws FacebookException {
+		NameValuePair[] nameValuePairs = new NameValuePair[6];
+
+		nameValuePairs[0] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
+		nameValuePairs[1] = new NameValuePair(Constants.LINK, link);
+
+		if (name != null) {
+			nameValuePairs[2] = new NameValuePair(Constants.NAME, name);
+		}
+		if (caption != null) {
+			nameValuePairs[3] = new NameValuePair(Constants.CAPTION, caption);
+		}
+		if (description != null) {
+			nameValuePairs[4] = new NameValuePair(Constants.DESCRIPTION, description);
+		}
+		if (message != null) {
+			nameValuePairs[5] = new NameValuePair(Constants.MESSAGE, message);
+		}
+
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK, nameValuePairs);
+	}
+
+	public void postLink(String link) throws FacebookException {
+		postLink(link, null, null, null, null);
+	}
 
 	public OAuthAccessToken getAuthAccessToken() {
 		return authAccessToken;

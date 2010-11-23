@@ -17,7 +17,6 @@ import com.sun.org.apache.xerces.internal.util.URI;
 
 public class URLFetchAPICaller implements APICallerInterface{
 	
-	@Override
 	public String getData(String url, NameValuePair[] nameValuePairs)
 			throws FacebookException {
 		
@@ -54,8 +53,20 @@ public class URLFetchAPICaller implements APICallerInterface{
 			
 		return responseString;
 	}
-	
-	private String constructParams(NameValuePair[] nameValuePairs){
+
+    /**
+     *
+     * @param url
+     * @param nameValuePairs
+     * @return
+     * @throws FacebookException
+     */
+    //TODO: To be implemented
+    public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
+        return null;  
+    }
+
+    private String constructParams(NameValuePair[] nameValuePairs){
 		
 		StringBuilder builder = null;
 		String constructedParams = null;

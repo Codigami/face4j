@@ -6,15 +6,15 @@ public class Hometown implements Serializable {
 
 	private static final long serialVersionUID = 140766500508933899L;
 	
-	private String id;
+	private long id;
 	
 	private String name;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

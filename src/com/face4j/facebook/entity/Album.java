@@ -14,7 +14,7 @@ public class Album implements Serializable {
 	/**
 	 * The photo album ID
 	 */
-	private String id;	
+	private long id;	
 
 	/**
 	 * An object containing the ID and name of the profile who posted this album
@@ -56,11 +56,11 @@ public class Album implements Serializable {
    */
 	private String updatedTime;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

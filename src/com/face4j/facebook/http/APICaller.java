@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import com.face4j.facebook.exception.FacebookException;
+import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
  * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
@@ -67,8 +68,38 @@ public class APICaller implements APICallerInterface {
 	  }
 		return response;
  }
+
+
+    public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
+
+        HttpClient client = APICaller.getHttpClient();
+        String response = null;
+
+        PostMethod postMethod = null;
+        try {
+            postMethod = new PostMethod(url);
+
+            if (nameValuePairs != null) {
+                postMethod.setQueryString(nameValuePairs);
+            }
+
+            int statusCode = client.executeMethod(postMethod);
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode, statusCode);
+            }
+            response = postMethod.getResponseBodyAsString();
+        } catch (HttpException e) {
+            throw new FacebookException("Http Exception while calling facebook!", e);
+        } catch (IOException e) {
+            throw new FacebookException("IO Exception while calling facebook!", e);
+        } finally {
+            postMethod.releaseConnection();
+        }
+
+        return response;
+    }
 	
-	//TODO: Post data and delete data methods
+	//TODO: delete data method
 	
 	/*public static void main(String[] args) {
 		
