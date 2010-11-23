@@ -1,7 +1,6 @@
 package com.face4j.facebook.fql;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class FQL_Comment implements Serializable {
 
@@ -9,7 +8,7 @@ public class FQL_Comment implements Serializable {
 
 	private String id;
 	private Long fromId;
-	private Date time;
+	private Long time;
 	private String text;
 
 	public String getId() {
@@ -28,11 +27,11 @@ public class FQL_Comment implements Serializable {
 		this.fromId = fromId;
 	}
 
-	public Date getTime() {
+	public Long getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Long time) {
 		this.time = time;
 	}
 

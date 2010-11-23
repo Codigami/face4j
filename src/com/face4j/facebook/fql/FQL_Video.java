@@ -1,7 +1,6 @@
 package com.face4j.facebook.fql;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class FQL_Video implements Serializable {
 
@@ -11,7 +10,7 @@ public class FQL_Video implements Serializable {
 	private String sourceUrl;
 	private Long owner;
 	private String sourceType;
-	private Date createdTime;
+	private Long createdTime;
 
 	public String getDisplayUrl() {
 		return displayUrl;
@@ -45,11 +44,11 @@ public class FQL_Video implements Serializable {
 		this.sourceType = sourceType;
 	}
 
-	public Date getCreatedTime() {
+	public Long getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(Long createdTime) {
 		this.createdTime = createdTime;
 	}
 

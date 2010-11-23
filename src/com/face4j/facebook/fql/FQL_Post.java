@@ -1,7 +1,6 @@
 package com.face4j.facebook.fql;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 public class FQL_Post implements Serializable {
@@ -12,8 +11,8 @@ public class FQL_Post implements Serializable {
 	private Integer viewerId;
 	private Integer appId;
 	private Integer sourceId;
-	private Date updatedTime;
-	private Date createdTime;
+	private Long updatedTime;
+	private Long createdTime;
 	private String filterKey;
 	private String attribution;
 	private String actorId;
@@ -32,9 +31,8 @@ public class FQL_Post implements Serializable {
 	// TODO: private FQL_AppData appData;
 
 	/**
-	 * The ID of the post from the user's stream. This field, when used as an
-	 * index, is primarily used to re-retrieve posts. Otherwise, it is used to
-	 * specify a post when using any of the stream setters.
+	 * The ID of the post from the user's stream. This field, when used as an index, is primarily used to re-retrieve
+	 * posts. Otherwise, it is used to specify a post when using any of the stream setters.
 	 * 
 	 * @return postId
 	 */
@@ -43,9 +41,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The ID of the post from the user's stream. This field, when used as an
-	 * index, is primarily used to re-retrieve posts. Otherwise, it is used to
-	 * specify a post when using any of the stream setters.
+	 * The ID of the post from the user's stream. This field, when used as an index, is primarily used to re-retrieve
+	 * posts. Otherwise, it is used to specify a post when using any of the stream setters.
 	 * 
 	 * @param postId
 	 */
@@ -54,8 +51,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The ID of the user whose stream you are querying. The viewer_id defaults
-	 * to the active session key.
+	 * The ID of the user whose stream you are querying. The viewer_id defaults to the active session key.
 	 * 
 	 * @return
 	 */
@@ -64,8 +60,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The ID of the user whose stream you are querying. The viewer_id defaults
-	 * to the active session key.
+	 * The ID of the user whose stream you are querying. The viewer_id defaults to the active session key.
 	 * 
 	 * @param viewerId
 	 */
@@ -74,9 +69,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The application ID for the application through which the post was
-	 * published. This includes application IDs for Facebook applications like
-	 * Photos and Video.
+	 * The application ID for the application through which the post was published. This includes application IDs for
+	 * Facebook applications like Photos and Video.
 	 * 
 	 * @return
 	 */
@@ -85,9 +79,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The application ID for the application through which the post was
-	 * published. This includes application IDs for Facebook applications like
-	 * Photos and Video.
+	 * The application ID for the application through which the post was published. This includes application IDs for
+	 * Facebook applications like Photos and Video.
 	 * 
 	 * @param appId
 	 */
@@ -96,11 +89,9 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The ID of the user, Page, group, or event whose posts you want to
-	 * retrieve. This includes both posts that the user or Page has authored
-	 * (that is, the actor_id is the source_id) and posts that have been
-	 * directed at this target user, Page, group, or event (that is, the
-	 * target_id is the source_id).
+	 * The ID of the user, Page, group, or event whose posts you want to retrieve. This includes both posts that the user
+	 * or Page has authored (that is, the actor_id is the source_id) and posts that have been directed at this target
+	 * user, Page, group, or event (that is, the target_id is the source_id).
 	 * 
 	 * @return
 	 */
@@ -109,11 +100,9 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The ID of the user, Page, group, or event whose posts you want to
-	 * retrieve. This includes both posts that the user or Page has authored
-	 * (that is, the actor_id is the source_id) and posts that have been
-	 * directed at this target user, Page, group, or event (that is, the
-	 * target_id is the source_id).
+	 * The ID of the user, Page, group, or event whose posts you want to retrieve. This includes both posts that the user
+	 * or Page has authored (that is, the actor_id is the source_id) and posts that have been directed at this target
+	 * user, Page, group, or event (that is, the target_id is the source_id).
 	 * 
 	 * @param sourceId
 	 */
@@ -122,22 +111,20 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The time the post was last updated, which occurs when a user comments on
-	 * the post.
+	 * The time the post was last updated, which occurs when a user comments on the post.
 	 * 
 	 * @return
 	 */
-	public Date getUpdatedTime() {
+	public Long getUpdatedTime() {
 		return updatedTime;
 	}
 
 	/**
-	 * The time the post was last updated, which occurs when a user comments on
-	 * the post.
+	 * The time the post was last updated, which occurs when a user comments on the post.
 	 * 
 	 * @param updatedTime
 	 */
-	public void setUpdatedTime(Date updatedTime) {
+	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
 	}
 
@@ -146,7 +133,7 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Date getCreatedTime() {
+	public Long getCreatedTime() {
 		return createdTime;
 	}
 
@@ -155,13 +142,13 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @param createdTime
 	 */
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(Long createdTime) {
 		this.createdTime = createdTime;
 	}
 
 	/**
-	 * The filter key to fetch data with. This key should be retrieved from
-	 * stream.getFilters or querying the stream_filter FQL table.
+	 * The filter key to fetch data with. This key should be retrieved from stream.getFilters or querying the
+	 * stream_filter FQL table.
 	 * 
 	 * @return
 	 */
@@ -170,8 +157,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The filter key to fetch data with. This key should be retrieved from
-	 * stream.getFilters or querying the stream_filter FQL table.
+	 * The filter key to fetch data with. This key should be retrieved from stream.getFilters or querying the
+	 * stream_filter FQL table.
 	 * 
 	 * @param filterKey
 	 */
@@ -180,9 +167,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * For posts published by applications, this is the string that states
-	 * through which application the post was published. For example,
-	 * "Joe loves the Social Web (by MicroBloggerApp)."
+	 * For posts published by applications, this is the string that states through which application the post was
+	 * published. For example, "Joe loves the Social Web (by MicroBloggerApp)."
 	 * 
 	 * @return
 	 */
@@ -191,9 +177,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * For posts published by applications, this is the string that states
-	 * through which application the post was published. For example,
-	 * "Joe loves the Social Web (by MicroBloggerApp)."
+	 * For posts published by applications, this is the string that states through which application the post was
+	 * published. For example, "Joe loves the Social Web (by MicroBloggerApp)."
 	 * 
 	 * @param attribution
 	 */
@@ -256,11 +241,10 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * Do not use this field as it's been deprecated. To determine what sort of
-	 * post gets returned, look for the presence of an attachment (lack of an
-	 * attachment indicates a status update), and if one is present, look at the
-	 * attachment's media type (photo, Flash, mp3) to determine how you want to
-	 * handle the post. Facebook for Adobe AIR uses this method, for example.
+	 * Do not use this field as it's been deprecated. To determine what sort of post gets returned, look for the presence
+	 * of an attachment (lack of an attachment indicates a status update), and if one is present, look at the attachment's
+	 * media type (photo, Flash, mp3) to determine how you want to handle the post. Facebook for Adobe AIR uses this
+	 * method, for example.
 	 * 
 	 * @return
 	 */
@@ -269,11 +253,10 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * Do not use this field as it's been deprecated. To determine what sort of
-	 * post gets returned, look for the presence of an attachment (lack of an
-	 * attachment indicates a status update), and if one is present, look at the
-	 * attachment's media type (photo, Flash, mp3) to determine how you want to
-	 * handle the post. Facebook for Adobe AIR uses this method, for example.
+	 * Do not use this field as it's been deprecated. To determine what sort of post gets returned, look for the presence
+	 * of an attachment (lack of an attachment indicates a status update), and if one is present, look at the attachment's
+	 * media type (photo, Flash, mp3) to determine how you want to handle the post. Facebook for Adobe AIR uses this
+	 * method, for example.
 	 * 
 	 * @param type
 	 */
@@ -282,8 +265,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * List containing {@link FQL_ActionLink} which consists of the text and URL
-	 * for each action link.
+	 * List containing {@link FQL_ActionLink} which consists of the text and URL for each action link.
 	 * 
 	 * @return
 	 */
@@ -292,8 +274,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * List containing {@link FQL_ActionLink} which consists of the text and URL
-	 * for each action link.
+	 * List containing {@link FQL_ActionLink} which consists of the text and URL for each action link.
 	 * 
 	 * @param actionLinks
 	 */
@@ -302,8 +283,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * {@link FQL_Attachment} that contains information about the attachment to
-	 * the post. This is the attachment that Facebook returns.
+	 * {@link FQL_Attachment} that contains information about the attachment to the post. This is the attachment that
+	 * Facebook returns.
 	 * 
 	 * @return
 	 */
@@ -312,8 +293,8 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * {@link FQL_Attachment} that contains information about the attachment to
-	 * the post. This is the attachment that Facebook returns.
+	 * {@link FQL_Attachment} that contains information about the attachment to the post. This is the attachment that
+	 * Facebook returns.
 	 * 
 	 * @param attachment
 	 */
@@ -322,18 +303,16 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * {@link FQL_Comments} added to a post. This contains up to two comments to
-	 * display along with stream content. To get the full list of comments, use
-	 * stream.getComments or query the comment FQL table using the post_id of
-	 * this post. {@link FQL_Comments} contains the following fields:
+	 * {@link FQL_Comments} added to a post. This contains up to two comments to display along with stream content. To get
+	 * the full list of comments, use stream.getComments or query the comment FQL table using the post_id of this post.
+	 * {@link FQL_Comments} contains the following fields:
 	 * 
 	 * <ul>
 	 * <li>canRemove (bool): Indicates whether users can remove comments.
 	 * <li>canPost (bool): Indicates whether users can post comments.
 	 * <li>count (i32): The total number of comments added to the post.
-	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type
-	 * comments for this post. Comments are formatted as they would be when
-	 * returned by the comment (FQL) table.
+	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type comments for this post. Comments are
+	 * formatted as they would be when returned by the comment (FQL) table.
 	 * </ul>
 	 * 
 	 * @return
@@ -343,18 +322,16 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * {@link FQL_Comments} added to a post. This contains up to two comments to
-	 * display along with stream content. To get the full list of comments, use
-	 * stream.getComments or query the comment FQL table using the post_id of
-	 * this post. {@link FQL_Comments} contains the following fields:
+	 * {@link FQL_Comments} added to a post. This contains up to two comments to display along with stream content. To get
+	 * the full list of comments, use stream.getComments or query the comment FQL table using the post_id of this post.
+	 * {@link FQL_Comments} contains the following fields:
 	 * 
 	 * <ul>
 	 * <li>canRemove (bool): Indicates whether users can remove comments.
 	 * <li>canPost (bool): Indicates whether users can post comments.
 	 * <li>count (i32): The total number of comments added to the post.
-	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type
-	 * comments for this post. Comments are formatted as they would be when
-	 * returned by the comment (FQL) table.
+	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type comments for this post. Comments are
+	 * formatted as they would be when returned by the comment (FQL) table.
 	 * </ul>
 	 * 
 	 * @param comments
@@ -367,14 +344,11 @@ public class FQL_Post implements Serializable {
 	 * Likes associated with the post. Contains the following fields:
 	 * 
 	 * <ul>
-	 * <li>href (string): The URL to a page showing the other users who've liked
-	 * this post.
+	 * <li>href (string): The URL to a page showing the other users who've liked this post.
 	 * <li>count (Integer): The total number of times users like the post.
 	 * <li>sample (List<Long>): A sample of users who like the post.
-	 * <li>friends (List<Long>): A list of the viewing user's friends who like
-	 * the post.
-	 * <li>user_likes (Boolean): Indicates whether the viewing user likes the
-	 * post.
+	 * <li>friends (List<Long>): A list of the viewing user's friends who like the post.
+	 * <li>user_likes (Boolean): Indicates whether the viewing user likes the post.
 	 * <li>can_like (Boolean): Indicates whether the post can be liked.
 	 * 
 	 * @return
@@ -387,14 +361,11 @@ public class FQL_Post implements Serializable {
 	 * Likes associated with the post. Contains the following fields:
 	 * 
 	 * <ul>
-	 * <li>href (string): The URL to a page showing the other users who've liked
-	 * this post. count (Integer): The total number of times users like the
-	 * post.
+	 * <li>href (string): The URL to a page showing the other users who've liked this post. count (Integer): The total
+	 * number of times users like the post.
 	 * <li>sample (List<Long>): A sample of users who like the post.
-	 * <li>friends (List<Long>): A list of the viewing user's friends who like
-	 * the post.
-	 * <li>user_likes (Boolean): Indicates whether the viewing user likes the
-	 * post.
+	 * <li>friends (List<Long>): A list of the viewing user's friends who like the post.
+	 * <li>user_likes (Boolean): Indicates whether the viewing user likes the post.
 	 * <li>can_like (Boolean): Indicates whether the post can be liked.
 	 * </ul>
 	 * 
@@ -405,8 +376,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The privacy setting for a post, indicating which of a user's friends or
-	 * others can see the content.
+	 * The privacy setting for a post, indicating which of a user's friends or others can see the content.
 	 * 
 	 * @return
 	 */
@@ -415,8 +385,7 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * The privacy setting for a post, indicating which of a user's friends or
-	 * others can see the content.
+	 * The privacy setting for a post, indicating which of a user's friends or others can see the content.
 	 * 
 	 * @param privacy
 	 */
@@ -459,28 +428,21 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * An array of application-specific information supplied to Facebook to
-	 * create the attachment to the post. This information is not needed to
-	 * render a user's stream in your application, unless you need this
-	 * information for special handing of your own application posts. This array
-	 * includes:
+	 * An array of application-specific information supplied to Facebook to create the attachment to the post. This
+	 * information is not needed to render a user's stream in your application, unless you need this information for
+	 * special handing of your own application posts. This array includes:
 	 * 
 	 * <ul>
-	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for
-	 * posts that entered the stream through the now discontinued method
-	 * feed.publishUserAction and similar calls that are not stream publishing
-	 * methods (like stream.publish or Facebook.streamPublish).
-	 * <li>attachment_data (array): An array containing the template data, for
-	 * posts that entered the stream through the now discontinued method
-	 * feed.publishUserAction and similar calls that are not stream publishing
-	 * methods (like stream.publish or Facebook.streamPublish).
-	 * <li>images (array): A JSON-encoded object containing any images
-	 * associated with the story. These images are specified in Attachment
-	 * (Streams) (and used to be specified in Template Data, if an application
-	 * used a now discontinued method like feed.publishUserAction to create the
-	 * post originally).
-	 * <li>action_links (array): An array containing the text and URL for each
-	 * action link.
+	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for posts that entered the stream through the now
+	 * discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like
+	 * stream.publish or Facebook.streamPublish).
+	 * <li>attachment_data (array): An array containing the template data, for posts that entered the stream through the
+	 * now discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like
+	 * stream.publish or Facebook.streamPublish).
+	 * <li>images (array): A JSON-encoded object containing any images associated with the story. These images are
+	 * specified in Attachment (Streams) (and used to be specified in Template Data, if an application used a now
+	 * discontinued method like feed.publishUserAction to create the post originally).
+	 * <li>action_links (array): An array containing the text and URL for each action link.
 	 * </ul>
 	 * 
 	 * @return
@@ -490,28 +452,21 @@ public class FQL_Post implements Serializable {
 	 */
 
 	/**
-	 * An array of application-specific information supplied to Facebook to
-	 * create the attachment to the post. This information is not needed to
-	 * render a user's stream in your application, unless you need this
-	 * information for special handing of your own application posts. This array
-	 * includes:
+	 * An array of application-specific information supplied to Facebook to create the attachment to the post. This
+	 * information is not needed to render a user's stream in your application, unless you need this information for
+	 * special handing of your own application posts. This array includes:
 	 * 
 	 * <ul>
-	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for
-	 * posts that entered the stream through the now discontinued method
-	 * feed.publishUserAction and similar calls that are not stream publishing
-	 * methods (like stream.publish or Facebook.streamPublish).
-	 * <li>attachment_data (array): An array containing the template data, for
-	 * posts that entered the stream through the now discontinued method
-	 * feed.publishUserAction and similar calls that are not stream publishing
-	 * methods (like stream.publish or Facebook.streamPublish).
-	 * <li>images (array): A JSON-encoded object containing any images
-	 * associated with the story. These images are specified in Attachment
-	 * (Streams) (and used to be specified in Template Data, if an application
-	 * used a now discontinued method like feed.publishUserAction to create the
-	 * post originally).
-	 * <li>action_links (array): An array containing the text and URL for each
-	 * action link.
+	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for posts that entered the stream through the now
+	 * discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like
+	 * stream.publish or Facebook.streamPublish).
+	 * <li>attachment_data (array): An array containing the template data, for posts that entered the stream through the
+	 * now discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like
+	 * stream.publish or Facebook.streamPublish).
+	 * <li>images (array): A JSON-encoded object containing any images associated with the story. These images are
+	 * specified in Attachment (Streams) (and used to be specified in Template Data, if an application used a now
+	 * discontinued method like feed.publishUserAction to create the post originally).
+	 * <li>action_links (array): An array containing the text and URL for each action link.
 	 * </ul>
 	 * 
 	 * @param appData

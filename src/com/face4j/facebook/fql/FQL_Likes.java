@@ -1,7 +1,6 @@
 package com.face4j.facebook.fql;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class FQL_Likes implements Serializable {
 
@@ -9,8 +8,8 @@ public class FQL_Likes implements Serializable {
 
 	private String href;
 	private Integer count;
-	private List<Long> sample;
-	private List<Long> friends;
+	private Long[] sample;
+	private Long[] friends;
 	private Boolean userLikes;
 	private Boolean canLike;
 
@@ -91,7 +90,8 @@ public class FQL_Likes implements Serializable {
 	 * 
 	 * @return
 	 */
-	public List<Long> getSample() {
+
+	public Long[] getSample() {
 		return sample;
 	}
 
@@ -100,7 +100,8 @@ public class FQL_Likes implements Serializable {
 	 * 
 	 * @param sample
 	 */
-	public void setSample(List<Long> sample) {
+
+	public void setSample(Long[] sample) {
 		this.sample = sample;
 	}
 
@@ -109,7 +110,8 @@ public class FQL_Likes implements Serializable {
 	 * 
 	 * @return
 	 */
-	public List<Long> getFriends() {
+
+	public Long[] getFriends() {
 		return friends;
 	}
 
@@ -118,7 +120,8 @@ public class FQL_Likes implements Serializable {
 	 * 
 	 * @param friends
 	 */
-	public void setFriends(List<Long> friends) {
+
+	public void setFriends(Long[] friends) {
 		this.friends = friends;
 	}
 
