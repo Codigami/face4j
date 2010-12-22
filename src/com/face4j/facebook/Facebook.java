@@ -1,29 +1,33 @@
 package com.face4j.facebook;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.enums.HttpClientType;
+import com.face4j.facebook.enums.StreamColumn;
 import com.face4j.facebook.exception.FacebookException;
-import com.face4j.facebook.fql.FQL_Post;
+import com.face4j.facebook.fql.FqlPost;
 import com.face4j.facebook.http.APICallerFactory;
 import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.util.Constants;
 import com.face4j.facebook.util.JSONToObjectTransformer;
+import com.face4j.facebook.wrapper.StreamColumnCriteria;
 
 /**
  * This is the main facebook class that will have methods which return facebook data as well as publish data to facebook
  * This is a work in progress.
  * 
  * @author Nischal Shetty - nischalshetty85 at gmail
- * 
  */
 public class Facebook implements Serializable {
 
 	private static final long serialVersionUID = 350726728289608542L;
+	private static final String isHidden = "is_hidden";
 
 	Logger logger = Logger.getLogger(Facebook.class.getName());
 
@@ -136,38 +140,142 @@ public class Facebook implements Serializable {
 		return new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
 	}
 
-	public FQL_Post[] wallPosts() throws FacebookException {
+	public FqlPost[] newsFeed() throws FacebookException {
 
-		NameValuePair[] nameValuePairs = {
-				getNameValuePairAccessToken(),
-				new NameValuePair(
-						"query",
-						"SELECT post_id, actor_id, target_id, viewer_id, message, attachment, updated_time, created_time, attribution, comments, likes, permalink "
-								+ "FROM stream WHERE source_id in (SELECT target_id FROM connection WHERE source_id=me() AND is_following=1) AND is_hidden = 0"),
+		List<StreamColumn> columnNames = new ArrayList<StreamColumn>();
+
+		columnNames.add(StreamColumn.POST_ID);
+		columnNames.add(StreamColumn.ACTOR_ID);
+		columnNames.add(StreamColumn.TARGET_ID);
+		columnNames.add(StreamColumn.VIEWER_ID);
+		columnNames.add(StreamColumn.MESSAGE);
+		columnNames.add(StreamColumn.ATTACHMENT);
+		columnNames.add(StreamColumn.UPDATED_TIME);
+		columnNames.add(StreamColumn.CREATED_TIME);
+		columnNames.add(StreamColumn.ATTRIBUTION);
+		columnNames.add(StreamColumn.COMMENTS);
+		columnNames.add(StreamColumn.LIKES);
+		columnNames.add(StreamColumn.PERMALINK);
+
+		return newsFeed(columnNames, null);
+	}
+
+	public FqlPost[] newsFeed(List<StreamColumn> columnNames, StreamColumnCriteria columnCriteria)
+			throws FacebookException {
+
+		StringBuilder criteria = constructCriteria(columnCriteria);
+		StringBuilder columnName = appendColumns(columnNames);
+
+		String fqlQuery = "SELECT "
+				+ columnName.toString()
+				+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0	 "
+				+ criteria.toString();
+
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
 				new NameValuePair("format", "JSON") };
-
-		// all irrespective of friendship
-		// SELECT post_id, actor_id, target_id, message FROM stream WHERE source_id in (SELECT target_id FROM connection
-		// WHERE source_id=me()) AND is_hidden = 0
-
-		// SELECT post_id, actor_id, target_id, message FROM stream WHERE source_id in (SELECT target_id FROM connection
-		// WHERE source_id=<uid> AND is_following=1) AND is_hidden = 0
 
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 
-		jsonResponse = jsonResponse.replaceAll("\"sample\":\\{\\}", "\"sample\":[]"); // long array
-		jsonResponse = jsonResponse.replaceAll("\"friends\":\\{\\}", "\"friends\":[]"); // long array
-		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[{}]");
+		// fql currently sends empty arrays with {} but we need []
+		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[]");
 
-		FQL_Post[] fql_Posts = JSONToObjectTransformer.getObject(jsonResponse, FQL_Post[].class);
-
-		/*
-		 * if (fql_Posts != null && fql_Posts.length > 0) { for (FQL_Post fql_Post : fql_Posts) { if
-		 * (fql_Post.getAttachment() != null) { System.out.println("message is: " + fql_Post.getAttachment().getHref() +
-		 * " type:" + fql_Post.getAttachment().getMedia()); System.out.println("Permalink is " + fql_Post.getPermalink()); }
-		 * } }
-		 */
+		FqlPost[] fql_Posts = JSONToObjectTransformer.getObject(jsonResponse, FqlPost[].class);
 
 		return fql_Posts;
+	}
+
+	private StringBuilder appendColumns(List<StreamColumn> columnNames) {
+		StringBuilder columnName = null;
+		for (StreamColumn column : columnNames) {
+			if (columnName != null) {
+				columnName.append(", " + column.toString());
+			} else {
+				columnName = new StringBuilder();
+				columnName.append(column.toString());
+			}
+		}
+		return columnName;
+	}
+
+	private StringBuilder constructCriteria(StreamColumnCriteria columnCriteria) {
+
+		StringBuilder criteria = new StringBuilder();
+
+		if (columnCriteria != null) {
+
+			if (columnCriteria.isDefaultXid()) {
+				criteria.append(" AND " + StreamColumn.XID.toString() + " = 'default'");
+			} else if (columnCriteria.getXid() != null) {
+				criteria.append(" AND " + StreamColumn.XID.toString() + " = " + columnCriteria.getXid());
+			}
+
+			if (columnCriteria.getActorId() != null) {
+				criteria.append(" AND " + StreamColumn.ACTOR_ID.toString() + " = '" + columnCriteria.getActorId() + "'");
+			}
+
+			if (columnCriteria.getAppId() != null) {
+				criteria.append(" AND " + StreamColumn.APP_ID.toString() + " = " + columnCriteria.getAppId());
+			}
+
+			if (columnCriteria.getAttribution() != null) {
+				criteria.append(" AND " + StreamColumn.ATTRIBUTION.toString() + " = '" + columnCriteria.getAttribution() + "'");
+			}
+
+			if (columnCriteria.getCreatedTimeGreaterThan() != null) {
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " > "
+						+ columnCriteria.getCreatedTimeGreaterThan());
+			}
+
+			if (columnCriteria.getCreatedTimeLessThan() != null) {
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " < "
+						+ columnCriteria.getCreatedTimeLessThan());
+			}
+
+			if (columnCriteria.getFilterKey() != null) {
+				criteria.append(" AND " + StreamColumn.FILTER_KEY.toString() + " = '" + columnCriteria.getFilterKey() + "'");
+			}
+
+			if (columnCriteria.getPostId() != null) {
+				criteria.append(" AND " + StreamColumn.POST_ID.toString() + " = '" + columnCriteria.getPostId() + "'");
+			}
+
+			if (columnCriteria.getSourceId() != null) {
+				criteria.append(" AND " + StreamColumn.SOURCE_ID.toString() + " = " + columnCriteria.getSourceId());
+			}
+
+			if (columnCriteria.getTargetId() != null) {
+				criteria.append(" AND " + StreamColumn.TARGET_ID.toString() + " = '" + columnCriteria.getTargetId() + "'");
+			}
+
+			if (columnCriteria.getUpdatedTimeGreaterThan() != null) {
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " > "
+						+ columnCriteria.getUpdatedTimeGreaterThan());
+			}
+
+			if (columnCriteria.getUpdatedTimeLessThan() != null) {
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " < "
+						+ columnCriteria.getUpdatedTimeLessThan());
+			}
+
+			if (columnCriteria.getViewerId() != null) {
+				criteria.append(" AND " + StreamColumn.VIEWER_ID.toString() + " = " + columnCriteria.getViewerId());
+			}
+
+			// We will always be passing this param
+			// TODO: Do we need to always set this?
+			if (columnCriteria.isShowHidden()) {
+				criteria.append(" AND " + isHidden + " = 0 ");
+			} else {
+				// criteria.append(" AND " + isHidden + " = 1 ");
+			}
+
+			// This should be in the end
+			if (columnCriteria.getLimit() != null) {
+				criteria.append(" LIMIT " + columnCriteria.getLimit());
+			}
+
+		}
+
+		return criteria;
 	}
 }

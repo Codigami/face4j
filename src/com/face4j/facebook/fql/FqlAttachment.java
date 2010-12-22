@@ -3,25 +3,25 @@ package com.face4j.facebook.fql;
 import java.io.Serializable;
 import java.util.List;
 
-public class FQL_Attachment implements Serializable {
+public class FqlAttachment implements Serializable {
 
 	private static final long serialVersionUID = -7249990503411544573L;
 
-	private List<FQL_Media> media;
+	private List<FqlMedia> media;
 	private String name;
 	private String href;
 	private String caption;
 	private String description;
 	private String icon;
-	private List<FQL_Properties> properties;
+	private List<FqlProperties> properties;
 	private String fbObjectType;
 	private String fbObjectId;
 
-	public List<FQL_Media> getMedia() {
+	public List<FqlMedia> getMedia() {
 		return media;
 	}
 
-	public void setMedia(List<FQL_Media> media) {
+	public void setMedia(List<FqlMedia> media) {
 		this.media = media;
 	}
 
@@ -65,11 +65,11 @@ public class FQL_Attachment implements Serializable {
 		this.icon = icon;
 	}
 
-	public List<FQL_Properties> getProperties() {
+	public List<FqlProperties> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<FQL_Properties> properties) {
+	public void setProperties(List<FqlProperties> properties) {
 		this.properties = properties;
 	}
 

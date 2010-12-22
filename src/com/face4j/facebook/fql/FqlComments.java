@@ -3,14 +3,14 @@ package com.face4j.facebook.fql;
 import java.io.Serializable;
 import java.util.List;
 
-public class FQL_Comments implements Serializable {
+public class FqlComments implements Serializable {
 
 	private static final long serialVersionUID = 383394113986607215L;
 
 	private Boolean canRemove;
 	private Boolean canPost;
 	private Integer count;
-	List<FQL_Comment> commentList;
+	List<FqlComment> commentList;
 
 	/**
 	 * Indicates whether users can remove comments.
@@ -72,7 +72,7 @@ public class FQL_Comments implements Serializable {
 	 * 
 	 * @return
 	 */
-	public List<FQL_Comment> getCommentList() {
+	public List<FqlComment> getCommentList() {
 		return commentList;
 	}
 
@@ -82,7 +82,7 @@ public class FQL_Comments implements Serializable {
 	 * 
 	 * @param commentList
 	 */
-	public void setCommentList(List<FQL_Comment> commentList) {
+	public void setCommentList(List<FqlComment> commentList) {
 		this.commentList = commentList;
 	}
 

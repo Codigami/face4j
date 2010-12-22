@@ -2,7 +2,7 @@ package com.face4j.facebook.fql;
 
 import java.io.Serializable;
 
-public class FQL_Properties implements Serializable {
+public class FqlProperties implements Serializable {
 
 	private static final long serialVersionUID = 4642223364862839320L;
 

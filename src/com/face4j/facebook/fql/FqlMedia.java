@@ -2,7 +2,7 @@ package com.face4j.facebook.fql;
 
 import java.io.Serializable;
 
-public class FQL_Media implements Serializable {
+public class FqlMedia implements Serializable {
 
 	private static final long serialVersionUID = -1520632457634666566L;
 
@@ -10,7 +10,7 @@ public class FQL_Media implements Serializable {
 	private String alt;
 	private String type;
 	private String src;
-	private FQL_Video video;
+	private FqlVideo video;
 
 	public String getHref() {
 		return href;
@@ -44,11 +44,11 @@ public class FQL_Media implements Serializable {
 		this.src = src;
 	}
 
-	public FQL_Video getVideo() {
+	public FqlVideo getVideo() {
 		return video;
 	}
 
-	public void setVideo(FQL_Video video) {
+	public void setVideo(FqlVideo video) {
 		this.video = video;
 	}
 

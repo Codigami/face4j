@@ -3,7 +3,7 @@ package com.face4j.facebook.fql;
 import java.io.Serializable;
 import java.util.List;
 
-public class FQL_Post implements Serializable {
+public class FqlPost implements Serializable {
 
 	private static final long serialVersionUID = 6550520319195729998L;
 
@@ -19,11 +19,11 @@ public class FQL_Post implements Serializable {
 	private String targetId;
 	private String message;
 	private Integer type;
-	private List<FQL_ActionLink> actionLinks;
-	private FQL_Attachment attachment;
-	private FQL_Comments comments;
-	private FQL_Likes likes;
-	private FQL_Privacy privacy;
+	private List<FqlActionLink> actionLinks;
+	private FqlAttachment attachment;
+	private FqlComments comments;
+	private FqlLikes likes;
+	private FqlPrivacy privacy;
 	private List<Long> taggedIds;
 	private Boolean isHidden;
 	private String permalink;
@@ -265,84 +265,81 @@ public class FQL_Post implements Serializable {
 	}
 
 	/**
-	 * List containing {@link FQL_ActionLink} which consists of the text and URL for each action link.
+	 * List containing {@link FqlActionLink} which consists of the text and URL for each action link.
 	 * 
 	 * @return
 	 */
-	public List<FQL_ActionLink> getActionLinks() {
+	public List<FqlActionLink> getActionLinks() {
 		return actionLinks;
 	}
 
 	/**
-	 * List containing {@link FQL_ActionLink} which consists of the text and URL for each action link.
+	 * List containing {@link FqlActionLink} which consists of the text and URL for each action link.
 	 * 
 	 * @param actionLinks
 	 */
-	public void setActionLinks(List<FQL_ActionLink> actionLinks) {
+	public void setActionLinks(List<FqlActionLink> actionLinks) {
 		this.actionLinks = actionLinks;
 	}
 
 	/**
-	 * {@link FQL_Attachment} that contains information about the attachment to the post. This is the attachment that
+	 * {@link FqlAttachment} that contains information about the attachment to the post. This is the attachment that
 	 * Facebook returns.
 	 * 
 	 * @return
 	 */
-	public FQL_Attachment getAttachment() {
+	public FqlAttachment getAttachment() {
 		return attachment;
 	}
 
 	/**
-	 * {@link FQL_Attachment} that contains information about the attachment to the post. This is the attachment that
+	 * {@link FqlAttachment} that contains information about the attachment to the post. This is the attachment that
 	 * Facebook returns.
 	 * 
 	 * @param attachment
 	 */
-	public void setAttachment(FQL_Attachment attachment) {
+	public void setAttachment(FqlAttachment attachment) {
 		this.attachment = attachment;
 	}
 
 	/**
-	 * {@link FQL_Comments} added to a post. This contains up to two comments to display along with stream content. To get
+	 * {@link FqlComments} added to a post. This contains up to two comments to display along with stream content. To get
 	 * the full list of comments, use stream.getComments or query the comment FQL table using the post_id of this post.
-	 * {@link FQL_Comments} contains the following fields:
-	 * 
+	 * {@link FqlComments} contains the following fields:
 	 * <ul>
 	 * <li>canRemove (bool): Indicates whether users can remove comments.
 	 * <li>canPost (bool): Indicates whether users can post comments.
 	 * <li>count (i32): The total number of comments added to the post.
-	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type comments for this post. Comments are
-	 * formatted as they would be when returned by the comment (FQL) table.
+	 * <li>commentList (List of {@link FqlComment}): A list of comment-type comments for this post. Comments are formatted
+	 * as they would be when returned by the comment (FQL) table.
 	 * </ul>
 	 * 
 	 * @return
 	 */
-	public FQL_Comments getComments() {
+	public FqlComments getComments() {
 		return comments;
 	}
 
 	/**
-	 * {@link FQL_Comments} added to a post. This contains up to two comments to display along with stream content. To get
+	 * {@link FqlComments} added to a post. This contains up to two comments to display along with stream content. To get
 	 * the full list of comments, use stream.getComments or query the comment FQL table using the post_id of this post.
-	 * {@link FQL_Comments} contains the following fields:
-	 * 
+	 * {@link FqlComments} contains the following fields:
 	 * <ul>
 	 * <li>canRemove (bool): Indicates whether users can remove comments.
 	 * <li>canPost (bool): Indicates whether users can post comments.
 	 * <li>count (i32): The total number of comments added to the post.
-	 * <li>commentList (List of {@link FQL_Comment}): A list of comment-type comments for this post. Comments are
-	 * formatted as they would be when returned by the comment (FQL) table.
+	 * <li>commentList (List of {@link FqlComment}): A list of comment-type comments for this post. Comments are formatted
+	 * as they would be when returned by the comment (FQL) table.
 	 * </ul>
 	 * 
 	 * @param comments
 	 */
-	public void setComments(FQL_Comments comments) {
+	public void setComments(FqlComments comments) {
 		this.comments = comments;
 	}
 
 	/**
 	 * Likes associated with the post. Contains the following fields:
-	 * 
 	 * <ul>
 	 * <li>href (string): The URL to a page showing the other users who've liked this post.
 	 * <li>count (Integer): The total number of times users like the post.
@@ -353,13 +350,12 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @return
 	 */
-	public FQL_Likes getLikes() {
+	public FqlLikes getLikes() {
 		return likes;
 	}
 
 	/**
 	 * Likes associated with the post. Contains the following fields:
-	 * 
 	 * <ul>
 	 * <li>href (string): The URL to a page showing the other users who've liked this post. count (Integer): The total
 	 * number of times users like the post.
@@ -371,7 +367,7 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @param likes
 	 */
-	public void setLikes(FQL_Likes likes) {
+	public void setLikes(FqlLikes likes) {
 		this.likes = likes;
 	}
 
@@ -380,7 +376,7 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @return
 	 */
-	public FQL_Privacy getPrivacy() {
+	public FqlPrivacy getPrivacy() {
 		return privacy;
 	}
 
@@ -389,7 +385,7 @@ public class FQL_Post implements Serializable {
 	 * 
 	 * @param privacy
 	 */
-	public void setPrivacy(FQL_Privacy privacy) {
+	public void setPrivacy(FqlPrivacy privacy) {
 		this.privacy = privacy;
 	}
 
@@ -431,7 +427,6 @@ public class FQL_Post implements Serializable {
 	 * An array of application-specific information supplied to Facebook to create the attachment to the post. This
 	 * information is not needed to render a user's stream in your application, unless you need this information for
 	 * special handing of your own application posts. This array includes:
-	 * 
 	 * <ul>
 	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for posts that entered the stream through the now
 	 * discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like
@@ -455,7 +450,6 @@ public class FQL_Post implements Serializable {
 	 * An array of application-specific information supplied to Facebook to create the attachment to the post. This
 	 * information is not needed to render a user's stream in your application, unless you need this information for
 	 * special handing of your own application posts. This array includes:
-	 * 
 	 * <ul>
 	 * <li>tbid (i64): A 64-bit int representing the template bundle ID, for posts that entered the stream through the now
 	 * discontinued method feed.publishUserAction and similar calls that are not stream publishing methods (like

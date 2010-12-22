@@ -2,7 +2,7 @@ package com.face4j.facebook.fql;
 
 import java.io.Serializable;
 
-public class FQL_Comment implements Serializable {
+public class FqlComment implements Serializable {
 
 	private static final long serialVersionUID = 383394113986607215L;
 
