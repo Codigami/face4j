@@ -1,14 +1,21 @@
 package com.face4j.facebook.http;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.exception.FacebookException;
-import com.google.appengine.api.urlfetch.*;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 
 public class URLFetchAPICaller implements APICallerInterface {
 
@@ -55,9 +62,38 @@ public class URLFetchAPICaller implements APICallerInterface {
 	 * @return
 	 * @throws FacebookException
 	 */
-	// TODO: To be implemented
 	public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
-		return null;
+		
+		String constructedParams = null;
+		int statusCode = 0;
+        try {
+            URL posturl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) posturl.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            
+            constructedParams = constructParams(nameValuePairs);
+            
+            writer.write(constructedParams);
+            writer.close();
+    
+            statusCode = connection.getResponseCode();
+            if (statusCode != HttpURLConnection.HTTP_OK) {
+            	throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode,
+						statusCode);
+            } else {
+            	
+            }
+        } catch (MalformedURLException e) {
+        	throw new FacebookException("Malformed URL Exception while calling facebook!", e);
+        } catch (IOException e) {
+        	throw new FacebookException("IOException while calling facebook!", e);
+        }
+        
+        return null;
+        
 	}
 
 	private String constructParams(NameValuePair[] nameValuePairs) {
@@ -66,6 +102,7 @@ public class URLFetchAPICaller implements APICallerInterface {
 		String constructedParams = null;
 
 		for (NameValuePair nameValuePair : nameValuePairs) {
+			if(nameValuePair!=null && nameValuePair.getName()!=null && nameValuePair.getValue()!=null){
 			if (builder != null) {
 				try {
 					builder.append("&" + nameValuePair.getName() + "=" + URLEncoder.encode(nameValuePair.getValue(), "UTF-8"));
@@ -79,6 +116,7 @@ public class URLFetchAPICaller implements APICallerInterface {
 				} catch (UnsupportedEncodingException e) {
 					// TODO: Catch error
 				}
+			}
 			}
 		}
 
