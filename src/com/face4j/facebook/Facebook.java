@@ -7,10 +7,13 @@ import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.NameValuePair;
 
+import com.face4j.facebook.criteria.ConnectionColumnCriteria;
 import com.face4j.facebook.entity.User;
+import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.enums.StreamColumn;
 import com.face4j.facebook.exception.FacebookException;
+import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlPost;
 import com.face4j.facebook.http.APICallerFactory;
 import com.face4j.facebook.http.APICallerInterface;
@@ -278,4 +281,60 @@ public class Facebook implements Serializable {
 
 		return criteria;
 	}
+	
+	public FqlConnection[] getConnection(List<ConnectionColumn> columnNames, ConnectionColumnCriteria columnCriteria)throws FacebookException {
+
+		StringBuilder criteria = constructCriteria(columnCriteria);
+		StringBuilder columnName = appendConnectionColumns(columnNames);
+
+		String fqlQuery = "SELECT "
+				+ columnName.toString()
+				+ " FROM connection WHERE source_id = me() AND "
+				+ criteria.toString();
+
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
+				new NameValuePair("format", "JSON") };
+
+		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
+
+		// fql currently sends empty arrays with {} but we need []
+		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[]");
+
+		FqlConnection[] fqlConnection = JSONToObjectTransformer.getObject(jsonResponse, FqlConnection[].class);
+
+		return fqlConnection;
+	}
+	
+	private StringBuilder constructCriteria(ConnectionColumnCriteria columnCriteria) {
+		StringBuilder criteria = new StringBuilder();
+
+		if (columnCriteria != null) {
+			if (columnCriteria.getTargetType() != null) {
+				criteria.append(ConnectionColumn.TARGET_TYPE.toString() + " = '" + columnCriteria.getTargetType() + "'");
+			}
+
+			if (columnCriteria.getLimit() != null) {
+				criteria.append(" LIMIT " + columnCriteria.getLimit());
+			}
+			
+			if (columnCriteria.getOffset() != null){
+				criteria.append(" OFFSET " + columnCriteria.getOffset());
+			}
+		}
+		return criteria;
+	}
+	
+	private StringBuilder appendConnectionColumns(List<ConnectionColumn> columnNames) {
+		StringBuilder columnName = null;
+		for (ConnectionColumn column : columnNames) {
+			if (columnName != null) {
+				columnName.append(", " + column.toString());
+			} else {
+				columnName = new StringBuilder();
+				columnName.append(column.toString());
+			}
+		}
+		return columnName;
+	}
+
 }
