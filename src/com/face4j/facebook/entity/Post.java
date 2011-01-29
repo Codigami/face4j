@@ -1,7 +1,14 @@
 package com.face4j.facebook.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
+
+import com.face4j.facebook.Facebook;
+import com.face4j.facebook.entity.connection.Comments;
+import com.face4j.facebook.entity.connection.Likes;
+import com.face4j.facebook.enums.ConnectionType;
+import com.face4j.facebook.enums.Paging;
+import com.face4j.facebook.exception.FacebookException;
 
 /**
  * An individual entry in a profile's feed. 
@@ -31,9 +38,6 @@ public class Post implements Serializable {
 	private String createdTime;
 	private String updatedTime;
 	private Targeting targeting;
-	
-	private List<From> connectionLikes;
-	private List<Comment> connectionsComments;
 	
 	/**
 	 * The post ID
@@ -233,23 +237,33 @@ public class Post implements Serializable {
 	public void setTargeting(Targeting targeting) {
 		this.targeting = targeting;
 	}
-	
+
 	/**
-	 * The likes on this post
+	 * Returns the likes on this post. Pagination present, only a limited number of likes returned,
+	 * use pagination method to retrieve more. <br>
+	 * 
+	 * There will be a new http request in order to retrieve the "Likes" tied to this post. You need
+	 * to take care of caching the response if needed.
+	 * 
+	 * @param facebook
+	 * @param pagingCriteria
 	 * @return
+	 * @throws FacebookException
 	 */
-	public List<From> getConnectionLikes() {
-		//TODO implement
-		return connectionLikes;
+	public Likes getConnectionLikes(Facebook facebook, Map<Paging, String> pagingCriteria) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, pagingCriteria);
 	}
-	
+
 	/**
 	 * All of the comments on this post
+	 * 
+	 * @param facebook
+	 * @param pagingCriteria
 	 * @return
+	 * @throws FacebookException
 	 */
-	public List<Comment> getConnectionsComments() {
-		//TODO implement
-		return connectionsComments;
+	public Comments getConnectionsComments(Facebook facebook, Map<Paging, String> pagingCriteria) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.COMMENTS, Comments.class, pagingCriteria);
 	}
 
 }

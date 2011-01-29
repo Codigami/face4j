@@ -30,12 +30,14 @@ public class URLFetchAPICaller implements APICallerInterface {
 
 		try {
 
-			constructedParams = constructParams(nameValuePairs);
+			if (nameValuePairs != null) {
+				constructedParams = constructParams(nameValuePairs);
 
-			if (url.contains("?")) {
-				url = url.concat("&" + constructedParams);
-			} else {
-				url = url.concat("?" + constructedParams);
+				if (url.contains("?")) {
+					url = url.concat("&" + constructedParams);
+				} else {
+					url = url.concat("?" + constructedParams);
+				}
 			}
 
 			fetchURL = new URL(url);
