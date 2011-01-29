@@ -1,5 +1,6 @@
 package com.face4j.facebook.util;
 
+import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -22,6 +23,10 @@ public class JSONToObjectTransformer {
 
 	public static User getUser(String userJSON) {
 		return gson.fromJson(userJSON, User.class);
+	}
+	
+	public static Post getPost(String postJson){
+		return gson.fromJson(postJson, Post.class);
 	}
 
 	public static <E> E getObject(String json, Class<E> e) {

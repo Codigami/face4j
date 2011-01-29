@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
+import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.HttpClientType;
@@ -65,11 +66,11 @@ public class Facebook implements Serializable {
 	/**
 	 * Returns a facebook users available info.
 	 * 
-	 * @param username
+	 * @param fbId
 	 * @return
 	 * @throws FacebookException
 	 */
-	public User getUser(String username) throws FacebookException {
+	public User getUser(String fbId) throws FacebookException {
 
 		// APICaller would retrieve the json string object from facebook by making a https call
 		String userJson = null;
@@ -77,24 +78,13 @@ public class Facebook implements Serializable {
 		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
 				this.authAccessToken.getAccessToken()) };
 
-		userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + username, nameValuePairs);
+		userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, nameValuePairs);
 
 		// Once the json string object is obtaind, it is passed to obj
 		// transformer and the right object is retrieved
 		User user = JSONToObjectTransformer.getUser(userJson);
 
 		return user;
-	}
-
-	/**
-	 * Returns a facebook users available info.
-	 * 
-	 * @param id
-	 * @return
-	 * @throws FacebookException
-	 */
-	public User getUser(long id) throws FacebookException {
-		return getUser("" + id);
 	}
 
 	/*
@@ -337,4 +327,28 @@ public class Facebook implements Serializable {
 		return columnName;
 	}
 
+	/**
+	 * Returns a Post object containing all the details of a post. <br>
+	 * <b>Post</b> = An individual entry in a profile's feed. The read_stream extended permission is
+	 * required to access any information in a profile's feed that is not shared with everyone.
+	 * 
+	 * @param postId
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Post getPost(String postId) throws FacebookException{
+		
+		// APICaller would retrieve the json string object from facebook by making a https call
+		String postJson = null;
+
+		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
+				this.authAccessToken.getAccessToken()) };
+
+		postJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, nameValuePairs);
+
+		// Once the json string object is obtaind, it is passed to obj
+		// transformer and the right object is retrieved
+		return JSONToObjectTransformer.getPost(postJson);
+	}
+	
 }

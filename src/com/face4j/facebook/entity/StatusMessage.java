@@ -14,6 +14,10 @@ public class StatusMessage implements Serializable {
 	
 	private String updatedTime;
 	
+	private Comment[] comments;
+	
+	private Like[] likes;
+	
 	public StatusMessage(long id, From from, String message, String updatedTime) {
 		super();
 		this.id = id;
@@ -52,6 +56,16 @@ public class StatusMessage implements Serializable {
 
 	public void setUpdatedTime(String updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	public Comment[] getComments() {
+		//TODO implement
+		return comments;
+	}
+
+	public Like[] getLikes() {
+		//TODO implement
+		return likes;
 	}
 	
 	

@@ -10,5 +10,31 @@ public class Comment implements Serializable{
 	private From from;
 	private String message;
 	private String createdTime;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public From getFrom() {
+		return from;
+	}
+	public void setFrom(From from) {
+		this.from = from;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getCreatedTime() {
+		return createdTime;
+	}
+	public void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
+	}
+	
+	
 
 }
