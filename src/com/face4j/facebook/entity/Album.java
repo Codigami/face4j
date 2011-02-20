@@ -4,63 +4,63 @@ import java.io.Serializable;
 
 /**
  * A Photo album on facebook
+ * 
  * @author Nischal Shetty
- *
  */
 public class Album implements Serializable {
 
 	private static final long serialVersionUID = 1805429103365132266L;
-	
+
 	/**
 	 * The photo album ID
 	 */
-	private long id;	
+	private String id;
 
 	/**
 	 * An object containing the ID and name of the profile who posted this album
 	 */
-	private From from;	
+	private From from;
 
 	/**
 	 * The title of the album
 	 */
-	private String name;	
+	private String name;
 
 	/**
 	 * The description of the album
 	 */
 	private String description;
-	
+
 	/**
 	 * The location of the album
 	 */
-	private Location location;	
+	private Location location;
 
 	/**
-	 * 	A link to this album on Facebook
+	 * A link to this album on Facebook
 	 */
-	private String link;	
+	private String link;
 
 	/**
 	 * The number of photos in this album
 	 */
-  private long count;	
+	private long count;
 
-  /**
-   * The time the photo album was initially created
-   */
-  private String createdTime;	
+	/**
+	 * The time the photo album was initially created
+	 */
+	private String createdTime;
 
-  /**
-   * The last time the photo album was updated
-   */
+	/**
+	 * The last time the photo album was updated
+	 */
 	private String updatedTime;
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -127,5 +127,5 @@ public class Album implements Serializable {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
 }

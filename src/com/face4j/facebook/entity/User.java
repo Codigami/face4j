@@ -5,42 +5,42 @@ import java.io.Serializable;
 import com.face4j.facebook.enums.PictureType;
 import com.face4j.facebook.util.URLMaker;
 
-public class User implements Serializable{
-	
+public class User implements Serializable {
+
 	private static final long serialVersionUID = -7351804744720611823L;
 
-	private long id;	
+	private String id;
 
-	private String firstName;	
+	private String firstName;
 
-	private String lastName;	
+	private String lastName;
 
-	private String name;	
+	private String name;
 
-	private String link;	
+	private String link;
 
-	private String about;	
+	private String about;
 
-	private String birthday;	
+	private String birthday;
 
-	private Work[] work;	
+	private Work[] work;
 
-	private Education[] education;	
+	private Education[] education;
 
-	private String email;	
+	private String email;
 
 	private String website;
-	
+
 	private Hometown hometown;
-	
+
 	/**
 	 * The user's ID
 	 */
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -97,8 +97,9 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * The user's birthday. Format is MM/dd/yyyy . Can also be MM/dd (facebook let's users decide whether they want to display the date or no).
-	 * Users can also opt to keep their birthday private. In this case, even if you have access to a users birthday, you will not be able to access it.
+	 * The user's birthday. Format is MM/dd/yyyy . Can also be MM/dd (facebook let's users decide whether they want to
+	 * display the date or no). Users can also opt to keep their birthday private. In this case, even if you have access
+	 * to a users birthday, you will not be able to access it.
 	 */
 	public String getBirthday() {
 		return birthday;
@@ -107,7 +108,6 @@ public class User implements Serializable{
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-
 
 	/**
 	 * The proxied or contact email address granted by the user
@@ -139,7 +139,6 @@ public class User implements Serializable{
 		this.hometown = hometown;
 	}
 
-
 	/**
 	 * A list of the work history from the user's profile
 	 */
@@ -164,14 +163,16 @@ public class User implements Serializable{
 
 	/**
 	 * Returns the default image profile pic url of a user
+	 * 
 	 * @return
 	 */
 	public String getPictureURL() {
 		return URLMaker.getImageURL(this.id);
 	}
-	
+
 	/**
 	 * Returns the url along with a param that indicates the size of the pic
+	 * 
 	 * @param pictureType
 	 * @return
 	 */
@@ -179,5 +180,4 @@ public class User implements Serializable{
 		return URLMaker.getImageURL(this.id, pictureType);
 	}
 
-	
 }
