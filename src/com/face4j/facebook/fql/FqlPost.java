@@ -248,6 +248,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	public Integer getType() {
 		return type;
 	}
@@ -260,6 +261,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @param type
 	 */
+	@Deprecated
 	public void setType(Integer type) {
 		this.type = type;
 	}

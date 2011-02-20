@@ -11,6 +11,7 @@ public class FqlMedia implements Serializable {
 	private String type;
 	private String src;
 	private FqlVideo video;
+	private FqlPhoto photo;
 
 	public String getHref() {
 		return href;
@@ -50,6 +51,14 @@ public class FqlMedia implements Serializable {
 
 	public void setVideo(FqlVideo video) {
 		this.video = video;
+	}
+
+	public FqlPhoto getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(FqlPhoto photo) {
+		this.photo = photo;
 	}
 
 }
