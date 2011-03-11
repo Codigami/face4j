@@ -1,10 +1,7 @@
 package com.face4j.facebook;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.NameValuePair;
@@ -12,12 +9,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
-import com.face4j.facebook.enums.ConnectionColumn;
-import com.face4j.facebook.enums.ConnectionType;
-import com.face4j.facebook.enums.HttpClientType;
-import com.face4j.facebook.enums.Paging;
-import com.face4j.facebook.enums.Permission;
-import com.face4j.facebook.enums.StreamColumn;
+import com.face4j.facebook.enums.*;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlPost;
@@ -79,20 +71,20 @@ public class Facebook implements Serializable {
 	 */
 	public User getUser(String fbId) throws FacebookException {
 
-//		// APICaller would retrieve the json string object from facebook by making a https call
-//		String userJson = null;
-//
-//		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
-//				this.authAccessToken.getAccessToken()) };
-//
-//		userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, nameValuePairs);
-//
-//		// Once the json string object is obtaind, it is passed to obj
-//		// transformer and the right object is retrieved
-//		User user = JSONToObjectTransformer.getUser(userJson);
-//
-//		return user;
-		
+		// // APICaller would retrieve the json string object from facebook by making a https call
+		// String userJson = null;
+		//
+		// NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
+		// this.authAccessToken.getAccessToken()) };
+		//
+		// userJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, nameValuePairs);
+		//
+		// // Once the json string object is obtaind, it is passed to obj
+		// // transformer and the right object is retrieved
+		// User user = JSONToObjectTransformer.getUser(userJson);
+		//
+		// return user;
+
 		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, User.class, nameValuePairs);
 	}
@@ -122,8 +114,7 @@ public class Facebook implements Serializable {
 	 * @param message The message from the user about this link(optional)
 	 * @throws FacebookException
 	 */
-	public void postLink(String link, String name, String caption, String description, String message)
-			throws FacebookException {
+	public void postLink(String link, String name, String caption, String description, String message) throws FacebookException {
 		NameValuePair[] nameValuePairs = new NameValuePair[6];
 
 		nameValuePairs[0] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
@@ -140,6 +131,48 @@ public class Facebook implements Serializable {
 		}
 		if (message != null) {
 			nameValuePairs[5] = new NameValuePair(Constants.MESSAGE, message);
+		}
+
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK, nameValuePairs);
+	}
+
+	/**
+	 * Posts a link on the user's/page's wall <br>
+	 * Requires the {@link Permission#PUBLISH_STREAM} permission
+	 * 
+	 * @param link The URL to share 
+	 * @param name The name of the link (optional)
+	 * @param caption The caption of the link, appears beneath the link name (optional)
+	 * @param description A description of the link, appears beneath the link caption (optional)
+	 * @param message The message from the user about this link(optional)
+	 * @param A URL to the thumbnail image used in the link post
+	 * @param A URL to the link icon that Facebook displays in the news feed
+	 * @throws FacebookException
+	 */
+	public void postLink(String link, String name, String caption, String description, String message, String picture, String icon)
+			throws FacebookException {
+		NameValuePair[] nameValuePairs = new NameValuePair[8];
+
+		nameValuePairs[0] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
+		nameValuePairs[1] = new NameValuePair(Constants.LINK, link);
+
+		if (name != null) {
+			nameValuePairs[2] = new NameValuePair(Constants.NAME, name);
+		}
+		if (caption != null) {
+			nameValuePairs[3] = new NameValuePair(Constants.CAPTION, caption);
+		}
+		if (description != null) {
+			nameValuePairs[4] = new NameValuePair(Constants.DESCRIPTION, description);
+		}
+		if (message != null) {
+			nameValuePairs[5] = new NameValuePair(Constants.MESSAGE, message);
+		}
+		if (picture != null) {
+			nameValuePairs[6] = new NameValuePair(Constants.PICTURE, picture);
+		}
+		if (icon != null) {
+			nameValuePairs[7] = new NameValuePair(Constants.ICON, icon);
 		}
 
 		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK, nameValuePairs);
@@ -185,19 +218,16 @@ public class Facebook implements Serializable {
 		return newsFeed(columnNames, null);
 	}
 
-	public FqlPost[] newsFeed(List<StreamColumn> columnNames, StreamColumnCriteria columnCriteria)
-			throws FacebookException {
+	public FqlPost[] newsFeed(List<StreamColumn> columnNames, StreamColumnCriteria columnCriteria) throws FacebookException {
 
 		StringBuilder criteria = constructCriteria(columnCriteria);
 		StringBuilder columnName = appendColumns(columnNames);
 
-		String fqlQuery = "SELECT "
-				+ columnName.toString()
+		String fqlQuery = "SELECT " + columnName.toString()
 				+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0	 "
 				+ criteria.toString();
 
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery), new NameValuePair("format", "JSON") };
 
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 
@@ -247,13 +277,11 @@ public class Facebook implements Serializable {
 			}
 
 			if (columnCriteria.getCreatedTimeGreaterThan() != null) {
-				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " > "
-						+ columnCriteria.getCreatedTimeGreaterThan());
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " > " + columnCriteria.getCreatedTimeGreaterThan());
 			}
 
 			if (columnCriteria.getCreatedTimeLessThan() != null) {
-				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " < "
-						+ columnCriteria.getCreatedTimeLessThan());
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " < " + columnCriteria.getCreatedTimeLessThan());
 			}
 
 			if (columnCriteria.getFilterKey() != null) {
@@ -273,13 +301,11 @@ public class Facebook implements Serializable {
 			}
 
 			if (columnCriteria.getUpdatedTimeGreaterThan() != null) {
-				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " > "
-						+ columnCriteria.getUpdatedTimeGreaterThan());
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " > " + columnCriteria.getUpdatedTimeGreaterThan());
 			}
 
 			if (columnCriteria.getUpdatedTimeLessThan() != null) {
-				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " < "
-						+ columnCriteria.getUpdatedTimeLessThan());
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " < " + columnCriteria.getUpdatedTimeLessThan());
 			}
 
 			if (columnCriteria.getViewerId() != null) {
@@ -303,19 +329,15 @@ public class Facebook implements Serializable {
 
 		return criteria;
 	}
-	
-	public FqlConnection[] getConnection(List<ConnectionColumn> columnNames, ConnectionColumnCriteria columnCriteria)throws FacebookException {
+
+	public FqlConnection[] getConnection(List<ConnectionColumn> columnNames, ConnectionColumnCriteria columnCriteria) throws FacebookException {
 
 		StringBuilder criteria = constructCriteria(columnCriteria);
 		StringBuilder columnName = appendConnectionColumns(columnNames);
 
-		String fqlQuery = "SELECT "
-				+ columnName.toString()
-				+ " FROM connection WHERE source_id = me() AND "
-				+ criteria.toString();
+		String fqlQuery = "SELECT " + columnName.toString() + " FROM connection WHERE source_id = me() AND " + criteria.toString();
 
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery), new NameValuePair("format", "JSON") };
 
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 
@@ -326,7 +348,7 @@ public class Facebook implements Serializable {
 
 		return fqlConnection;
 	}
-	
+
 	private StringBuilder constructCriteria(ConnectionColumnCriteria columnCriteria) {
 		StringBuilder criteria = new StringBuilder();
 
@@ -338,14 +360,14 @@ public class Facebook implements Serializable {
 			if (columnCriteria.getLimit() != null) {
 				criteria.append(" LIMIT " + columnCriteria.getLimit());
 			}
-			
-			if (columnCriteria.getOffset() != null){
+
+			if (columnCriteria.getOffset() != null) {
 				criteria.append(" OFFSET " + columnCriteria.getOffset());
 			}
 		}
 		return criteria;
 	}
-	
+
 	private StringBuilder appendConnectionColumns(List<ConnectionColumn> columnNames) {
 		StringBuilder columnName = null;
 		for (ConnectionColumn column : columnNames) {
@@ -368,20 +390,20 @@ public class Facebook implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Post getPost(String postId) throws FacebookException{
-		
-//		// APICaller would retrieve the json string object from facebook by making a https call
-//		String postJson = null;
-//
-//		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
-//				this.authAccessToken.getAccessToken()) };
-//
-//		postJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, nameValuePairs);
-//
-//		// Once the json string object is obtaind, it is passed to obj
-//		// transformer and the right object is retrieved
-//		return JSONToObjectTransformer.getPost(postJson);
-		
+	public Post getPost(String postId) throws FacebookException {
+
+		// // APICaller would retrieve the json string object from facebook by making a https call
+		// String postJson = null;
+		//
+		// NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
+		// this.authAccessToken.getAccessToken()) };
+		//
+		// postJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, nameValuePairs);
+		//
+		// // Once the json string object is obtaind, it is passed to obj
+		// // transformer and the right object is retrieved
+		// return JSONToObjectTransformer.getPost(postJson);
+
 		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, Post.class, nameValuePairs);
 	}
@@ -399,8 +421,7 @@ public class Facebook implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Map<Paging, String> pagingCriteria)
-			throws FacebookException {
+	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Map<Paging, String> pagingCriteria) throws FacebookException {
 
 		// // APICaller would retrieve the json string object from facebook by making a https call
 		// String postJson = null;
@@ -416,29 +437,29 @@ public class Facebook implements Serializable {
 		// return JSONToObjectTransformer.getObject(postJson, e);
 		int i = 1;
 		NameValuePair[] nameValuePairs = null;
-		
+
 		if (pagingCriteria != null) {
 			i += pagingCriteria.size();
 			nameValuePairs = new NameValuePair[i];
 
 			Paging paging = null;
 			String value = null;
-			Iterator<Paging> iter = pagingCriteria.keySet().iterator(); 
-			
+			Iterator<Paging> iter = pagingCriteria.keySet().iterator();
+
 			for (int j = 0; iter.hasNext(); j++) {
 				paging = iter.next();
 				value = pagingCriteria.get(paging);
 				nameValuePairs[j] = new NameValuePair(paging.toString(), value);
 			}
-			
+
 		} else {
 			nameValuePairs = new NameValuePair[i];
 		}
 
 		nameValuePairs[i - 1] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
-		
+
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
-		
+
 	}
 
 	/**
