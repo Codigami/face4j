@@ -38,7 +38,20 @@ public class Constants {
 	 * To get the image pic for any facebook object, the graph url should end with /picture
 	 */
 	public static final String PICTURE = "picture";
+	
+	public static final String PRIVACY = "privacy";
+	
+	public static final String SOURCE = "source";
+	
+	public static final String TARGETING = "targeting";
+	
+	/**
+	 * A URL to the link icon that Facebook displays in the news feed
+	 */
+	public static final String ICON = "icon";
 
+	public static final String ACTIONS = "actions";
+	
     /**
      * This url is used for posting to the feed or wall of a user
      */
