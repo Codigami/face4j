@@ -21,7 +21,6 @@ public class Post implements Serializable {
 	private static final long serialVersionUID = -6841667779712886659L;
 	
 	private String id;
-	private int likes;
 	private From from;
 	private To to;
 	private String message;
@@ -39,6 +38,11 @@ public class Post implements Serializable {
 	private String updatedTime;
 	private Targeting targeting;
 	
+	
+	
+	public Post() {
+		super();
+	}
 	/**
 	 * The post ID
 	 * @return
@@ -48,17 +52,6 @@ public class Post implements Serializable {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	
-	/**
-	 * The number of likes on this post
-	 * @return
-	 */
-	public int getLikes() {
-		return likes;
-	}
-	public void setLikes(int likes) {
-		this.likes = likes;
 	}
 	
 	/**

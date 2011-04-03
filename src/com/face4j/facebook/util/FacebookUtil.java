@@ -31,17 +31,8 @@ public class FacebookUtil {
 		return appendPictureParam(pictureURL, PictureType.LARGE);
 	}
 	
-	
 	private static String appendPictureParam(String pictureURL, PictureType pictureType){
 		return  pictureURL +  (pictureURL.contains("?") ? "&" : "?")+Constants.PARAM_PICTURE_TYPE+"="+pictureType.getType();
 	}
 	
-	
-	/*public static void main(String[] args) {
-		
-		System.out.println(FacebookUtil.getLargePictureURL("http://test.com/picture"));
-		
-		
-	}*/
-
 }

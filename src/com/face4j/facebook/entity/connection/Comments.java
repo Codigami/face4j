@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.face4j.facebook.Facebook;
-import com.face4j.facebook.entity.Data;
+import com.face4j.facebook.entity.Comment;
 import com.face4j.facebook.entity.paging.Paging;
 import com.face4j.facebook.exception.FacebookException;
 
@@ -12,15 +12,16 @@ public class Comments implements Serializable {
 
 	private static final long serialVersionUID = 6159141573480261518L;
 
-	private List<Data> data;
+	private List<Comment> data;
+	
 	private Paging paging;
 
-	public List<Data> getData() {
+	public List<Comment> getComments() {
 		return data;
 	}
 
-	public void setData(List<Data> data) {
-		this.data = data;
+	public void setComments(List<Comment> comments) {
+		this.data = comments;
 	}
 
 	public Paging getPaging() {
