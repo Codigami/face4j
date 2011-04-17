@@ -8,3 +8,6 @@ Bumping version to 0.2.1
 version 0.3:
 1. Post method of URLFetch now returns the data received in the post response
 
+version 0.3.1:
+1. Changing face4j jar version. Need to have this done automatically eventually.
+
