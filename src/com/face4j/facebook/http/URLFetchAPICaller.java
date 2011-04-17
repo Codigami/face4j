@@ -1,6 +1,9 @@
 package com.face4j.facebook.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -66,13 +69,17 @@ public class URLFetchAPICaller implements APICallerInterface {
 	 */
 	public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
 		
+		String content = null;
 		String constructedParams = null;
 		int statusCode = 0;
+		HttpURLConnection connection = null;
         try {
             URL posturl = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) posturl.openConnection();
+            connection = (HttpURLConnection) posturl.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
+            //connection.setConnectTimeout(10000);
+            //connection.setReadTimeout(10000);
 
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             
@@ -86,15 +93,30 @@ public class URLFetchAPICaller implements APICallerInterface {
             	throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode,
 						statusCode);
             } else {
-            	
+            //Get Response	
+              InputStream is = connection.getInputStream();
+              BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+              String line;
+              StringBuilder response = new StringBuilder(); 
+              while((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+              }
+              rd.close();
+              content =  response.toString();
+
             }
         } catch (MalformedURLException e) {
         	throw new FacebookException("Malformed URL Exception while calling facebook!", e);
         } catch (IOException e) {
         	throw new FacebookException("IOException while calling facebook!", e);
+        } finally{
+        	if(connection != null){
+        		connection.disconnect();
+        	}
         }
         
-        return null;
+        return content;
         
 	}
 
