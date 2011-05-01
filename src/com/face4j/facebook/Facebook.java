@@ -16,6 +16,7 @@ import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.ConnectionType;
+import com.face4j.facebook.enums.FqlUserColumn;
 import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.enums.Permission;
@@ -23,11 +24,13 @@ import com.face4j.facebook.enums.StreamColumn;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlPost;
+import com.face4j.facebook.fql.FqlUser;
 import com.face4j.facebook.http.APICallerFactory;
 import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.publish.WallPost;
 import com.face4j.facebook.util.Constants;
 import com.face4j.facebook.util.JSONToObjectTransformer;
+import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
 import com.face4j.facebook.wrapper.StreamColumnCriteria;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -273,13 +276,13 @@ public class Facebook implements Serializable {
 	public FqlPost[] newsFeed(List<StreamColumn> columnNames, StreamColumnCriteria columnCriteria)
 			throws FacebookException {
 
-		StringBuilder criteria = constructCriteria(columnCriteria);
+		//StringBuilder criteria = constructCriteria(columnCriteria);
 		StringBuilder columnName = appendColumns(columnNames);
 
 		String fqlQuery = "SELECT "
-				+ columnName.toString()
-				+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0	 "
-				+ criteria.toString();
+			+ columnName.toString()
+			+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') "
+			+ columnCriteria.toString();
 
 		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
 				new NameValuePair("format", "JSON") };
@@ -289,14 +292,44 @@ public class Facebook implements Serializable {
 		// fql currently sends empty arrays with {} but we need []
 		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[]");
 
-		FqlPost[] fql_Posts = JSONToObjectTransformer.getObject(jsonResponse, FqlPost[].class);
+		FqlPost[] fqlPosts = JSONToObjectTransformer.getObject(jsonResponse, FqlPost[].class);
 
-		return fql_Posts;
+		return fqlPosts;
+	}
+	
+	/**
+	 * Retrieve an array of users with the fields that you specify. Uses the Fql API
+	 * @param columnNames
+	 * @param columnCriteria
+	 * @return
+	 * @throws FacebookException
+	 */
+	public FqlUser[] fqlUsers(List<FqlUserColumn> columnNames, FqlUserColumnCriteria columnCriteria) throws FacebookException {
+		
+		StringBuilder columnName = appendColumns(columnNames);
+		
+		String fqlQuery = "SELECT "
+			+ columnName.toString()
+			+ " FROM user WHERE "
+			+ columnCriteria.toString();
+		
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
+				new NameValuePair("format", "JSON") };
+		
+		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
+		
+		// fql currently sends empty arrays with {} but we need []
+		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[]");
+		
+		FqlUser[] fqlUsers = JSONToObjectTransformer.getObject(jsonResponse, FqlUser[].class);
+		
+		return fqlUsers;
 	}
 
-	private StringBuilder appendColumns(List<StreamColumn> columnNames) {
+
+	private <E> StringBuilder appendColumns(List<E> columnNames) {
 		StringBuilder columnName = null;
-		for (StreamColumn column : columnNames) {
+		for (E column : columnNames) {
 			if (columnName != null) {
 				columnName.append(", " + column.toString());
 			} else {
@@ -307,7 +340,7 @@ public class Facebook implements Serializable {
 		return columnName;
 	}
 
-	private StringBuilder constructCriteria(StreamColumnCriteria columnCriteria) {
+	/*private StringBuilder constructCriteria(StreamColumnCriteria columnCriteria) {
 
 		StringBuilder criteria = new StringBuilder();
 
@@ -387,7 +420,7 @@ public class Facebook implements Serializable {
 		}
 
 		return criteria;
-	}
+	}*/
 	
 	public FqlConnection[] getConnection(List<ConnectionColumn> columnNames, ConnectionColumnCriteria columnCriteria)throws FacebookException {
 
