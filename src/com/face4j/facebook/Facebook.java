@@ -20,7 +20,9 @@ import com.face4j.facebook.enums.FqlUserColumn;
 import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.enums.Permission;
+import com.face4j.facebook.enums.Privacy;
 import com.face4j.facebook.enums.StreamColumn;
+import com.face4j.facebook.enums.Value;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlPost;
@@ -130,9 +132,10 @@ public class Facebook implements Serializable {
 	 * @param message The message from the user about this link(optional)
 	 * @param icon A URL to the link icon that Facebook displays in the news feed (optional)
 	 * @param picture A URL to the thumbnail image used in the link post (optional)
+	 * @param privacy 
 	 * @throws FacebookException
 	 */
-	public void postLink(String link, String name, String caption, String description, String message, String icon, String picture)
+	public void postLink(String link, String name, String caption, String description, String message, String icon, String picture, Value privacy)
 			throws FacebookException {
 		
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
@@ -159,6 +162,9 @@ public class Facebook implements Serializable {
 		if (picture != null) {
 			namesValues.add(new NameValuePair(Constants.PICTURE, picture));
 		}
+		if(privacy != null){
+			namesValues.add(new NameValuePair(Constants.PRIVACY,"{\"value\":\""+privacy.toString()+"\"}"));
+		}
 
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -174,9 +180,9 @@ public class Facebook implements Serializable {
 	 * @throws FacebookException
 	 */
 	public void postLink(String link) throws FacebookException {
-		postLink(link, null, null, null, null, null, null);
+		postLink(link, null, null, null, null, null, null,Value.EVERYONE);
 	}
-
+	
 	/**
 	 * Data would be posted to the logged in users wall. Requires the publish_stream permission.
 	 * 
@@ -261,6 +267,7 @@ public class Facebook implements Serializable {
 		columnNames.add(StreamColumn.ACTOR_ID);
 		columnNames.add(StreamColumn.TARGET_ID);
 		columnNames.add(StreamColumn.VIEWER_ID);
+		columnNames.add(StreamColumn.SOURCE_ID);
 		columnNames.add(StreamColumn.MESSAGE);
 		columnNames.add(StreamColumn.ATTACHMENT);
 		columnNames.add(StreamColumn.UPDATED_TIME);
@@ -281,9 +288,12 @@ public class Facebook implements Serializable {
 
 		String fqlQuery = "SELECT "
 			+ columnName.toString()
-			+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') "
-			+ columnCriteria.toString();
-
+			+ " FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') ";
+		
+		if(columnCriteria!=null){
+			fqlQuery += columnCriteria.toString();
+		}
+		
 		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
 				new NameValuePair("format", "JSON") };
 
