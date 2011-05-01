@@ -16,15 +16,16 @@ import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.ConnectionType;
+import com.face4j.facebook.enums.FqlPageColumn;
 import com.face4j.facebook.enums.FqlUserColumn;
 import com.face4j.facebook.enums.HttpClientType;
 import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.enums.Permission;
-import com.face4j.facebook.enums.Privacy;
 import com.face4j.facebook.enums.StreamColumn;
 import com.face4j.facebook.enums.Value;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
+import com.face4j.facebook.fql.FqlPage;
 import com.face4j.facebook.fql.FqlPost;
 import com.face4j.facebook.fql.FqlUser;
 import com.face4j.facebook.http.APICallerFactory;
@@ -32,6 +33,7 @@ import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.publish.WallPost;
 import com.face4j.facebook.util.Constants;
 import com.face4j.facebook.util.JSONToObjectTransformer;
+import com.face4j.facebook.wrapper.FqlPageColumnCriteria;
 import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
 import com.face4j.facebook.wrapper.StreamColumnCriteria;
 import com.google.gson.Gson;
@@ -46,7 +48,6 @@ import com.google.gson.reflect.TypeToken;
 public class Facebook implements Serializable {
 
 	private static final long serialVersionUID = 350726728289608542L;
-	private static final String isHidden = "is_hidden";
 
 	Logger logger = Logger.getLogger(Facebook.class.getName());
 
@@ -165,7 +166,7 @@ public class Facebook implements Serializable {
 		if(privacy != null){
 			namesValues.add(new NameValuePair(Constants.PRIVACY,"{\"value\":\""+privacy.toString()+"\"}"));
 		}
-
+		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
 		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK.replaceFirst("PROFILE_ID", "me"), nameValuePairs);
@@ -336,6 +337,27 @@ public class Facebook implements Serializable {
 		return fqlUsers;
 	}
 
+	public FqlPage[] fqlPages(List<FqlPageColumn> columnNames, FqlPageColumnCriteria columnCriteria) throws FacebookException {
+	
+		StringBuilder columnName = appendColumns(columnNames);
+		
+		String fqlQuery = "SELECT "
+			+ columnName.toString()
+			+ " FROM page WHERE "
+			+ columnCriteria.toString();
+		
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
+				new NameValuePair("format", "JSON") };
+		
+		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
+		
+		// fql currently sends empty arrays with {} but we need []
+		jsonResponse = jsonResponse.replaceAll("\\{\\}", "[]");
+		
+		FqlPage[] fqlUsers = JSONToObjectTransformer.getObject(jsonResponse, FqlPage[].class);
+		return fqlUsers;
+		
+	}
 
 	private <E> StringBuilder appendColumns(List<E> columnNames) {
 		StringBuilder columnName = null;
