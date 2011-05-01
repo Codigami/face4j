@@ -24,8 +24,10 @@ import com.face4j.facebook.enums.FqlUserColumn;
 import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.enums.Permission;
 import com.face4j.facebook.enums.TargetType;
+import com.face4j.facebook.enums.Value;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.factory.FacebookFactory;
+import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlMedia;
 import com.face4j.facebook.fql.FqlPost;
 import com.face4j.facebook.fql.FqlUser;
@@ -47,10 +49,20 @@ public class Dummy {
 		FacebookFactory facebookFactory = new FacebookFactory(client);
 		Facebook facebook = facebookFactory.getInstance(accessToken);
 		
-		/*User[] users = facebook.getUsers(new String[]{"544232058", "100001125197404"});
+		//User[] users = facebook.getUsers(new String[]{"544232058", "100001125197404"});
 		
-		facebook.postLink("http://www.buffr.com");
+		Post post = facebook.getPost("24712846969_126741927403627");
 		
+		System.out.println("post = "+post.getName()+" actor id = ");
+		
+		//post = facebook.getPost("");
+		
+		
+		//facebook.postLink("http://www.youtube.com/watch?v=VYl-_uZcu64&feature=player_embedded",null, null, null,"Lovely song!", null, null, Value.EVERYONE);
+		
+	//	facebook.like();
+		
+		/*
 		for(User user : users){
 			System.out.println(user.getPicture());
 		}*/
@@ -71,7 +83,7 @@ public class Dummy {
 		}
 		//--------------------Fetching fql users
 		
-		/*List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
+		List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
 		columnNames.add(ConnectionColumn.IS_DELETED);
 		columnNames.add(ConnectionColumn.IS_FOLLOWING);
 		columnNames.add(ConnectionColumn.SOURCE_ID);
@@ -84,17 +96,17 @@ public class Dummy {
 		
 		FqlConnection[] connections = facebook.getConnection(columnNames, columnCriteria);
 		
-		for(FqlConnection connection : connections){
+		/*for(FqlConnection connection : connections){
 			System.out.println(connection.getTargetId());
 			//User user = facebook.getUser(connection.getTargetId());
-		}
+		}*/
 		
 		
 		FqlPost[] fqlPost = facebook.newsFeed();
 		
 		for(FqlPost fqlPost2 : fqlPost){
 		
-		System.out.println("Post id: "+fqlPost2.getPostId()+" source id: "+fqlPost2.getSourceId());	
+		System.out.println("Post id: "+fqlPost2.getPostId()+" source id: "+fqlPost2.getSourceId()+" actor id: "+fqlPost2.getActorId()+" viewer id: "+fqlPost2.getViewerId());	
 		//Post post = facebook.getPost(fqlPost2.getPostId());
 	
 		List<FqlMedia> medias =  fqlPost2.getAttachment().getMedia();
@@ -105,7 +117,8 @@ public class Dummy {
 					System.out.println("Media is "+fqlMedia.getHref()+" "+fqlMedia.getSrc()+" "+fqlMedia.getVideo().getDisplayUrl()+" "+fqlMedia.getVideo().getSourceUrl());
 				}
 			}
-		}*/
+		}
+		}
 		
 		
 		/*if(post!=null){
