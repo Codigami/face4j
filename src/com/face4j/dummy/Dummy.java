@@ -4,34 +4,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.face4j.facebook.Client;
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.OAuthAccessToken;
-import com.face4j.facebook.criteria.ConnectionColumnCriteria;
-import com.face4j.facebook.entity.Comment;
-import com.face4j.facebook.entity.Data;
-import com.face4j.facebook.entity.Media;
 import com.face4j.facebook.entity.Post;
-import com.face4j.facebook.entity.User;
-import com.face4j.facebook.entity.connection.Comments;
-import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.Display;
-import com.face4j.facebook.enums.FqlUserColumn;
-import com.face4j.facebook.enums.Paging;
+import com.face4j.facebook.enums.FqlPageColumn;
 import com.face4j.facebook.enums.Permission;
-import com.face4j.facebook.enums.TargetType;
-import com.face4j.facebook.enums.Value;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.factory.FacebookFactory;
-import com.face4j.facebook.fql.FqlConnection;
-import com.face4j.facebook.fql.FqlMedia;
-import com.face4j.facebook.fql.FqlPost;
+import com.face4j.facebook.fql.FqlPage;
 import com.face4j.facebook.fql.FqlUser;
-import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
+import com.face4j.facebook.wrapper.FqlPageColumnCriteria;
 
 public class Dummy {
 
@@ -56,11 +42,8 @@ public class Dummy {
 		System.out.println("post = "+post.getName()+" actor id = ");
 		
 		//post = facebook.getPost("");
+		//facebook.postLink("http://www.youtube.com/watch?v=P8cAU475dQo&feature=share",null, null, null,"testing song!", null, null, Value.EVERYONE);
 		
-		
-		//facebook.postLink("http://www.youtube.com/watch?v=VYl-_uZcu64&feature=player_embedded",null, null, null,"Lovely song!", null, null, Value.EVERYONE);
-		
-	//	facebook.like();
 		
 		/*
 		for(User user : users){
@@ -68,8 +51,24 @@ public class Dummy {
 		}*/
 		
 		
+		//--------------------- Fql Page
+		List<FqlPageColumn> fqlPageColumns = new ArrayList<FqlPageColumn>();
+		fqlPageColumns.add(FqlPageColumn.FAN_COUNT);
+		fqlPageColumns.add(FqlPageColumn.NAME);
+		fqlPageColumns.add(FqlPageColumn.PAGE_URL);
+		
+		FqlPageColumnCriteria fqlPageColumnCriteria = new FqlPageColumnCriteria();
+		fqlPageColumnCriteria.setPageIds(new String[]{"89743390101"});
+		
+		FqlPage[] fqlPages = facebook.fqlPages(fqlPageColumns, fqlPageColumnCriteria);
+		for(FqlPage user : fqlPages){
+			System.out.println("name = "+user.getName()+" fan count = "+user.getFanCount()+" page url = "+user.getPageUrl());
+		}
+		//--------------------- Fql Page
+		
+		
 		//--------------------Fetching fql users
-		List<FqlUserColumn> fqlColumns = new ArrayList<FqlUserColumn>();
+		/*List<FqlUserColumn> fqlColumns = new ArrayList<FqlUserColumn>();
 		fqlColumns.add(FqlUserColumn.FIRST_NAME);
 		fqlColumns.add(FqlUserColumn.NAME);
 		fqlColumns.add(FqlUserColumn.PIC_SQUARE);
@@ -80,10 +79,10 @@ public class Dummy {
 		FqlUser[] fqlUsers = facebook.fqlUsers(fqlColumns, fqlUserColumnCriteria);
 		for(FqlUser user : fqlUsers){
 			System.out.println("first name = "+user.getFirstName()+" name = "+user.getName()+" pic = "+user.getPicSquare());
-		}
+		}*/
 		//--------------------Fetching fql users
 		
-		List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
+		/*List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
 		columnNames.add(ConnectionColumn.IS_DELETED);
 		columnNames.add(ConnectionColumn.IS_FOLLOWING);
 		columnNames.add(ConnectionColumn.SOURCE_ID);
@@ -96,10 +95,10 @@ public class Dummy {
 		
 		FqlConnection[] connections = facebook.getConnection(columnNames, columnCriteria);
 		
-		/*for(FqlConnection connection : connections){
+		for(FqlConnection connection : connections){
 			System.out.println(connection.getTargetId());
 			//User user = facebook.getUser(connection.getTargetId());
-		}*/
+		}
 		
 		
 		FqlPost[] fqlPost = facebook.newsFeed();
@@ -118,7 +117,7 @@ public class Dummy {
 				}
 			}
 		}
-		}
+		}*/
 		
 		
 		/*if(post!=null){
