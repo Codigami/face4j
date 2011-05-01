@@ -55,7 +55,7 @@ public class Constants {
     /**
      * This url is used for posting to the feed or wall of a user
      */
-    public static final String POST_LINK = "/me/feed";
+    public static final String POST_LINK = "/PROFILE_ID/links";
 	
 	/**
 	 * This parameter needs to be sent along with the picture url to indicate the size of the pic to be returned. Not mandatory

@@ -8,9 +8,9 @@ public class FqlPost implements Serializable {
 	private static final long serialVersionUID = 6550520319195729998L;
 
 	private String postId;
-	private Integer viewerId;
-	private Integer appId;
-	private Integer sourceId;
+	private String viewerId;
+	private String appId;
+	private String sourceId;
 	private Long updatedTime;
 	private Long createdTime;
 	private String filterKey;
@@ -55,7 +55,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Integer getViewerId() {
+	public String getViewerId() {
 		return viewerId;
 	}
 
@@ -64,7 +64,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @param viewerId
 	 */
-	public void setViewerId(Integer viewerId) {
+	public void setViewerId(String viewerId) {
 		this.viewerId = viewerId;
 	}
 
@@ -74,7 +74,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Integer getAppId() {
+	public String getAppId() {
 		return appId;
 	}
 
@@ -84,7 +84,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @param appId
 	 */
-	public void setAppId(Integer appId) {
+	public void setAppId(String appId) {
 		this.appId = appId;
 	}
 
@@ -95,7 +95,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Integer getSourceId() {
+	public String getSourceId() {
 		return sourceId;
 	}
 
@@ -106,7 +106,7 @@ public class FqlPost implements Serializable {
 	 * 
 	 * @param sourceId
 	 */
-	public void setSourceId(Integer sourceId) {
+	public void setSourceId(String sourceId) {
 		this.sourceId = sourceId;
 	}
 
