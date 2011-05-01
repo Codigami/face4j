@@ -1,6 +1,10 @@
 package com.face4j.facebook.wrapper;
 
+import com.face4j.facebook.enums.StreamColumn;
+
 public class StreamColumnCriteria {
+
+	private static final String isHidden = "is_hidden";
 
 	private String postId;
 	private Integer viewerId;
@@ -18,6 +22,7 @@ public class StreamColumnCriteria {
 	private boolean isDefaultXid;
 	private Integer limit;
 	private boolean isShowHidden;
+	
 
 	public String getPostId() {
 		return postId;
@@ -213,4 +218,83 @@ public class StreamColumnCriteria {
 		this.isShowHidden = isShowHidden;
 	}
 
+	@Override
+	public String toString() {
+		
+		StringBuilder criteria = new StringBuilder();
+
+			if (this.isDefaultXid()) {
+				criteria.append(" AND " + StreamColumn.XID.toString() + " = 'default'");
+			} else if (this.getXid() != null) {
+				criteria.append(" AND " + StreamColumn.XID.toString() + " = " + this.getXid());
+			}
+
+			if (this.getActorId() != null) {
+				criteria.append(" AND " + StreamColumn.ACTOR_ID.toString() + " = '" + this.getActorId() + "'");
+			}
+
+			if (this.getAppId() != null) {
+				criteria.append(" AND " + StreamColumn.APP_ID.toString() + " = " + this.getAppId());
+			}
+
+			if (this.getAttribution() != null) {
+				criteria.append(" AND " + StreamColumn.ATTRIBUTION.toString() + " = '" + this.getAttribution() + "'");
+			}
+
+			if (this.getCreatedTimeGreaterThan() != null) {
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " > "
+						+ this.getCreatedTimeGreaterThan());
+			}
+
+			if (this.getCreatedTimeLessThan() != null) {
+				criteria.append(" AND " + StreamColumn.CREATED_TIME.toString() + " < "
+						+ this.getCreatedTimeLessThan());
+			}
+
+			if (this.getFilterKey() != null) {
+				criteria.append(" AND " + StreamColumn.FILTER_KEY.toString() + " = '" + this.getFilterKey() + "'");
+			}
+
+			if (this.getPostId() != null) {
+				criteria.append(" AND " + StreamColumn.POST_ID.toString() + " = '" + this.getPostId() + "'");
+			}
+
+			if (this.getSourceId() != null) {
+				criteria.append(" AND " + StreamColumn.SOURCE_ID.toString() + " = " + this.getSourceId());
+			}
+
+			if (this.getTargetId() != null) {
+				criteria.append(" AND " + StreamColumn.TARGET_ID.toString() + " = '" + this.getTargetId() + "'");
+			}
+
+			if (this.getUpdatedTimeGreaterThan() != null) {
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " > "
+						+ this.getUpdatedTimeGreaterThan());
+			}
+
+			if (this.getUpdatedTimeLessThan() != null) {
+				criteria.append(" AND " + StreamColumn.UPDATED_TIME.toString() + " < "
+						+ this.getUpdatedTimeLessThan());
+			}
+
+			if (this.getViewerId() != null) {
+				criteria.append(" AND " + StreamColumn.VIEWER_ID.toString() + " = " + this.getViewerId());
+			}
+
+			// We will always be passing this param
+			// TODO: Do we need to always set this?
+			if (this.isShowHidden()) {
+				criteria.append(" AND " + isHidden + " = 0 ");
+			} else {
+				// criteria.append(" AND " + isHidden + " = 1 ");
+			}
+
+			// This should be in the end
+			if (this.getLimit() != null) {
+				criteria.append(" LIMIT " + this.getLimit());
+			}
+
+		return criteria.toString();
+	}
+	
 }
