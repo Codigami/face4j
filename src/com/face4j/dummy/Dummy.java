@@ -14,24 +14,29 @@ import com.face4j.facebook.OAuthAccessToken;
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
 import com.face4j.facebook.entity.Comment;
 import com.face4j.facebook.entity.Data;
+import com.face4j.facebook.entity.Media;
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.entity.connection.Comments;
 import com.face4j.facebook.enums.ConnectionColumn;
 import com.face4j.facebook.enums.Display;
+import com.face4j.facebook.enums.FqlUserColumn;
 import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.enums.Permission;
 import com.face4j.facebook.enums.TargetType;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.factory.FacebookFactory;
+import com.face4j.facebook.fql.FqlMedia;
 import com.face4j.facebook.fql.FqlPost;
+import com.face4j.facebook.fql.FqlUser;
+import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
 
 public class Dummy {
 
 	private static String clientId = "05c5dd19dde59bfaa8921bc0b30889c4";
 	private static String clientSecret = "f152bc483259c4403aa26dd9a75b7a8d";
 	//private static String code = null;
-	private static String code = "135280156521587|2c0ac3e6905b4265a3527140-100001125197404|CwIrliPnLbLLHnvoCrUQ1OxWo4Q"; //ninjachacha
+	private static String code = "135280156521587|e5b89313944fc7ae77bd401f.1-100001125197404|SFi_f4qhHy0Uqv2i9DAfMMQnFWw"; //ninjachacha
 	private static String redirectUrl = "http://buffr.com/login_verify.html";
 
 	public static void main(String[] args) throws IOException, FacebookException {
@@ -42,7 +47,31 @@ public class Dummy {
 		FacebookFactory facebookFactory = new FacebookFactory(client);
 		Facebook facebook = facebookFactory.getInstance(accessToken);
 		
-		List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
+		/*User[] users = facebook.getUsers(new String[]{"544232058", "100001125197404"});
+		
+		facebook.postLink("http://www.buffr.com");
+		
+		for(User user : users){
+			System.out.println(user.getPicture());
+		}*/
+		
+		
+		//--------------------Fetching fql users
+		List<FqlUserColumn> fqlColumns = new ArrayList<FqlUserColumn>();
+		fqlColumns.add(FqlUserColumn.FIRST_NAME);
+		fqlColumns.add(FqlUserColumn.NAME);
+		fqlColumns.add(FqlUserColumn.PIC_SQUARE);
+		
+		FqlUserColumnCriteria fqlUserColumnCriteria = new FqlUserColumnCriteria();
+		fqlUserColumnCriteria.setUids(new String[]{"544232058", "100001125197404"});
+		
+		FqlUser[] fqlUsers = facebook.fqlUsers(fqlColumns, fqlUserColumnCriteria);
+		for(FqlUser user : fqlUsers){
+			System.out.println("first name = "+user.getFirstName()+" name = "+user.getName()+" pic = "+user.getPicSquare());
+		}
+		//--------------------Fetching fql users
+		
+		/*List<ConnectionColumn> columnNames = new ArrayList<ConnectionColumn>();
 		columnNames.add(ConnectionColumn.IS_DELETED);
 		columnNames.add(ConnectionColumn.IS_FOLLOWING);
 		columnNames.add(ConnectionColumn.SOURCE_ID);
@@ -53,22 +82,33 @@ public class Dummy {
 		ConnectionColumnCriteria columnCriteria = new ConnectionColumnCriteria();
 		columnCriteria.setTargetType(TargetType.PAGE);
 		
-		/*FqlConnection[] connections = facebook.getConnection(columnNames, columnCriteria);
+		FqlConnection[] connections = facebook.getConnection(columnNames, columnCriteria);
 		
 		for(FqlConnection connection : connections){
 			System.out.println(connection.getTargetId());
 			//User user = facebook.getUser(connection.getTargetId());
 		}
-		*/
+		
 		
 		FqlPost[] fqlPost = facebook.newsFeed();
 		
 		for(FqlPost fqlPost2 : fqlPost){
 		
 		System.out.println("Post id: "+fqlPost2.getPostId()+" source id: "+fqlPost2.getSourceId());	
-		Post post = facebook.getPost(fqlPost2.getPostId());
+		//Post post = facebook.getPost(fqlPost2.getPostId());
+	
+		List<FqlMedia> medias =  fqlPost2.getAttachment().getMedia();
 		
-		if(post!=null){
+		if(medias != null){
+			for(FqlMedia fqlMedia : medias){
+				if(fqlMedia.getType().equals("video")){
+					System.out.println("Media is "+fqlMedia.getHref()+" "+fqlMedia.getSrc()+" "+fqlMedia.getVideo().getDisplayUrl()+" "+fqlMedia.getVideo().getSourceUrl());
+				}
+			}
+		}*/
+		
+		
+		/*if(post!=null){
 			System.out.println(post.getId());
 			System.out.println(post.getName());
 			System.out.println(post.getPicture());
@@ -152,8 +192,8 @@ public class Dummy {
 				// -----------Comments Test-----------
 
 			//break;
-		}
-		}
+		}*/
+		//}
 		
 		// User fbUser = facebook.getCurrentUser();
 		// System.out.println(fbUser.getFirstName());
