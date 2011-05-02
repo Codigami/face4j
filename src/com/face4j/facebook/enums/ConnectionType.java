@@ -12,7 +12,9 @@ public enum ConnectionType {
 	 * Would be a part of the graph API URL to retrieve all the "Like" details of an object Example:
 	 * http://graph.facebook.com/<id>/likes
 	 */
-	LIKES("likes");
+	LIKES("likes"), 
+	
+	PERMISSIONS("permissions");
 
 	private String type;
 

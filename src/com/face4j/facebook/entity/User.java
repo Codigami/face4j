@@ -2,7 +2,11 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
+import com.face4j.facebook.Facebook;
+import com.face4j.facebook.enums.ConnectionType;
+import com.face4j.facebook.enums.Permission;
 import com.face4j.facebook.enums.PictureType;
+import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.util.URLMaker;
 
 public class User implements Serializable {
@@ -179,5 +183,22 @@ public class User implements Serializable {
 	public String getPictureURL(PictureType pictureType) {
 		return URLMaker.getImageURL(this.id, pictureType);
 	}
-
+	
+	/**
+	 * Returns the permission of the user whose auth code is present in the "facebook" object
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public static PermissionCheck permissions(Facebook facebook) throws FacebookException{
+		PermissionCheckData permissionCheckData = facebook.getConnections("me", ConnectionType.PERMISSIONS, PermissionCheckData.class, null);
+		PermissionCheck permissionCheck = null;
+		
+		if(permissionCheckData != null && permissionCheckData.getPermissions() != null && permissionCheckData.getPermissions().size() > 0){
+			permissionCheck = permissionCheckData.getPermissions().get(0);
+		}
+		
+		return permissionCheck;
+	}
+	
 }
