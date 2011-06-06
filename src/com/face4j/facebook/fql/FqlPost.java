@@ -18,15 +18,20 @@ public class FqlPost implements Serializable {
 	private String actorId;
 	private String targetId;
 	private String message;
-	private Integer type;
 	private List<FqlActionLink> actionLinks;
 	private FqlAttachment attachment;
+	private Integer impressions;
 	private FqlComments comments;
 	private FqlLikes likes;
 	private FqlPrivacy privacy;
+	
+	@Deprecated
+	private String type;
+	
 	private List<Long> taggedIds;
 	private Boolean isHidden;
 	private String permalink;
+	private Integer xid;
 
 	// TODO: private FQL_AppData appData;
 
@@ -249,7 +254,7 @@ public class FqlPost implements Serializable {
 	 * @return
 	 */
 	@Deprecated
-	public Integer getType() {
+	public String getType() {
 		return type;
 	}
 
@@ -262,7 +267,7 @@ public class FqlPost implements Serializable {
 	 * @param type
 	 */
 	@Deprecated
-	public void setType(Integer type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -426,6 +431,46 @@ public class FqlPost implements Serializable {
 	}
 
 	/**
+	 * Number of impressions of this post. This data is visible only if the you have read_insights
+	 * extended permission of any of the page owners.
+	 * 
+	 * @return
+	 */
+	public Integer getImpressions() {
+		return impressions;
+	}
+
+	/**
+	 * Number of impressions of this post. This data is visible only if the you have read_insights
+	 * extended permission of any of the page owners.
+	 * 
+	 * @param impressions
+	 */
+	public void setImpressions(Integer impressions) {
+		this.impressions = impressions;
+	}
+
+	/**
+	 * When querying for the feed of a live stream box, this is the xid associated with the Live
+	 * Stream box (you can provide 'default' if one is not available).
+	 * 
+	 * @return
+	 */
+	public Integer getXid() {
+		return xid;
+	}
+
+	/**
+	 * When querying for the feed of a live stream box, this is the xid associated with the Live
+	 * Stream box (you can provide 'default' if one is not available).
+	 * 
+	 * @param xid
+	 */
+	public void setXid(Integer xid) {
+		this.xid = xid;
+	}
+
+	/**
 	 * An array of application-specific information supplied to Facebook to create the attachment to the post. This
 	 * information is not needed to render a user's stream in your application, unless you need this information for
 	 * special handing of your own application posts. This array includes:
@@ -471,4 +516,6 @@ public class FqlPost implements Serializable {
 	 * public void setAppData(FQL_AppData appData) { this.appData = appData; }
 	 */
 
+	
+	
 }
