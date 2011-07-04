@@ -2,6 +2,14 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
+import com.face4j.facebook.Facebook;
+import com.face4j.facebook.entity.connection.Accounts;
+import com.face4j.facebook.entity.connection.Comments;
+import com.face4j.facebook.entity.connection.Likes;
+import com.face4j.facebook.entity.connection.Photos;
+import com.face4j.facebook.enums.ConnectionType;
+import com.face4j.facebook.exception.FacebookException;
+
 /**
  * A Photo album on facebook
  * 
@@ -229,6 +237,48 @@ public class Album implements Serializable {
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
 	}
+	
+	
+	/**
+	 * The photos contained in this album
+	 * PERMISSION: generic access_token or user_photos or friend_photos
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Photos photos(Facebook facebook) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.PHOTOS, Photos.class, null);
+	}
+	
+	/**
+	 * The likes made on this album
+	 * PERMISSION: generic access_token or user_photos or friend_photos
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Likes likes(Facebook facebook) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, null);
+	}
+	
+	/**
+	 * The comments made on this album
+	 * PERMISSION: generic access_token or user_photos or friend_photos
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Comments comments(Facebook facebook) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.COMMENTS, Comments.class, null);
+	}
+	
+	//TODO: implement picture connections
+	/*public String picture(Facebook facebook) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.PICTURE, String.class, null);
+	}*/
 	
 	
 	
