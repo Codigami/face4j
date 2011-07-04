@@ -28,6 +28,12 @@ public class Checkin implements Serializable {
 	private Application application;
 	
 	private String createdTime;
+	
+	private GenericEntity likes;
+	
+	private Comment[] comments;
+	
+	private String type;
 
 	/**
 	 * The checkin ID
@@ -119,4 +125,49 @@ public class Checkin implements Serializable {
 	public void setCreatedTime(String createdTime) {
 		this.createdTime = createdTime;
 	}
+
+	/**
+	 * Users who like the checkin
+	 * 
+	 * PERMISSION: user_checkins 
+	 * 
+	 * @return
+	 */
+	public GenericEntity getLikes() {
+		return likes;
+	}
+
+	public void setLikes(GenericEntity likes) {
+		this.likes = likes;
+	}
+
+	/**
+	 * All of the comments on this link
+	 * 
+	 * PERMISSION: user_checkins
+	 * @return
+	 */
+	public Comment[] getComments() {
+		return comments;
+	}
+
+	public void setComments(Comment[] comments) {
+		this.comments = comments;
+	}
+
+	/**
+	 * The type of this object; always returns checkin
+	 * 
+	 * PERMISSION: user_checkins
+	 * 
+	 * @return
+	 */
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }

@@ -564,6 +564,13 @@ public class Facebook implements Serializable {
 		// // Once the json string object is obtaind, it is passed to obj
 		// // transformer and the right object is retrieved
 		// return JSONToObjectTransformer.getObject(postJson, e);
+		NameValuePair[] nameValuePairs = constructNameValuePairs(pagingCriteria);
+		
+		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
+		
+	}
+
+	private NameValuePair[] constructNameValuePairs(Map<Paging, String> pagingCriteria) {
 		int i = 1;
 		NameValuePair[] nameValuePairs = null;
 		
@@ -586,9 +593,7 @@ public class Facebook implements Serializable {
 		}
 
 		nameValuePairs[i - 1] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
-		
-		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
-		
+		return nameValuePairs;
 	}
 
 	/**

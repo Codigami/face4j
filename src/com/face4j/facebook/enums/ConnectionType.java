@@ -14,7 +14,59 @@ public enum ConnectionType {
 	 */
 	LIKES("likes"), 
 	
-	PERMISSIONS("permissions");
+	PERMISSIONS("permissions"),
+	
+	ACCOUNTS("accounts"),
+	
+	ACTIVITIES("activities"),
+	
+	ALBUMS("albums"),
+	
+	BOOKS("books"),
+	
+	CHECKINS("checkins"),
+	
+	EVENTS("events"),
+	
+	FEED("feed"),
+	
+	FRIENDLISTS("friendlists"),
+	
+	FRIENDS("friends"),
+	
+	GROUPS("groups"),
+	
+	HOME("home"),
+	
+	INBOX("inbox"),
+	
+	INTERESTS("interests"),
+	
+	LINKS("links"),
+	
+	MOVIES("movies"),
+	
+	MUSIC("music"),
+	
+	NOTES("notes"),
+	
+	OUTBOX("outbox"),
+	
+	PHOTOS("photos"),
+	
+	POKES("pokes"), 
+	
+	POSTS("posts"),
+	
+	STATUSES("statuses"),
+	
+	TELEVISION("television"),
+	
+	UPDATES("updates"),
+	
+	VIDEOS("videos"),
+	
+	PICTURE("picture");
 
 	private String type;
 

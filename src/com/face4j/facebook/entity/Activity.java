@@ -2,13 +2,22 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-public class Like implements Serializable {
+/**
+ * The activity listed on the user's profile
+ * 
+ * @author nischal
+ *
+ */
+public class Activity implements Serializable {
 
-	private static final long serialVersionUID = -8965058278742020548L;
-
+	private static final long serialVersionUID = 3163116507230732449L;
+	
 	private String id;
+	
 	private String name;
+	
 	private String category;
+	
 	private String createTime;
 
 	public String getId() {
@@ -42,5 +51,5 @@ public class Like implements Serializable {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-
+	
 }
