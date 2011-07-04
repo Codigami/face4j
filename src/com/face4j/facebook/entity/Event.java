@@ -41,6 +41,8 @@ public class Event implements Serializable{
 	private EventReply[] declined;
 	
 	private String picture;
+	
+	private String rsvpStatus;
 
 	/**
 	 * The event ID
@@ -224,4 +226,18 @@ public class Event implements Serializable{
 		//TODO implement
 		return picture;
 	}
+
+	/**
+	 * Usually obtained as part of "events" connection for a User 
+	 * @return
+	 */
+	public String getRsvpStatus() {
+		return rsvpStatus;
+	}
+
+	public void setRsvpStatus(String rsvpStatus) {
+		this.rsvpStatus = rsvpStatus;
+	}
+	
+	
 }

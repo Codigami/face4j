@@ -31,20 +31,20 @@ public enum Permission {
 	OFFLINE_ACCESS,
 	
 	/**
+	 * Enables your app to perform checkins on behalf of the user.
+	 */
+	PUBLISH_CHECKINS,
+	
+	/**
+	 * Enables your app to create and edit the user's friend lists.
+	 */
+	MANAGE_FRIENDLISTS,
+	
+	/**
 	 * Provides access to the user's primary email address in the email property. Do not spam users. 
 	 * Your use of email must comply both with Facebook policies and with the CAN-SPAM Act.
 	 */
 	EMAIL, 
-	
-	/**
-	 * Provides read access to the Insights data for pages, applications, and domains the user owns.
-	 */
-	READ_INSIGHTS, 
-	
-	/**
-	 * Provides access to all the posts in the user's News Feed and enables your application to perform searches against the user's News Feed
-	 */
-	READ_STREAM, 
 	
 	/**
 	 * Provides access to the "About Me" section of the profile in the about property
@@ -60,6 +60,11 @@ public enum Permission {
 	 * Provides access to the full birthday with year as the birthday_date property
 	 */
 	USER_BIRTHDAY, 
+	
+	/**
+	 * Provides read access to the authorized user's check-ins or a friend's check-ins that the user can see.
+	 */
+	USER_CHECKINS,
 	
 	/**
 	 * Provides access to education history as the education property
@@ -122,6 +127,11 @@ public enum Permission {
 	USER_RELATIONSHIPS, 
 	
 	/**
+	 * Provides access to the user's relationship preferences
+	 */
+	USER_RELATIONSHIP_DETAILS,
+	
+	/**
 	 * Provides access to the user's religious and political affiliations
 	 */
 	USER_RELIGION_POLITICS, 
@@ -152,12 +162,52 @@ public enum Permission {
 	READ_FRIENDLISTS, 
 	
 	/**
+	 * Provides read access to the Insights data for pages, applications, and domains the user owns.
+	 */
+	READ_INSIGHTS,
+	
+	/**
+	 * Provides the ability to read from a user's Facebook Inbox.
+	 */
+	READ_MAILBOX,
+	
+	/**
 	 * Provides read access to the user's friend requests
 	 */
-	READ_REQUESTS, 
+	READ_REQUESTS,
 	
-	FRIENDS_ABOUT_ME, FRIENDS_ACTIVITIES, FRIENDS_BIRTHDAY, FRIENDS_EDUCATION_HISTORY, FRIENDS_EVENTS, FRIENDS_GROUPS, FRIENDS_HOMETOWN, FRIENDS_INTERESTS, 
-	FRIENDS_LIKES, FRIENDS_LOCATION, FRIENDS_NOTES, FRIENDS_ONLINE_PRESENCE, FRIENDS_PHOTO_VIDEO_TAGS, FRIENDS_PHOTOS, FRIENDS_RELATIONSHIPS, FRIENDS_RELIGION_POLITICS, 
+	/**
+	 * Provides access to all the posts in the user's News Feed and enables your application to perform searches against the user's News Feed
+	 */
+	READ_STREAM,
+	
+	/**
+	 * Provides applications that integrate with Facebook Chat the ability to log in users.
+	 */
+	XMPP_LOGIN,
+	
+	/**
+	 * Provides the ability to manage ads and call the Facebook Ads API on behalf of a user.
+	 */
+	ADS_MANAGEMENT,
+
+	/**
+	 * Enables your application to retrieve access_tokens for pages the user administrates. The access
+	 * tokens can be queried using the "accounts" connection in the Graph API. This permission is only
+	 * compatible with the Graph API.
+	 * 
+	 * An access_token used to manage a page. This is used when you want to perform an operation
+	 * acting as a `Page` instead of the logged in user. This access token is retrieved by issuing an
+	 * HTTP GET to /USER_ID/accounts with the manage_pages permission. This operation will return a
+	 * list of `Page`s (including application profile pages) to which the user has access, along with
+	 * `access_tokens` for those `Page`s to which the user has administrative rights. See the
+	 * documentation for the User object for more information.
+	 */
+	MANAGE_PAGES,
+	
+	FRIENDS_ABOUT_ME, FRIENDS_ACTIVITIES, FRIENDS_BIRTHDAY, FRIENDS_CHECKINS, FRIENDS_EDUCATION_HISTORY, FRIENDS_EVENTS, FRIENDS_GROUPS, FRIENDS_HOMETOWN, FRIENDS_INTERESTS, 
+	FRIENDS_LIKES, FRIENDS_LOCATION, FRIENDS_NOTES, FRIENDS_ONLINE_PRESENCE, FRIENDS_PHOTO_VIDEO_TAGS, FRIENDS_PHOTOS, FRIENDS_RELATIONSHIPS,
+	FRIENDS_RELATIONSHIP_DETAILS, FRIENDS_RELIGION_POLITICS, 
 	FRIENDS_STATUS, FRIENDS_VIDEOS, FRIENDS_WEBSITE, FRIENDS_WORK_HISTORY;
 
 }

@@ -2,7 +2,6 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-import com.face4j.facebook.Note;
 import com.face4j.facebook.OAuthAccessToken;
 import com.face4j.facebook.http.APICallerInterface;
 

@@ -1,11 +1,8 @@
-package com.face4j.facebook;
+package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.face4j.facebook.entity.Comment;
-import com.face4j.facebook.entity.From;
-import com.face4j.facebook.entity.Like;
 
 public class Note implements Serializable{
 
@@ -27,8 +24,6 @@ public class Note implements Serializable{
 	
 	private Comment[] comments;
 	
-	private Like[] likes;
-
 	/**
 	 * The note ID
 	 * Available to everyone on Facebook by default
@@ -126,20 +121,12 @@ public class Note implements Serializable{
 	 * @return
 	 */
 	public Comment[] getComments() {
-		//TODO implement
 		return comments;
 	}
-
-	/**
-	 * Users who like the note
-	 * Available to everyone on Facebook by default
-	 * @return
-	 */
-	public Like[] getLikes() {
-		//TODO implement
-		return likes;
-	}
 	
+	//TODO: Connection - Comments
+	//TODO: Connection - Likes
+
 	
 
 }

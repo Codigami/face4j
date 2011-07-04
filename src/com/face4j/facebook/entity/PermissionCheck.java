@@ -2,7 +2,16 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
+/**
+ * When permission is accessible then usually "1" is sent. If the getters return null it means permission is not available
+ * 
+ * @author nischal
+ *
+ */
 public class PermissionCheck implements Serializable {
+	
+	private static final long serialVersionUID = 5639790284593333735L;
+	
 	
 	/**
 	 * Enables your application to post content, comments, and likes to a user's stream and to the streams of the user's friends, 
@@ -33,20 +42,20 @@ public class PermissionCheck implements Serializable {
 	offlineAccess,
 	
 	/**
+	 * Enables your app to perform checkins on behalf of the user.
+	 */
+	publishCheckins,
+	
+	/**
+	 * Enables your app to create and edit the user's friend lists.
+	 */
+	manageFriendlists,
+	
+	/**
 	 * Provides access to the user's primary email address in the email property. Do not spam users. 
 	 * Your use of email must comply both with Facebook policies and with the CAN-SPAM Act.
 	 */
 	email, 
-	
-	/**
-	 * Provides read access to the Insights data for pages, applications, and domains the user owns.
-	 */
-	readInsights, 
-	
-	/**
-	 * Provides access to all the posts in the user's News Feed and enables your application to perform searches against the user's News Feed
-	 */
-	readStream, 
 	
 	/**
 	 * Provides access to the "About Me" section of the profile in the about property
@@ -62,6 +71,11 @@ public class PermissionCheck implements Serializable {
 	 * Provides access to the full birthday with year as the birthdayDate property
 	 */
 	userBirthday, 
+	
+	/**
+	 * Provides read access to the authorized user's check-ins or a friend's check-ins that the user can see.
+	 */
+	userCheckins,
 	
 	/**
 	 * Provides access to education history as the education property
@@ -124,6 +138,11 @@ public class PermissionCheck implements Serializable {
 	userRelationships, 
 	
 	/**
+	 * Provides access to the user's relationship preferences
+	 */
+	userRelationshipDetails,
+	
+	/**
 	 * Provides access to the user's religious and political affiliations
 	 */
 	userReligionPolitics, 
@@ -151,16 +170,48 @@ public class PermissionCheck implements Serializable {
 	/**
 	 * Provides read access to the user's friend lists
 	 */
-	readFriendlists, 
+	readFriendlists,
+	
+	/**
+	 * Provides read access to the Insights data for pages, applications, and domains the user owns.
+	 */
+	readInsights, 
+	
+	/**
+	 * Provides the ability to read from a user's Facebook Inbox.
+	 */
+	readMailbox,
 	
 	/**
 	 * Provides read access to the user's friend requests
 	 */
-	readRequests, 
+	readRequests,
 	
-	friendsAboutMe, friendsActivities, friendsBirthday, friendsEducationHistory, friendsEvents, friendsGroups, friendsHometown, friendsInterests, 
-	friendsLikes, friendsLocation, friendsNotes, friendsOnlinePresence, friendsPhotoVideoTags, friendsPhotos, friendsRelationships, friendsReligionPolitics, 
-	friendsStatus, friendsVideos, friendsWebsite, friendsWorkHistory;
+	/**
+	 * Provides access to all the posts in the user's News Feed and enables your application to perform searches against the user's News Feed
+	 */
+	readStream, 
+	
+	/**
+	 * Provides applications that integrate with Facebook Chat the ability to log in users.
+	 */
+	xmppLogin,
+	
+	/**
+	 * Provides the ability to manage ads and call the Facebook Ads API on behalf of a user.
+	 */
+	adsManagements,
+	
+	friendsAboutMe, friendsActivities, friendsBirthday, friendsCheckins, friendsEducationHistory, friendsEvents, friendsGroups, friendsHometown, friendsInterests, 
+	friendsLikes, friendsLocation, friendsNotes, friendsOnlinePresence, friendsPhotoVideoTags, friendsPhotos, friendsRelationships, friendsRelationshipDetails, friendsReligionPolitics, 
+	friendsStatus, friendsVideos, friendsWebsite, friendsWorkHistory,
+	
+	/**
+	 * Enables your application to retrieve access_tokens for pages the user administrates. The
+	 * access tokens can be queried using the "accounts" connection in the Graph API. This
+	 * permission is only compatible with the Graph API.
+	 */
+	managePages;
 
 	public String getPublishStream() {
 		return publishStream;
@@ -561,7 +612,85 @@ public class PermissionCheck implements Serializable {
 	public void setFriendsWorkHistory(String friendsWorkHistory) {
 		this.friendsWorkHistory = friendsWorkHistory;
 	}
-	
-	
 
+	public String getPublishCheckins() {
+		return publishCheckins;
+	}
+
+	public void setPublishCheckins(String publishCheckins) {
+		this.publishCheckins = publishCheckins;
+	}
+
+	public String getManageFriendlists() {
+		return manageFriendlists;
+	}
+
+	public void setManageFriendlists(String manageFriendlists) {
+		this.manageFriendlists = manageFriendlists;
+	}
+
+	public String getUserCheckins() {
+		return userCheckins;
+	}
+
+	public void setUserCheckins(String userCheckins) {
+		this.userCheckins = userCheckins;
+	}
+
+	public String getUserRelationshipDetails() {
+		return userRelationshipDetails;
+	}
+
+	public void setUserRelationshipDetails(String userRelationshipDetails) {
+		this.userRelationshipDetails = userRelationshipDetails;
+	}
+
+	public String getReadMailbox() {
+		return readMailbox;
+	}
+
+	public void setReadMailbox(String readMailbox) {
+		this.readMailbox = readMailbox;
+	}
+
+	public String getXmppLogin() {
+		return xmppLogin;
+	}
+
+	public void setXmppLogin(String xmppLogin) {
+		this.xmppLogin = xmppLogin;
+	}
+
+	public String getAdsManagements() {
+		return adsManagements;
+	}
+
+	public void setAdsManagements(String adsManagements) {
+		this.adsManagements = adsManagements;
+	}
+
+	public String getFriendsCheckins() {
+		return friendsCheckins;
+	}
+
+	public void setFriendsCheckins(String friendsCheckins) {
+		this.friendsCheckins = friendsCheckins;
+	}
+
+	public String getFriendsRelationshipDetails() {
+		return friendsRelationshipDetails;
+	}
+
+	public void setFriendsRelationshipDetails(String friendsRelationshipDetails) {
+		this.friendsRelationshipDetails = friendsRelationshipDetails;
+	}
+
+	public String getManagePages() {
+		return managePages;
+	}
+
+	public void setManagePages(String managePages) {
+		this.managePages = managePages;
+	}
+	
 }

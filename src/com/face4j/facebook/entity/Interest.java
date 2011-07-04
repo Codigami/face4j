@@ -2,9 +2,9 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-public class Like implements Serializable {
+public class Interest implements Serializable {
 
-	private static final long serialVersionUID = -8965058278742020548L;
+	private static final long serialVersionUID = -1891059102257698656L;
 
 	private String id;
 	private String name;
@@ -43,4 +43,6 @@ public class Like implements Serializable {
 		this.createTime = createTime;
 	}
 
+	
+	
 }

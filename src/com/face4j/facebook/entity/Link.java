@@ -37,6 +37,8 @@ public class Link implements Serializable, Entity{
 	private String createdTime;
 	
 	private Comment[] comments;
+	
+	private String type;
 
 	/**
 	 * The link ID
@@ -208,4 +210,22 @@ public class Link implements Serializable, Entity{
 	public void setApiCallerInterface(APICallerInterface apiCallerInterface) {
 		this.caller = apiCallerInterface;
 	}
+
+	/**
+	 * The type of this object; always returns link
+	 * 
+	 * PERMISSION: generic access_token or read_stream
+	 * @return
+	 */
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	//TODO: Connection - comments
+	//TODO: Connection - likes
+	
 }

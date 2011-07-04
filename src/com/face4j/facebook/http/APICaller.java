@@ -9,9 +9,9 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 
 import com.face4j.facebook.exception.FacebookException;
-import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
  * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
@@ -45,6 +45,17 @@ public class APICaller implements APICallerInterface {
 	public String getData(String url, NameValuePair[] nameValuePairs) throws FacebookException{
 		HttpClient client = APICaller.getHttpClient();
 		String response = null;
+		
+		//This part is when the nameValuePairs is null indicating the params are most probably in the url
+		String urlSplit[] = null;
+		if(nameValuePairs==null){
+			urlSplit = url.split("\\?");
+			url = urlSplit[0];
+			
+			if(urlSplit.length > 1){
+				nameValuePairs = getNameValuePairs(urlSplit[1]);
+			}
+		}
 		
 		GetMethod getMethod = null;
 		try{
@@ -97,6 +108,23 @@ public class APICaller implements APICallerInterface {
         }
 
         return response;
+    }
+    
+    private NameValuePair[] getNameValuePairs(String urlParams){
+    	
+    	String[] params = urlParams.split("&");
+    	NameValuePair[] nameValuePair = new NameValuePair[params.length];
+    	NameValuePair valuePair = null;
+    	
+    	String[] tempParamPair = null;
+    	
+    	for(int i=0;i <params.length;i++){
+    		tempParamPair = params[i].split("=");
+    		valuePair = new NameValuePair(tempParamPair[0], tempParamPair[1]);
+    		nameValuePair[i] = valuePair;
+    	}
+    	
+    	return nameValuePair;
     }
 	
 	//TODO: delete data method
