@@ -34,7 +34,7 @@ public class Album implements Serializable {
 	/**
 	 * The location of the album
 	 */
-	private Location location;
+	private String location;
 
 	/**
 	 * A link to this album on Facebook
@@ -53,9 +53,32 @@ public class Album implements Serializable {
 
 	/**
 	 * The last time the photo album was updated
+	 * 
 	 */
 	private String updatedTime;
+	
+	/**
+	 * The type of the album: profile, mobile, wall, normal or album
+	 */
+	private String type;
+	
+	/**
+	 * The album cover photo ID
+	 */
+	private String coverPhoto;
+	
+	/**
+	 * The privacy settings for the album
+	 */
+	private String privacy;
+	
+	
 
+	/**
+	 * The album ID
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
@@ -64,6 +87,11 @@ public class Album implements Serializable {
 		this.id = id;
 	}
 
+	/**
+	 * The profile that created this album
+	 * Permissions: generic access_token
+	 * @return
+	 */
 	public From getFrom() {
 		return from;
 	}
@@ -72,6 +100,11 @@ public class Album implements Serializable {
 		this.from = from;
 	}
 
+	/**
+	 * The title of the album
+	 * Permissions: generic access_token or user_photos or friend_photos 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
@@ -80,6 +113,11 @@ public class Album implements Serializable {
 		this.name = name;
 	}
 
+	/**
+	 * The description of the album
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
@@ -88,6 +126,11 @@ public class Album implements Serializable {
 		this.description = description;
 	}
 
+	/**
+	 * A link to this album on Facebook
+	 * Permission: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public String getLink() {
 		return link;
 	}
@@ -96,6 +139,11 @@ public class Album implements Serializable {
 		this.link = link;
 	}
 
+	/**
+	 * The number of photos in this album
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public long getCount() {
 		return count;
 	}
@@ -104,6 +152,11 @@ public class Album implements Serializable {
 		this.count = count;
 	}
 
+	/**
+	 * The time the photo album was initially created
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public String getCreatedTime() {
 		return createdTime;
 	}
@@ -112,6 +165,11 @@ public class Album implements Serializable {
 		this.createdTime = createdTime;
 	}
 
+	/**
+	 * The last time the photo album was updated
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
 	public String getUpdatedTime() {
 		return updatedTime;
 	}
@@ -120,12 +178,59 @@ public class Album implements Serializable {
 		this.updatedTime = updatedTime;
 	}
 
-	public Location getLocation() {
+	/**
+	 * The location of the album
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
+	public String getLocation() {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(String location) {
 		this.location = location;
 	}
 
+	/**
+	 * The type of the album: profile, mobile, wall, normal or album
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * The album cover photo ID
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
+	public String getCoverPhoto() {
+		return coverPhoto;
+	}
+
+	public void setCoverPhoto(String coverPhoto) {
+		this.coverPhoto = coverPhoto;
+	}
+
+	/**
+	 * The privacy settings for the album
+	 * Permissions: generic access_token or user_photos or friend_photos
+	 * @return
+	 */
+	public String getPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(String privacy) {
+		this.privacy = privacy;
+	}
+	
+	
+	
+	
 }

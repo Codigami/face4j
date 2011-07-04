@@ -2,14 +2,15 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-public class Like implements Serializable {
+public class Account implements Serializable {
 
-	private static final long serialVersionUID = -8965058278742020548L;
-
+	private static final long serialVersionUID = -1879529230536226563L;
+	
 	private String id;
+	
 	private String name;
+	
 	private String category;
-	private String createTime;
 
 	public String getId() {
 		return id;
@@ -34,13 +35,7 @@ public class Like implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
+	
+	
 
 }

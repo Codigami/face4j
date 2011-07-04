@@ -10,7 +10,9 @@ public enum PictureType {
 	/**
 	 * The url would return an image 50 pixels wide and of variable height
 	 */
-	SMALL("small"), 
+	SMALL("small"),
+	
+	NORMAL("normal"), 
 	
 	/**
 	 * The url would return an image 200 pixels wide and of variable height
