@@ -1,6 +1,10 @@
 package com.face4j.facebook;
 
-public class OAuthAccessToken {
+import java.io.Serializable;
+
+public class OAuthAccessToken implements Serializable {
+	
+	private static final long serialVersionUID = 8716928752207365362L;
 	
 	private String accessToken;
 	private Long expires;
