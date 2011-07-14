@@ -78,7 +78,7 @@ public class Facebook implements Serializable {
 	 * @throws Exception
 	 */
 	public User getCurrentUser() throws FacebookException {
-		return getUser(Constants.SELF_PROFILE_INFO);
+		return getUser(Constants.ME);
 	}
 
 	/**
@@ -123,6 +123,7 @@ public class Facebook implements Serializable {
 	}
 
 	/**
+	 * Deprecated: Use {@link #link(List)} instead
 	 * Posts a link on the user's/page's wall <br>
 	 * Requires the {@link Permission#PUBLISH_STREAM} permission
 	 * 
@@ -136,6 +137,7 @@ public class Facebook implements Serializable {
 	 * @param privacy 
 	 * @throws FacebookException
 	 */
+	/*@Deprecated
 	public void postLink(String link, String name, String caption, String description, String message, String icon, String picture, Value privacy)
 			throws FacebookException {
 		
@@ -170,7 +172,7 @@ public class Facebook implements Serializable {
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
 		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK.replaceFirst("PROFILE_ID", "me"), nameValuePairs);
-	}
+	}*/
 
 	/**
 	 * Posts the given url on facebook <br>
@@ -180,9 +182,10 @@ public class Facebook implements Serializable {
 	 * @param link The URL to share 
 	 * @throws FacebookException
 	 */
+/*	@Deprecated
 	public void postLink(String link) throws FacebookException {
 		postLink(link, null, null, null, null, null, null,Value.EVERYONE);
-	}
+	}*/
 	
 	/**
 	 * Data would be posted to the logged in users wall. Requires the publish_stream permission.
@@ -191,9 +194,10 @@ public class Facebook implements Serializable {
 	 *          The data to be posted to the logged in users wall
 	 * @throws FacebookException
 	 */
+/*	@Deprecated
 	public void post(WallPost wallPost) throws FacebookException {
-		post(wallPost, Constants.SELF_PROFILE_INFO);	
-	}
+		post(wallPost, Constants.ME);	
+	}*/
 
 	/**
 	 * Requires the publish_stream permission.
@@ -210,6 +214,7 @@ public class Facebook implements Serializable {
 	 * @param profileId
 	 * @throws FacebookException
 	 */
+	/*@Deprecated
 	public void post(WallPost wallPost, String profileId) throws FacebookException{
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 		Gson gson = new Gson();
@@ -250,7 +255,7 @@ public class Facebook implements Serializable {
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
 		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK.replaceFirst("PROFILE_ID", profileId), nameValuePairs);
-	}
+	}*/
 
 	public OAuthAccessToken getAuthAccessToken() {
 		return authAccessToken;
@@ -259,6 +264,328 @@ public class Facebook implements Serializable {
 	private NameValuePair getNameValuePairAccessToken() {
 		return new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
 	}
+	
+	/**
+	 * Publish a new post on the given profile's feed/wall
+	 * 
+	 * @param message
+	 *          (required)
+	 * @param picture
+	 * @param link
+	 * @param name
+	 * @param caption
+	 * @param description
+	 * @param source
+	 * @param profileId
+	 *          The user id of the user on whose wall the message needs to be posted, if null then the
+	 *          post would be posted on the authenticated users wall
+	 * @throws FacebookException 
+	 */
+	public void wallPost(String message, String picture, String link, String name, String caption, String description, String source, String profileId) throws FacebookException{
+
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(message !=null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+		}
+		
+		if(picture != null){
+			namesValues.add(new NameValuePair(Constants.PICTURE,picture));
+		}
+		
+		if(link != null){
+			namesValues.add(new NameValuePair(Constants.LINK,link));
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(caption != null){
+			namesValues.add(new NameValuePair(Constants.CAPTION,caption));
+		}
+		
+		if(description != null){
+			namesValues.add(new NameValuePair(Constants.DESCRIPTION,description));
+		}
+		
+		if(source != null){
+			namesValues.add(new NameValuePair(Constants.SOURCE,source));
+		}
+
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_FEED.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	
+	}
+	
+	/**
+	 * Publish a link on the given profile
+	 * @param link (mandatory)
+	 * @param message
+	 * @param picture
+	 * @param name
+	 * @param caption
+	 * @param description
+	 * @param profileId
+	 * @throws FacebookException
+	 */
+	public void shareLink(String link, String message, String picture, String name, String caption, String description, String profileId) throws FacebookException{
+
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(message !=null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+		}
+		
+		if(picture != null){
+			namesValues.add(new NameValuePair(Constants.PICTURE,picture));
+		}
+		
+		if(link != null){
+			namesValues.add(new NameValuePair(Constants.LINK,link));
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(caption != null){
+			namesValues.add(new NameValuePair(Constants.CAPTION,caption));
+		}
+		
+		if(description != null){
+			namesValues.add(new NameValuePair(Constants.DESCRIPTION,description));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LINK.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	
+	}
+	
+	/**
+	 * Comment on the given object (if it has a /comments connection)
+	 * @param message
+	 * @param objectId
+	 * @throws FacebookException
+	 */
+	public void comment(String message, String objectId) throws FacebookException{
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_COMMENTS.replaceFirst(Constants.REPLACE_OBJECT_ID, objectId), nameValuePairs);
+	}
+	
+	/**
+	 * 
+	 * @param objectId
+	 * @throws FacebookException
+	 */
+	public void like(String objectId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_LIKES.replaceFirst(Constants.REPLACE_OBJECT_ID, objectId), nameValuePairs);
+	}
+	
+	/**
+	 * Publish a note on the given profile
+	 * @param message
+	 * @param subject
+	 * @param profileId
+	 * @throws FacebookException
+	 */
+	public void createNote(String message, String subject, String profileId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		if(message != null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+		}
+		
+		if(subject != null){
+			namesValues.add(new NameValuePair(Constants.SUBJECT, subject));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_NOTES.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	}
+	
+	/**
+	 * Create an event
+	 * @param name
+	 * @param startTime
+	 * @param endTime
+	 * @param profileId
+	 * @throws FacebookException
+	 */
+	public void createEvent(String name, String startTime, String endTime, String profileId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(startTime != null){
+			namesValues.add(new NameValuePair(Constants.START_TIME, startTime));
+		}
+		
+		if(endTime != null){
+			namesValues.add(new NameValuePair(Constants.END_TIME, endTime));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_EVENTS.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	}
+	
+	/**
+	 * RSVP "attending" to the given event
+	 * @param eventId
+	 * @throws FacebookException
+	 */
+	public void eventAttending(String eventId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_ATTENDING.replaceFirst(Constants.REPLACE_EVENT_ID, eventId), nameValuePairs);
+	}
+	
+	/**
+	 * RSVP "maybe" to the given event
+	 * @param eventId
+	 * @throws FacebookException
+	 */
+	public void eventMaybe(String eventId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_MAYBE.replaceFirst(Constants.REPLACE_EVENT_ID, eventId), nameValuePairs);
+	}
+	
+	/**
+	 * RSVP "declined" to the given event
+	 * @param eventId
+	 * @throws FacebookException
+	 */
+	public void eventDeclined(String eventId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_DECLINED.replaceFirst(Constants.REPLACE_EVENT_ID, eventId), nameValuePairs);
+	}
+	
+	/**
+	 * Create an album
+	 * @param name
+	 * @param message
+	 * @param profileId
+	 * @throws FacebookException
+	 */
+	public void createAlbum(String name, String message, String profileId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(message != null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE, message));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_ALBUMS.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	}
+	
+	//TODO: Upload photo
+	/*public void photos(String name, String message, String profileId) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(message != null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE, message));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_EVENTS.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	}*/
+	
+	//TODO: Publish Checkins
+	/*public void checkins(String coordinates, String place, String message, String tags) throws FacebookException {
+		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
+
+		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		
+		if(profileId == null){
+			profileId = Constants.ME;
+		}
+		
+		if(name != null){
+			namesValues.add(new NameValuePair(Constants.NAME,name));
+		}
+		
+		if(message != null){
+			namesValues.add(new NameValuePair(Constants.MESSAGE, message));
+		}
+		
+		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
+		namesValues.toArray(nameValuePairs);
+		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_CHECKINS.replaceFirst(Constants.REPLACE_PROFILE_ID, profileId), nameValuePairs);
+	}*/
 
 	public FqlPost[] newsFeed() throws FacebookException {
 
