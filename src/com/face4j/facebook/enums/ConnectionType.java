@@ -66,7 +66,11 @@ public enum ConnectionType {
 	
 	VIDEOS("videos"),
 	
-	PICTURE("picture");
+	PICTURE("picture"),
+	
+	SETTINGS("settings"),
+	
+	TABS("tabs");
 
 	private String type;
 
