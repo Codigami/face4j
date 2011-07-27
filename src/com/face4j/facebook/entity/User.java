@@ -2,35 +2,8 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-import org.apache.commons.httpclient.NameValuePair;
-
 import com.face4j.facebook.Facebook;
-import com.face4j.facebook.entity.connection.Accounts;
-import com.face4j.facebook.entity.connection.Activities;
-import com.face4j.facebook.entity.connection.Albums;
-import com.face4j.facebook.entity.connection.Books;
-import com.face4j.facebook.entity.connection.Checkins;
-import com.face4j.facebook.entity.connection.Events;
-import com.face4j.facebook.entity.connection.Feed;
-import com.face4j.facebook.entity.connection.FriendLists;
-import com.face4j.facebook.entity.connection.Friends;
-import com.face4j.facebook.entity.connection.Groups;
-import com.face4j.facebook.entity.connection.Home;
-import com.face4j.facebook.entity.connection.Inbox;
-import com.face4j.facebook.entity.connection.Interests;
-import com.face4j.facebook.entity.connection.Likes;
-import com.face4j.facebook.entity.connection.Links;
-import com.face4j.facebook.entity.connection.Movies;
-import com.face4j.facebook.entity.connection.Music;
-import com.face4j.facebook.entity.connection.Notes;
-import com.face4j.facebook.entity.connection.Outbox;
-import com.face4j.facebook.entity.connection.Photos;
-import com.face4j.facebook.entity.connection.Pokes;
-import com.face4j.facebook.entity.connection.Posts;
-import com.face4j.facebook.entity.connection.Statuses;
-import com.face4j.facebook.entity.connection.Television;
-import com.face4j.facebook.entity.connection.Updates;
-import com.face4j.facebook.entity.connection.Videos;
+import com.face4j.facebook.entity.connection.*;
 import com.face4j.facebook.enums.ConnectionType;
 import com.face4j.facebook.enums.PictureType;
 import com.face4j.facebook.exception.FacebookException;
@@ -110,6 +83,14 @@ public class User implements Serializable {
 	private String website;
 
 	private Hometown hometown;
+	
+	/**For Gson*/
+	@SuppressWarnings("unused")
+	private User(){}
+	
+	public User(String id){
+		this.id = id;
+	}
 
 	/**
 	 * The user's Facebook ID

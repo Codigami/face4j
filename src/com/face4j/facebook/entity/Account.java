@@ -11,6 +11,8 @@ public class Account implements Serializable {
 	private String name;
 	
 	private String category;
+	
+	private String accessToken;
 
 	public String getId() {
 		return id;
@@ -35,7 +37,18 @@ public class Account implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
-	
 
+	/**
+	 * Available if the 'manage_pages' permission has been granted
+	 * 
+	 * @return
+	 */
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
 }
