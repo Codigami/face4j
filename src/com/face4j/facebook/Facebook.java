@@ -14,15 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
-import com.face4j.facebook.enums.ConnectionColumn;
-import com.face4j.facebook.enums.ConnectionType;
-import com.face4j.facebook.enums.FqlPageColumn;
-import com.face4j.facebook.enums.FqlUserColumn;
-import com.face4j.facebook.enums.HttpClientType;
-import com.face4j.facebook.enums.Paging;
-import com.face4j.facebook.enums.Permission;
-import com.face4j.facebook.enums.StreamColumn;
-import com.face4j.facebook.enums.Value;
+import com.face4j.facebook.enums.*;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
 import com.face4j.facebook.fql.FqlPage;
@@ -30,13 +22,11 @@ import com.face4j.facebook.fql.FqlPost;
 import com.face4j.facebook.fql.FqlUser;
 import com.face4j.facebook.http.APICallerFactory;
 import com.face4j.facebook.http.APICallerInterface;
-import com.face4j.facebook.publish.WallPost;
 import com.face4j.facebook.util.Constants;
 import com.face4j.facebook.util.JSONToObjectTransformer;
 import com.face4j.facebook.wrapper.FqlPageColumnCriteria;
 import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
 import com.face4j.facebook.wrapper.StreamColumnCriteria;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -278,7 +268,7 @@ public class Facebook implements Serializable {
 	 * @param source
 	 * @param profileId
 	 *          The user id of the user on whose wall the message needs to be posted, if null then the
-	 *          post would be posted on the authenticated users wall
+	 *          post would be posted on the authenticated users wall. If it's a page then page id.
 	 * @throws FacebookException 
 	 */
 	public void wallPost(String message, String picture, String link, String name, String caption, String description, String source, String profileId) throws FacebookException{
@@ -333,7 +323,7 @@ public class Facebook implements Serializable {
 	 * @param name
 	 * @param caption
 	 * @param description
-	 * @param profileId
+	 * @param profileId user id or page id
 	 * @throws FacebookException
 	 */
 	public void shareLink(String link, String message, String picture, String name, String caption, String description, String profileId) throws FacebookException{
@@ -438,7 +428,7 @@ public class Facebook implements Serializable {
 	 * @param name
 	 * @param startTime
 	 * @param endTime
-	 * @param profileId
+	 * @param profileId If for a user then the users id, if for a page then the page id
 	 * @throws FacebookException
 	 */
 	public void createEvent(String name, String startTime, String endTime, String profileId) throws FacebookException {
