@@ -15,6 +15,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 
+import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
@@ -48,8 +49,8 @@ public class URLFetchAPICaller implements APICallerInterface {
 
 			int statusCode = response.getResponseCode();
 			if (statusCode != HttpStatus.SC_OK) {
-				throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode,
-						statusCode);
+				FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+				throw new FacebookException(error);
 			}
 			responseString = new String(response.getContent());
 		} catch (HttpException e) {
@@ -90,8 +91,8 @@ public class URLFetchAPICaller implements APICallerInterface {
     
             statusCode = connection.getResponseCode();
             if (statusCode != HttpURLConnection.HTTP_OK) {
-            	throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode,
-						statusCode);
+            	FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+      				throw new FacebookException(error);
             } else {
             //Get Response	
               InputStream is = connection.getInputStream();

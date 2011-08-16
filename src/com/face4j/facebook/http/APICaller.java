@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
+import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
 
 /**
@@ -67,7 +68,8 @@ public class APICaller implements APICallerInterface {
 		 
 		 int statusCode = client.executeMethod(getMethod);
 			if (statusCode != HttpStatus.SC_OK) {
-	      throw new FacebookException ("I guess you are not permitted to access this url. HTTP status code:"  + statusCode,statusCode);
+				FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+				throw new FacebookException(error);
 	    }
 			response = getMethod.getResponseBodyAsString();
 		} catch (HttpException e) {
@@ -96,7 +98,8 @@ public class APICaller implements APICallerInterface {
 
             int statusCode = client.executeMethod(postMethod);
             if (statusCode != HttpStatus.SC_OK) {
-                throw new FacebookException("I guess you are not permitted to access this url. HTTP status code:" + statusCode, statusCode);
+            	FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+      				throw new FacebookException(error);
             }
             response = postMethod.getResponseBodyAsString();
         } catch (HttpException e) {
