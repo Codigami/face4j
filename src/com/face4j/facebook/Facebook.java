@@ -893,7 +893,7 @@ public class Facebook implements Serializable {
 		NameValuePair[] nameValuePairs = null;
 		
 		if (paging != null) {
-			i = Paging.pagingElementCount(paging);
+			i += Paging.pagingElementCount(paging);
 			nameValuePairs = new NameValuePair[i];
 			Paging.addNameValuePairs(paging, nameValuePairs);
 		} else {
