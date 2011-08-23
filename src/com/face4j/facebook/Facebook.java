@@ -1,6 +1,8 @@
 package com.face4j.facebook;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -837,19 +839,6 @@ public class Facebook implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Post getPost(String postId) throws FacebookException{
-		
-//		// APICaller would retrieve the json string object from facebook by making a https call
-//		String postJson = null;
-//
-//		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
-//				this.authAccessToken.getAccessToken()) };
-//
-//		postJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, nameValuePairs);
-//
-//		// Once the json string object is obtaind, it is passed to obj
-//		// transformer and the right object is retrieved
-//		return JSONToObjectTransformer.getPost(postJson);
-		
 		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, Post.class, nameValuePairs);
 	}
@@ -867,26 +856,52 @@ public class Facebook implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Paging paging)
-			throws FacebookException {
+	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Paging paging) throws FacebookException {
 
-		// // APICaller would retrieve the json string object from facebook by making a https call
-		// String postJson = null;
-		//
-		// NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN,
-		// this.authAccessToken.getAccessToken()) };
-		//
-		// postJson = caller.getData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" +
-		// connectionType.getType(), nameValuePairs);
-		//
-		// // Once the json string object is obtaind, it is passed to obj
-		// // transformer and the right object is retrieved
-		// return JSONToObjectTransformer.getObject(postJson, e);
 		NameValuePair[] nameValuePairs = constructNameValuePairs(paging);
 		
-		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
+		E t = pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
+		touchPaging(t);
 		
+		return t;
 	}
+	
+	/**
+	 * This has been done so that we touch the paging object inside the connection. Paging object contains private fields which need to be modfied.
+	 * The private fields get modified on calling any of the getters. This is needed because gson directly calls private fields. It does not call the
+	 * getters. Since the private fields depend on the getters, we are touching the getter so that private fields get initialized accordingly.
+	 * 
+	 * @param <E>
+	 * @param e
+	 */
+	private <E> void touchPaging(E e) {
+		try {
+			Class thisClass = Class.forName(e.getClass().getName());
+
+			Method method = thisClass.getDeclaredMethod("getPaging");
+
+			if (method != null) {
+				Object paging = method.invoke(e);
+
+				if (paging != null) {
+					Class pagingClass = Class.forName(Paging.class.getName());
+					Method pagingMethod = pagingClass.getDeclaredMethod("getLimit");
+					if(pagingMethod != null){
+						pagingMethod.invoke(paging);
+					}
+				}
+			}
+		} catch (SecurityException e1) {
+		} catch (IllegalArgumentException e1) {
+		} catch (ClassNotFoundException e1) {
+		} catch (NoSuchMethodException e1) {
+		} catch (IllegalAccessException e1) {
+		} catch (InvocationTargetException e1) {
+		} catch (Exception e1) {
+		}
+
+	}
+	
 
 	private NameValuePair[] constructNameValuePairs(Paging paging) {
 		int i = 1;
