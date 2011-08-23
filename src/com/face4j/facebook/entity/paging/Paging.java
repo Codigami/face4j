@@ -54,6 +54,8 @@ public class Paging implements Serializable {
 	
 
 	public int getLimit() {
+		// Please note that this method is being used as part of reflection. If you rename this method
+		// be sure to do a string search for "getLimit" and replace with the new name accordingly
 		extractValue();
 		return limit;
 	}
@@ -62,6 +64,10 @@ public class Paging implements Serializable {
 		this.limit = limit;
 	}
 
+	/**
+	 * Use this to receive older updates.
+	 * @return
+	 */
 	public long getUntil() {
 		extractValue();
 		return until;
@@ -71,6 +77,10 @@ public class Paging implements Serializable {
 		this.until = until;
 	}
 
+	/**
+	 * Use this to get new updates. Updates after the ones you have already pulled
+	 * @return
+	 */
 	public long getSince() {
 		extractValue();
 		return since;
