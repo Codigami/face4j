@@ -54,6 +54,8 @@ public class Paging implements Serializable {
 	
 
 	public int getLimit() {
+		// Please note that this method is being used as part of reflection. If you rename this method
+		// be sure to do a string search for "getLimit" and replace with the new name accordingly
 		extractValue();
 		return limit;
 	}
