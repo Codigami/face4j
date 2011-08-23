@@ -2,18 +2,12 @@ package com.face4j.facebook.http;
 
 import java.io.IOException;
 
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
-import com.face4j.facebook.util.Util;
 
 /**
  * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.

@@ -1,11 +1,6 @@
 package com.face4j.facebook.http;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,8 +12,6 @@ import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
-import com.face4j.facebook.util.Constants;
-import com.face4j.facebook.util.Util;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
