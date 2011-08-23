@@ -13,6 +13,8 @@ public class Comments implements Serializable {
 	private List<Comment> data;
 	
 	private Paging paging;
+	
+	private int count;
 
 	public List<Comment> getComments() {
 		return data;
@@ -30,33 +32,12 @@ public class Comments implements Serializable {
 		this.paging = paging;
 	}
 
-	/**
-	 * Returns paginated records. This will be a fresh http request to facebook.
-	 * 
-	 * @param facebook
-	 * @return
-	 * @throws FacebookException
-	 */
-	/*public Comments getPrevious(Facebook facebook) throws FacebookException {
-		if (paging != null && paging.getPrevious() != null) {
-			return facebook.pullData(this.paging.getPrevious(), Comments.class, null);
-		}
-		return null;
-	}*/
+	public int getCount() {
+		return count;
+	}
 
-	/**
-	 * Returns paginated records. This will be a fresh http request to facebook.
-	 * 
-	 * @param facebook
-	 * @return
-	 * @throws FacebookException
-	 */
-	/*public Comments getNext(Facebook facebook) throws FacebookException {
-		if (paging != null && paging.getNext() != null) {
-			return facebook.pullData(this.paging.getNext(), Comments.class, null);
-		}
-		return null;
-	}*/
-
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 }

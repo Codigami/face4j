@@ -12,7 +12,8 @@ public class Likes implements Serializable {
 
 	private List<Data> data;
 	private Paging paging;
-
+	private int count;
+	
 	/**
 	 * Returns the id and name of users who have liked the object
 	 * @return
@@ -25,34 +26,12 @@ public class Likes implements Serializable {
 		this.data = data;
 	}
 
-	/**
-	 * Returns paginated records. This will be a fresh http request to facebook.
-	 * 
-	 * @param facebook
-	 * @return
-	 * @throws FacebookException
-	 */
-	/*public Likes getNext(Facebook facebook) throws FacebookException {
-		if (paging != null && paging.getNext() != null) {
-			Likes likes = facebook.pullData(this.paging.getNext(), Likes.class, null);
+	public int getCount() {
+		return count;
+	}
 
-			return likes;
-		}
-		return null;
-	}*/
-
-	/**
-	 * Returns paginated records. This will be a fresh http request to facebook.
-	 * 
-	 * @param facebook
-	 * @return
-	 * @throws FacebookException
-	 */
-	/*public Likes getPrevious(Facebook facebook) throws FacebookException {
-		if (paging != null && paging.getPrevious() != null) {
-			return facebook.pullData(this.paging.getPrevious(), Likes.class, null);
-		}
-		return null;
-	}*/
+	public void setCount(int count) {
+		this.count = count;
+	}
 	
 }
