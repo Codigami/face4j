@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.entity.connection.*;
+import com.face4j.facebook.entity.paging.Paging;
 import com.face4j.facebook.enums.ConnectionType;
 import com.face4j.facebook.enums.PictureType;
 import com.face4j.facebook.exception.FacebookException;
@@ -534,7 +535,11 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Accounts accounts(Facebook facebook) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.ACCOUNTS, Accounts.class, null);
+		return this.accounts(facebook, null);
+	}
+	
+	public Accounts accounts(Facebook facebook, Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.ACCOUNTS, Accounts.class, paging);
 	}
 
 	/**
@@ -546,7 +551,11 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Activities activities(Facebook facebook) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.ACTIVITIES, Activities.class, null);
+		return activities(facebook, null);
+	}
+	
+	public Activities activities(Facebook facebook, Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.ACTIVITIES, Activities.class, paging);
 	}
 
 	/**
@@ -558,7 +567,20 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Albums albums(Facebook facebook) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.ALBUMS, Albums.class, null);
+		return albums(facebook, null);
+	}
+	
+	/**
+	 * The photo albums this user has created
+	 * PERMISSION: user_photos or friends_photos
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Albums albums(Facebook facebook, Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.ALBUMS, Albums.class, paging);
 	}
 
 	//TODO: Connections apprequests
@@ -572,7 +594,19 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Books books(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.BOOKS, Books.class, null);
+		return books(facebook, null);
+	}
+	
+	/**
+	 * The books listed on the user's profile
+	 * PERMISSION: user_likes or friends_likes
+	 *  
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Books books(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.BOOKS, Books.class, paging);
 	}
 	
 	/**
@@ -584,7 +618,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Checkins checkins(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.CHECKINS, Checkins.class, null);
+		return checkins(facebook, null);
+	}
+	
+	/**
+	 * The places that the user has checked-into
+	 * PERMISSION: user_checkins or friends_checkins
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Checkins checkins(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.CHECKINS, Checkins.class, paging);
 	}
 
 	/**
@@ -596,7 +644,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Events events(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.EVENTS, Events.class, null);
+		return events(facebook, null);
+	}
+	
+	/**
+	 * The events this user is attending
+	 * PERMISSION: user_events or friends_events
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Events events(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.EVENTS, Events.class, paging);
 	}
 	
 	/**
@@ -608,7 +670,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Feed feed(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.FEED, Feed.class, null);
+		return feed(facebook, null);
+	}
+	
+	/**
+	 * The user's wall
+	 * PERMISSION: Requires access_token or read_stream to see non-public posts
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Feed feed(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.FEED, Feed.class, paging);
 	}
 	
 	/**
@@ -620,7 +696,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public FriendLists friendLists(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.FRIENDLISTS, FriendLists.class, null);
+		return friendLists(facebook, null);
+	}
+	
+	/**
+	 * The user's friend lists
+	 * PERMISSION: read_friendlists
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public FriendLists friendLists(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.FRIENDLISTS, FriendLists.class, paging);
 	}
 	
 	/**
@@ -632,7 +722,19 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Friends friends(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.FRIENDS, Friends.class, null);
+		return friends(facebook, null);
+	}
+	
+	/**
+	 * The user's friends
+	 * PERMISSION: Requires access_token
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Friends friends(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.FRIENDS, Friends.class, paging);
 	}
 	
 	/**
@@ -644,7 +746,19 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Groups groups(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.GROUPS, Groups.class, null);
+		return groups(facebook, null);
+	}
+	
+	/**
+	 * The Groups that the user belongs to
+	 * PERMISSION: user_groups or friends_groups
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Groups groups(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.GROUPS, Groups.class, paging);
 	}
 	
 	/**
@@ -656,7 +770,20 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Home home(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.HOME, Home.class, null);
+		return home(facebook, null);
+	}
+	
+	/**
+	 * The user's news feed
+	 * PERMISSION: read_stream
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Home home(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.HOME, Home.class, paging);
 	}
 	
 	/**
@@ -668,7 +795,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Inbox inbox(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.INBOX, Inbox.class, null);
+		return inbox(facebook, null);
+	}
+	
+	/**
+	 * The Threads in this user's inbox
+	 * PERMISSION: read_mailbox
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Inbox inbox(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.INBOX, Inbox.class, paging);
 	}
 	
 	/**
@@ -680,7 +821,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Interests interests(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.INTERESTS, Interests.class, null);
+		return interests(facebook, null);
+	}
+	
+	/**
+	 * The interests listed on the user's profile
+	 * PERMISSION: user_interests or friends_interests
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Interests interests(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.INTERESTS, Interests.class, paging);
 	}
 	
 	/**
@@ -692,7 +847,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Likes likes(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, null);
+		return likes(facebook, null);
+	}
+	
+	/**
+	 * All the pages this user has liked
+	 * PERMISSION: user_likes or friends_likes
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Likes likes(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, paging);
 	}
 	
 	/**
@@ -704,7 +873,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Links links(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.LINKS, Links.class, null);
+		return links(facebook, null);
+	}
+	
+	/**
+	 * The user's posted links
+	 * PERMISSION: read_stream
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Links links(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.LINKS, Links.class, paging);
 	}
 	
 	/**
@@ -716,7 +899,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Movies movies(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.MOVIES, Movies.class, null);
+		return movies(facebook, null);
+	}
+	
+	/**
+	 * The movies listed on the user's profile
+	 * PERMISSION: user_likes or friends_likes
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Movies movies(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.MOVIES, Movies.class, paging);
 	}
 	
 	/**
@@ -728,7 +925,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Music music(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.MUSIC, Music.class, null);
+		return music(facebook, null);
+	}
+	
+	/**
+	 * The music listed on the user's profile
+	 * PERMISSION: user_likes or friends_likes
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Music music(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.MUSIC, Music.class, paging);
 	}
 	
 	/**
@@ -740,7 +951,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Notes notes(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.NOTES, Notes.class, null);
+		return notes(facebook, null);
+	}
+	
+	/**
+	 * The user's notes
+	 * PERMISSION: read_stream
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Notes notes(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.NOTES, Notes.class, paging);
 	}
 	
 	/**
@@ -752,7 +977,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Outbox outbox(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.OUTBOX, Outbox.class, null);
+		return outbox(facebook, null);
+	}
+	
+	/**
+	 * The messages in this user's outbox
+	 * PERMISSION: read_mailbox
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Outbox outbox(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.OUTBOX, Outbox.class, paging);
 	}
 	
 	/**
@@ -785,7 +1024,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Photos photos(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.PHOTOS, Photos.class, null);
+		return photos(facebook, null);
+	}
+	
+	/**
+	 * Photos the user (or friend) is tagged in
+	 * PERMISSION: user_photo_video_tags or friends_photo_video_tags
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Photos photos(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.PHOTOS, Photos.class, paging);
 	}
 	
 	/**
@@ -829,7 +1082,19 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Posts posts(Facebook facebook) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.POSTS, Posts.class, null);
+		return posts(facebook, null);
+	}
+	
+	/**
+	 * The user's own posts
+	 * PERMISSION: Any valid access_token or read_stream to see non-public posts
+	 * 
+	 * @param facebook
+	 * @return Posts that contains list of Post objects along with pagination for obtaining next and previous posts
+	 * @throws FacebookException
+	 */
+	public Posts posts(Facebook facebook, Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.POSTS, Posts.class, paging);
 	}
 	
 	/**
@@ -841,7 +1106,19 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Statuses statuses(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.STATUSES, Statuses.class, null);
+		return statuses(facebook, null);
+	}
+	
+	/**
+	 * The user's status updates
+	 * PERMISSION: read_stream
+	 * 
+	 * @param facebook
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Statuses statuses(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.STATUSES, Statuses.class, paging);
 	}
 
 	/**
@@ -853,7 +1130,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Television television(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.TELEVISION, Television.class, null);
+		return television(facebook, null);
+	}
+	
+	/**
+	 * The television listed on the user's profile
+	 * PERMISSION: user_likes or friends_likes
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Television television(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.TELEVISION, Television.class, paging);
 	}
 	
 	/**
@@ -865,7 +1156,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Updates updates(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.UPDATES, Updates.class, null);
+		return updates(facebook, null);
+	}
+	
+	/**
+	 * The updates in this user's inbox
+	 * PERMISSION: read_mailbox
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Updates updates(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.UPDATES, Updates.class, paging);
 	}
 	
 	/**
@@ -877,7 +1182,21 @@ public class User implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Videos videos(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.VIDEOS, Videos.class, null);
+		return videos(facebook, null);
+	}
+	
+	/**
+	 * The videos this user has been tagged in
+	 * PERMISSION: user_videos or friends_videos
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Videos videos(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.VIDEOS, Videos.class, paging);
 	}
 	 
 }

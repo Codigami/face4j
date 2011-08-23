@@ -1,11 +1,6 @@
 package com.face4j.facebook.http;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -59,6 +54,10 @@ public class URLFetchAPICaller implements APICallerInterface {
 			throw new FacebookException("IO Exception while calling facebook!", e);
 		}
 
+		
+		//if response string contains accessToken=xxx remove it!
+		//responseString = Util.replaceAccessToken(responseString, nameValuePairs);
+		
 		return responseString;
 	}
 
@@ -151,5 +150,5 @@ public class URLFetchAPICaller implements APICallerInterface {
 
 		return constructedParams;
 	}
-
+	
 }

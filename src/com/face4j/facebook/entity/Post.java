@@ -1,14 +1,12 @@
 package com.face4j.facebook.entity;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.entity.connection.Comments;
 import com.face4j.facebook.entity.connection.Likes;
+import com.face4j.facebook.entity.paging.Paging;
 import com.face4j.facebook.enums.ConnectionType;
-import com.face4j.facebook.enums.Paging;
 import com.face4j.facebook.exception.FacebookException;
 
 /**
@@ -279,8 +277,8 @@ public class Post implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Likes getConnectionLikes(Facebook facebook, Map<Paging, String> pagingCriteria) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, pagingCriteria);
+	public Likes getConnectionLikes(Facebook facebook, com.face4j.facebook.entity.paging.Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.LIKES, Likes.class, paging);
 	}
 
 	/**
@@ -291,8 +289,8 @@ public class Post implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Comments getConnectionsComments(Facebook facebook, Map<Paging, String> pagingCriteria) throws FacebookException {
-		return facebook.getConnections(this.id, ConnectionType.COMMENTS, Comments.class, pagingCriteria);
+	public Comments getConnectionsComments(Facebook facebook, Paging paging) throws FacebookException {
+		return facebook.getConnections(this.id, ConnectionType.COMMENTS, Comments.class, paging);
 	}
 
 	/**

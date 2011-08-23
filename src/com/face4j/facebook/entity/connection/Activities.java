@@ -38,12 +38,12 @@ public class Activities implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Activities getPrevious(Facebook facebook) throws FacebookException {
+	/*public Activities getPrevious(Facebook facebook) throws FacebookException {
 		if (paging != null && paging.getPrevious() != null) {
 			return facebook.pullData(this.paging.getPrevious(), Activities.class, null);
 		}
 		return null;
-	}
+	}*/
 
 	/**
 	 * Returns paginated records. This will be a fresh http request to facebook.
@@ -52,12 +52,12 @@ public class Activities implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Activities getNext(Facebook facebook) throws FacebookException {
+	/*public Activities getNext(Facebook facebook) throws FacebookException {
 		if (paging != null && paging.getNext() != null) {
 			return facebook.pullData(this.paging.getNext(), Activities.class, null);
 		}
 		return null;
-	}
+	}*/
 
 	
 }
