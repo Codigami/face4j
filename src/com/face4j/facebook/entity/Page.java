@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.entity.connection.*;
+import com.face4j.facebook.entity.paging.Paging;
 import com.face4j.facebook.enums.ConnectionType;
 import com.face4j.facebook.enums.PictureType;
 import com.face4j.facebook.exception.FacebookException;
@@ -164,7 +165,20 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Feed feed(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.FEED, Feed.class, null);
+		return feed(facebook, null);
+	} 
+	
+	/**
+	 * The Page's wall.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Feed feed(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.FEED, Feed.class, paging);
 	} 
 	
 	/**
@@ -211,7 +225,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Links links(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.LINKS, Links.class, null);
+		return links(facebook, null);
+	}
+	
+	/**
+	 * The Page's posted links.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Links links(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.LINKS, Links.class, paging);
 	}
 	
 	/**
@@ -223,7 +251,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Photos photos(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.PHOTOS, Photos.class, null);
+		return photos(facebook, null);
+	}
+	
+	/**
+	 * The Page's uploaded photos.
+	 * Permission: No access token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Photos photos(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.PHOTOS, Photos.class, paging);
 	}
 	
 	/**
@@ -235,7 +277,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Groups groups(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.GROUPS, Groups.class, null);
+		return groups(facebook, null);
+	}
+	
+	/**
+	 * Groups to which the Page belongs.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Groups groups(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.GROUPS, Groups.class, paging);
 	}
 
 	/**
@@ -247,7 +303,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Albums albums(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.ALBUMS, Albums.class, null);
+		return albums(facebook, null);
+	}
+	
+	/**
+	 * The photo albums the Page has uploaded.
+	 * Permission: No access token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Albums albums(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.ALBUMS, Albums.class, paging);
 	}
 	
 	/**
@@ -259,7 +329,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Statuses statuses(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.STATUSES, Statuses.class, null);
+		return statuses(facebook, null);
+	}
+	
+	/**
+	 * The Page's status updates.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Statuses statuses(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.STATUSES, Statuses.class, paging);
 	}
 	
 	/**
@@ -270,7 +354,20 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Videos videos(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.VIDEOS, Videos.class, null);
+		return videos(facebook, null);
+	}
+	
+	/**
+	 * The videos the Page has uploaded.
+	 * Permission: any valid access_token or user access_token
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Videos videos(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.VIDEOS, Videos.class, paging);
 	}
 
 	/**
@@ -282,7 +379,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Notes notes(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.NOTES, Notes.class, null);
+		return notes(facebook, null);
+	}
+	
+	/**
+	 * The Page's notes.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Notes notes(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.NOTES, Notes.class, paging);
 	}
 	
 	/**
@@ -294,7 +405,21 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Posts posts(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.POSTS, Posts.class, null);
+		return posts(facebook, null);
+	}
+	
+	/**
+	 * The Page's own posts.
+	 * Permission: any valid access_token or user access_token
+	 * 
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Posts posts(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.POSTS, Posts.class, paging);
 	}
 	
 	/**
@@ -305,7 +430,20 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Events events(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.EVENTS, Events.class, null);
+		return events(facebook, null);
+	}
+	
+	/**
+	 * The events the Page is attending.
+	 * Permission: any valid access_token or user access_token
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Events events(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.EVENTS, Events.class, paging);
 	}
 	
 	/**
@@ -316,7 +454,19 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Checkins checkins(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.CHECKINS, Checkins.class, null);
+		return checkins(facebook, null);
+	}
+	
+	/**
+	 * Checkins made to this Place Page by the current user, and friends of the current user.
+	 * Permission: user_checkins or friends_checkins
+	 * @param facebook
+	 * @param paging
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Checkins checkins(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.CHECKINS, Checkins.class, paging);
 	}
 	
 	/**
@@ -327,7 +477,20 @@ public class Page implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Tabs tabs(Facebook facebook) throws FacebookException{
-		return facebook.getConnections(this.id, ConnectionType.TABS, Tabs.class, null);
+		return tabs(facebook, null);
+	}
+	
+	/**
+	 * The Page's profile tabs. You can read the tabs for a Page with a Page Access Token. 
+	 * Permission: Page admin access_token
+	 * @param facebook
+	 * @param paging
+	 * 
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Tabs tabs(Facebook facebook, Paging paging) throws FacebookException{
+		return facebook.getConnections(this.id, ConnectionType.TABS, Tabs.class, paging);
 	}
 	
 }

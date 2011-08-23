@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
+import com.face4j.facebook.entity.paging.Paging;
 import com.face4j.facebook.enums.*;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.fql.FqlConnection;
@@ -866,7 +867,7 @@ public class Facebook implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Map<Paging, String> pagingCriteria)
+	public <E> E getConnections(String id, ConnectionType connectionType, Class<E> e, Paging paging)
 			throws FacebookException {
 
 		// // APICaller would retrieve the json string object from facebook by making a https call
@@ -881,30 +882,20 @@ public class Facebook implements Serializable {
 		// // Once the json string object is obtaind, it is passed to obj
 		// // transformer and the right object is retrieved
 		// return JSONToObjectTransformer.getObject(postJson, e);
-		NameValuePair[] nameValuePairs = constructNameValuePairs(pagingCriteria);
+		NameValuePair[] nameValuePairs = constructNameValuePairs(paging);
 		
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + id + "/" + connectionType.getType(), e, nameValuePairs);
 		
 	}
 
-	private NameValuePair[] constructNameValuePairs(Map<Paging, String> pagingCriteria) {
+	private NameValuePair[] constructNameValuePairs(Paging paging) {
 		int i = 1;
 		NameValuePair[] nameValuePairs = null;
 		
-		if (pagingCriteria != null) {
-			i += pagingCriteria.size();
+		if (paging != null) {
+			i = Paging.pagingElementCount(paging);
 			nameValuePairs = new NameValuePair[i];
-
-			Paging paging = null;
-			String value = null;
-			Iterator<Paging> iter = pagingCriteria.keySet().iterator(); 
-			
-			for (int j = 0; iter.hasNext(); j++) {
-				paging = iter.next();
-				value = pagingCriteria.get(paging);
-				nameValuePairs[j] = new NameValuePair(paging.toString(), value);
-			}
-			
+			Paging.addNameValuePairs(paging, nameValuePairs);
 		} else {
 			nameValuePairs = new NameValuePair[i];
 		}
@@ -912,6 +903,7 @@ public class Facebook implements Serializable {
 		nameValuePairs[i - 1] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
 		return nameValuePairs;
 	}
+	
 
 	/**
 	 * Raw API method to pull any data in json form and transform it into the right object <br>
