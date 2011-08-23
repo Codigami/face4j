@@ -17,6 +17,8 @@ import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
+import com.face4j.facebook.util.Constants;
+import com.face4j.facebook.util.Util;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
@@ -59,6 +61,10 @@ public class URLFetchAPICaller implements APICallerInterface {
 			throw new FacebookException("IO Exception while calling facebook!", e);
 		}
 
+		
+		//if response string contains accessToken=xxx remove it!
+		//responseString = Util.replaceAccessToken(responseString, nameValuePairs);
+		
 		return responseString;
 	}
 
@@ -151,5 +157,5 @@ public class URLFetchAPICaller implements APICallerInterface {
 
 		return constructedParams;
 	}
-
+	
 }

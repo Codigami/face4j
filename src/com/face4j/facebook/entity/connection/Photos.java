@@ -3,10 +3,8 @@ package com.face4j.facebook.entity.connection;
 import java.io.Serializable;
 import java.util.List;
 
-import com.face4j.facebook.Facebook;
 import com.face4j.facebook.entity.Photo;
 import com.face4j.facebook.entity.paging.Paging;
-import com.face4j.facebook.exception.FacebookException;
 
 public class Photos implements Serializable {
 
@@ -38,12 +36,12 @@ public class Photos implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Photos getPrevious(Facebook facebook) throws FacebookException {
+	/*public Photos getPrevious(Facebook facebook) throws FacebookException {
 		if (paging != null && paging.getPrevious() != null) {
 			return facebook.pullData(this.paging.getPrevious(), Photos.class, null);
 		}
 		return null;
-	}
+	}*/
 
 	/**
 	 * Returns paginated records. This will be a fresh http request to facebook.
@@ -52,11 +50,11 @@ public class Photos implements Serializable {
 	 * @return
 	 * @throws FacebookException
 	 */
-	public Photos getNext(Facebook facebook) throws FacebookException {
+	/*public Photos getNext(Facebook facebook) throws FacebookException {
 		if (paging != null && paging.getNext() != null) {
 			return facebook.pullData(this.paging.getNext(), Photos.class, null);
 		}
 		return null;
-	}
+	}*/
 
 }

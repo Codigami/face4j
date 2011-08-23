@@ -13,6 +13,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
+import com.face4j.facebook.util.Util;
 
 /**
  * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
@@ -79,6 +80,10 @@ public class APICaller implements APICallerInterface {
 		}	finally {
 	  		getMethod.releaseConnection();
 	  }
+		
+		//if response string contains accessToken=xxx remove it!
+		//response = Util.replaceAccessToken(response, nameValuePairs);
+		
 		return response;
  }
 
