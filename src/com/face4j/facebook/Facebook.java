@@ -101,7 +101,7 @@ public class Facebook implements Serializable {
 		User[] users = null;
 		
 		Type type = new TypeToken<Map<String, User>>(){}.getType();
-		Map<String, User> userMap = pullData(Constants.FACEBOOK_GRAPH_URL, type, nameValuePairs);
+		Map<String, User> userMap = pullData(Constants.FACEBOOK_GRAPH_URL+"/", type, nameValuePairs);
 		
 		if(userMap != null){
 			users = new User[fbIds.length];
