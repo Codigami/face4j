@@ -43,8 +43,13 @@ public class Post implements Serializable {
 	private String updatedTime;
 	private Targeting targeting;
 
-	public Post() {
+	/** For gson */
+	private Post() {
 		super();
+	}
+	
+	public Post(String id){
+		this.id = id;
 	}
 
 	/**
