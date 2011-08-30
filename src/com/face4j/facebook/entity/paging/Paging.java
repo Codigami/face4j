@@ -13,6 +13,7 @@ public class Paging implements Serializable {
 	private int limit = -1;
 	private long until = -1;
 	private long since = -1;
+	private int offset = -1;
 	
 	
 	public enum PagingParam {
@@ -90,6 +91,14 @@ public class Paging implements Serializable {
 		this.since = since;
 	}
 	
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	public static int pagingElementCount(Paging paging){
 			int size = 0;
 			if(paging.getLimit() > -1){
@@ -101,6 +110,10 @@ public class Paging implements Serializable {
 			}
 			
 			if(paging.getUntil() > -1){
+				size++;
+			}
+			
+			if(paging.getOffset() > -1){
 				size++;
 			}
 			
@@ -122,6 +135,11 @@ public class Paging implements Serializable {
 		
 		if(paging.getUntil() > -1){
 			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.UNTIL.toString(),""+paging.getUntil());
+			i++;
+		}
+		
+		if(paging.getOffset() > -1){
+			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.OFFSET.toString(),""+paging.getOffset());
 			i++;
 		}
 	}
@@ -146,6 +164,9 @@ public class Paging implements Serializable {
 				}
 				if(string.contains(PagingParam.UNTIL.toString()) && string.length() > 1){
 					until = Long.parseLong(string.split("=")[1]);
+				}
+				if(string.contains(PagingParam.OFFSET.toString()) && string.length() > 1){
+					offset = Integer.parseInt(string.split("=")[1]);
 				}
 			}
 			next = null;
