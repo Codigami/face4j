@@ -8,5 +8,7 @@ public interface APICallerInterface {
 	
 	public String getData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
 
-    public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
+  public String postData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
+  
+  public String deleteData(String url, NameValuePair[] nameValuePairs) throws FacebookException;
 }

@@ -6,6 +6,7 @@ import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
+import com.face4j.facebook.exception.HttpError;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,6 +62,11 @@ public class JSONToObjectTransformer {
 			
 			throw new FacebookException(error);
 		}
+	}
+	
+	public static FacebookError getError(String response, int statusCode) {
+  	HttpError httpError =  gson.fromJson(response, HttpError.class);
+  	return new FacebookError(statusCode, "Exception Type: "+httpError.getError().getType()+ " " + httpError.getError().getMessage(), null);
 	}
 	
 	/*public static void main(String[] args) {

@@ -866,6 +866,16 @@ public class Facebook implements Serializable {
 		return t;
 	}
 	
+	public boolean delete(String id) throws FacebookException {
+		NameValuePair[] nameValuePairs = constructNameValuePairs(null);
+		return Boolean.parseBoolean(caller.deleteData(Constants.FACEBOOK_GRAPH_URL + "/" + id, nameValuePairs));
+	}
+	
+	public boolean unlike(String id) throws FacebookException {
+		NameValuePair[] nameValuePairs = constructNameValuePairs(null);
+		return Boolean.parseBoolean(caller.deleteData(Constants.FACEBOOK_GRAPH_URL + "/" + id +"/likes", nameValuePairs));
+	}
+	
 	/**
 	 * This has been done so that we touch the paging object inside the connection. Paging object contains private fields which need to be modfied.
 	 * The private fields get modified on calling any of the getters. This is needed because gson directly calls private fields. It does not call the
