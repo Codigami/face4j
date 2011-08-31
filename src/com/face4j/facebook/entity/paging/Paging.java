@@ -11,8 +11,8 @@ public class Paging implements Serializable {
 	private String next;
 	private String previous;
 	private int limit = -1;
-	private long until = -1;
-	private long since = -1;
+	private String until;
+	private String since;
 	private int offset = -1;
 	
 	
@@ -69,12 +69,12 @@ public class Paging implements Serializable {
 	 * Use this to receive older updates.
 	 * @return
 	 */
-	public long getUntil() {
+	public String getUntil() {
 		extractValue();
 		return until;
 	}
 
-	public void setUntil(long until) {
+	public void setUntil(String until) {
 		this.until = until;
 	}
 
@@ -82,12 +82,12 @@ public class Paging implements Serializable {
 	 * Use this to get new updates. Updates after the ones you have already pulled
 	 * @return
 	 */
-	public long getSince() {
+	public String getSince() {
 		extractValue();
 		return since;
 	}
 
-	public void setSince(long since) {
+	public void setSince(String since) {
 		this.since = since;
 	}
 	
@@ -105,11 +105,11 @@ public class Paging implements Serializable {
 				size++;
 			}
 			
-			if(paging.getSince() > -1){
+			if(paging.getSince() != null){
 				size++;
 			}
 			
-			if(paging.getUntil() > -1){
+			if(paging.getUntil() != null){
 				size++;
 			}
 			
@@ -128,12 +128,12 @@ public class Paging implements Serializable {
 			i++;
 		}
 		
-		if(paging.getSince() > -1){
+		if(paging.getSince() != null){
 			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.SINCE.toString(),""+paging.getSince());
 			i++;
 		}
 		
-		if(paging.getUntil() > -1){
+		if(paging.getUntil() != null){
 			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.UNTIL.toString(),""+paging.getUntil());
 			i++;
 		}
@@ -163,7 +163,7 @@ public class Paging implements Serializable {
 					limit = Integer.parseInt(string.split("=")[1]);
 				}
 				if(string.contains(PagingParam.UNTIL.toString()) && string.length() > 1){
-					until = Long.parseLong(string.split("=")[1]);
+					until = string.split("=")[1];
 				}
 				if(string.contains(PagingParam.OFFSET.toString()) && string.length() > 1){
 					offset = Integer.parseInt(string.split("=")[1]);
@@ -182,7 +182,7 @@ public class Paging implements Serializable {
 			
 			for(String string : paramSplit){
 				if(string.contains(PagingParam.SINCE.toString()) && string.length() > 1){
-					since = Long.parseLong(string.split("=")[1]);
+					since = string.split("=")[1];
 				}
 			}
 			
