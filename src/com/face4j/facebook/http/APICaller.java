@@ -3,11 +3,12 @@ package com.face4j.facebook.http;
 import java.io.IOException;
 
 import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
-import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
+import com.face4j.facebook.util.JSONToObjectTransformer;
 
 /**
  * APICaller will make http requests, obtain that response and return it without processing. Basically, the raw response is returned by every method.
@@ -63,8 +64,9 @@ public class APICaller implements APICallerInterface {
 		 
 		 int statusCode = client.executeMethod(getMethod);
 			if (statusCode != HttpStatus.SC_OK) {
-				FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
-				throw new FacebookException(error);
+				//FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+				response = getMethod.getResponseBodyAsString();
+				throw new FacebookException(JSONToObjectTransformer.getError(response, statusCode));
 	    }
 			response = getMethod.getResponseBodyAsString();
 		} catch (HttpException e) {
@@ -97,8 +99,9 @@ public class APICaller implements APICallerInterface {
 
             int statusCode = client.executeMethod(postMethod);
             if (statusCode != HttpStatus.SC_OK) {
-            	FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
-      				throw new FacebookException(error);
+            	//FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"+statusCode, null);
+            	response = postMethod.getResponseBodyAsString();
+      				throw new FacebookException(JSONToObjectTransformer.getError(response, statusCode));
             }
             response = postMethod.getResponseBodyAsString();
         } catch (HttpException e) {
@@ -111,6 +114,37 @@ public class APICaller implements APICallerInterface {
 
         return response;
     }
+   
+    public String deleteData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
+
+      HttpClient client = APICaller.getHttpClient();
+      String response = null;
+
+      DeleteMethod deleteMethod = null;
+      try {
+          deleteMethod = new DeleteMethod(url);
+
+          if (nameValuePairs != null) {
+              deleteMethod.setQueryString(nameValuePairs);
+          }
+
+          int statusCode = client.executeMethod(deleteMethod);
+          if (statusCode != HttpStatus.SC_OK) {
+          	response = deleteMethod.getResponseBodyAsString();
+    				throw new FacebookException(JSONToObjectTransformer.getError(response, statusCode));
+          }
+          response = deleteMethod.getResponseBodyAsString();
+      } catch (HttpException e) {
+          throw new FacebookException("Http Exception while calling facebook!", e);
+      } catch (IOException e) {
+          throw new FacebookException("IO Exception while calling facebook!", e);
+      } finally {
+          deleteMethod.releaseConnection();
+      }
+
+      return response;
+  } 
+    
     
     private NameValuePair[] getNameValuePairs(String urlParams){
     	

@@ -3,41 +3,16 @@ package com.face4j.facebook.exception;
 public class FacebookException extends Exception {
 
 	private static final long serialVersionUID = -3433466538055836949L;
-	
- // private int statusCode;
   private FacebookError error;
-
-  public FacebookException(String msg) {
-      super(msg);
-  }
-
-  public FacebookException(Exception exception) {
-      super(exception);
-  }
-
- /* public FacebookException(String msg, int statusCode) {
-      super(msg);
-      this.statusCode = statusCode;
-  }*/
 
   public FacebookException(String msg, Exception exception) {
       super(msg, exception);
   }
 
- /* public FacebookException(String msg, Exception exception, int statusCode) {
-      super(msg, exception);
-      this.statusCode = statusCode;
-
-  }*/
-
   public FacebookException(FacebookError error) {
 		super();
 		this.error = error;
 	}
-
-/*	public int getStatusCode() {
-      return this.statusCode;
-  }*/
 
 	public FacebookError getError() {
 		return error;
@@ -47,7 +22,14 @@ public class FacebookException extends Exception {
 		this.error = error;
 	}
 	
+	@Override
+	public String getMessage() {
+		return (this.getError() == null) ? super.getMessage() : this.getError().getErrorMsg();
+	}
 	
-
+	@Override
+	public String getLocalizedMessage() {
+		return this.getMessage();
+	}
 
 }
