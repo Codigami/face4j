@@ -152,9 +152,9 @@ public class URLFetchAPICaller implements APICallerInterface {
 
 			statusCode = connection.getResponseCode();
 			if (statusCode != HttpURLConnection.HTTP_OK) {
-				FacebookError error = new FacebookError(statusCode, "I guess you are not permitted to access this url. HTTP status code:"
-						+ statusCode, null);
-				throw new FacebookException(error);
+				content = getResponse(connection);
+				throw new FacebookException(JSONToObjectTransformer.getError(content, statusCode));
+				
 			} else {
 				content = getResponse(connection);
 
