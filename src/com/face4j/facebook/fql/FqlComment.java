@@ -2,12 +2,14 @@ package com.face4j.facebook.fql;
 
 import java.io.Serializable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class FqlComment implements Serializable {
 
 	private static final long serialVersionUID = 383394113986607215L;
 
 	private String id;
-	private Long fromId;
+	@SerializedName("fromid")	private Long fromId;
 	private Long time;
 	private String text;
 
