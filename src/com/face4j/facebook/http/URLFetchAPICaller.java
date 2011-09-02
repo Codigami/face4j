@@ -10,12 +10,9 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 
-import com.face4j.facebook.exception.FacebookError;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.util.JSONToObjectTransformer;
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchService;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.appengine.api.urlfetch.*;
 
 public class URLFetchAPICaller implements APICallerInterface {
 
@@ -129,48 +126,76 @@ public class URLFetchAPICaller implements APICallerInterface {
 		return content;
 	}
 
-	public String deleteData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
+	/*
+	 * public String deleteData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
+	 * 
+	 * String content = null; String constructedParams = null; int statusCode = 0; HttpURLConnection
+	 * connection = null; try {
+	 * 
+	 * constructedParams = constructParams(nameValuePairs);
+	 * 
+	 * 
+	 * 
+	 * URL posturl = new URL(url+"/?"+constructedParams); connection = (HttpURLConnection)
+	 * posturl.openConnection(); connection.setRequestProperty( "Content-Type",
+	 * "application/x-www-form-urlencoded" ); connection.setDoOutput(true);
+	 * connection.setRequestMethod("DELETE"); // connection.setConnectTimeout(10000); //
+	 * connection.setReadTimeout(10000);
+	 * 
+	 * //connection.connect();
+	 * 
+	 * //System.out.println(connection.getContent());
+	 * 
+	 * OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+	 * 
+	 * writer.write(""); writer.close();
+	 * 
+	 * statusCode = connection.getResponseCode(); if (statusCode != HttpURLConnection.HTTP_OK) {
+	 * content = getResponse(connection); throw new
+	 * FacebookException(JSONToObjectTransformer.getError(content, statusCode));
+	 * 
+	 * } else { content = getResponse(connection);
+	 * 
+	 * } } catch (MalformedURLException e) { throw new
+	 * FacebookException("Malformed URL Exception while calling facebook!", e); } catch (IOException
+	 * e) { throw new FacebookException("IOException while calling facebook!", e); } finally { if
+	 * (connection != null) { connection.disconnect(); } }
+	 * 
+	 * return content;
+	 * 
+	 * }
+	 */
 
+	public String deleteData(String url, NameValuePair[] nameValuePairs) throws FacebookException {
 		String content = null;
 		String constructedParams = null;
 		int statusCode = 0;
-		HttpURLConnection connection = null;
+
+		URLFetchService fetchService = URLFetchServiceFactory.getURLFetchService();
+		URL posturl = null;
+		constructedParams = constructParams(nameValuePairs);
+
 		try {
-			URL posturl = new URL(url);
-			connection = (HttpURLConnection) posturl.openConnection();
-			connection.setDoOutput(true);
-			connection.setRequestMethod("DELETE");
-			// connection.setConnectTimeout(10000);
-			// connection.setReadTimeout(10000);
-
-			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-
-			constructedParams = constructParams(nameValuePairs);
-
-			writer.write(constructedParams);
-			writer.close();
-
-			statusCode = connection.getResponseCode();
-			if (statusCode != HttpURLConnection.HTTP_OK) {
-				content = getResponse(connection);
-				throw new FacebookException(JSONToObjectTransformer.getError(content, statusCode));
-				
-			} else {
-				content = getResponse(connection);
-
-			}
+			posturl = new URL(url + "?" + constructedParams);
 		} catch (MalformedURLException e) {
-			throw new FacebookException("Malformed URL Exception while calling facebook!", e);
-		} catch (IOException e) {
-			throw new FacebookException("IOException while calling facebook!", e);
-		} finally {
-			if (connection != null) {
-				connection.disconnect();
+		}
+
+		try {
+			HTTPResponse response = fetchService.fetch(new HTTPRequest(posturl, HTTPMethod.DELETE));
+
+			statusCode = response.getResponseCode();
+
+			if (statusCode != HttpURLConnection.HTTP_OK) {
+				content = new String(response.getContent());
+				throw new FacebookException(JSONToObjectTransformer.getError(content, statusCode));
+			} else {
+				content = new String(response.getContent());
 			}
+
+		} catch (IOException e) {
 		}
 
 		return content;
-
 	}
 
 	private String constructParams(NameValuePair[] nameValuePairs) {
