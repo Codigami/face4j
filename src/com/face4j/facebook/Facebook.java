@@ -14,6 +14,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.lang.StringUtils;
 
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
+import com.face4j.facebook.entity.Page;
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
 import com.face4j.facebook.entity.paging.Paging;
@@ -75,7 +76,7 @@ public class Facebook implements Serializable {
 	}
 
 	/**
-	 * Returns a facebook users available info.
+	 * Returns a Facebook user's available info.
 	 * 
 	 * @param fbId
 	 * @return
@@ -88,7 +89,7 @@ public class Facebook implements Serializable {
 	
 	
 	/**
-	 * Returns an array of facebook users for all the fb ids passed
+	 * Returns an array of facebook users for all the fb user ids passed
 	 * @param fbIds
 	 * @return
 	 * @throws FacebookException
@@ -114,6 +115,48 @@ public class Facebook implements Serializable {
 		
 		return users;
 	}
+	
+	/**
+	 * Returns a facebook page's available info.
+	 * 
+	 * @param fbId
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Page getPage(String fbId) throws FacebookException {
+		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
+		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, Page.class, nameValuePairs);
+	}
+	
+	
+	/**
+	 * Returns an array of facebook pages for all the fb page ids passed
+	 * @param fbIds
+	 * @return
+	 * @throws FacebookException
+	 */
+	public Page[] getPages(String[] fbIds) throws FacebookException {
+		
+		String concatenatedFbIds = StringUtils.join(fbIds, ",");
+		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()), 
+				new NameValuePair("ids",concatenatedFbIds) };
+		Page[] pages = null;
+		
+		Type type = new TypeToken<Map<String, Page>>(){}.getType();
+		Map<String, Page> userMap = pullData(Constants.FACEBOOK_GRAPH_URL+"/", type, nameValuePairs);
+		
+		if(userMap != null){
+			pages = new Page[fbIds.length];
+			
+			int i=0;
+			for(Iterator<String> iterator = userMap.keySet().iterator();iterator.hasNext();){
+					pages[i++] = userMap.get(iterator.next());
+			}
+		}
+		
+		return pages;
+	}
+	
 
 	/**
 	 * Deprecated: Use {@link #link(List)} instead
