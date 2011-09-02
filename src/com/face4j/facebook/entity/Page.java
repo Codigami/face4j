@@ -190,7 +190,7 @@ public class Page implements Serializable {
 	 * @return string representing URL of the user's profile picture (use PictureType = square | small | normal | large to request a different photo)
 	 * @throws FacebookException
 	 */
-	public String picture(Facebook facebook, PictureType pictureType) throws FacebookException{
+	public String picture(PictureType pictureType) throws FacebookException{
 		
 			String url = Constants.FACEBOOK_GRAPH_URL + "/" + this.id + "/" + ConnectionType.PICTURE.getType();
 			
