@@ -6,11 +6,11 @@ public class From implements Serializable{
 	
 	private static final long serialVersionUID = -3428384342557008840L;
 
-	private long id;
+	private String id;
 	private String name;
 	private String category;
 	
-	public From(long id, String name){
+	public From(String id, String name){
 		this.id = id;
 		this.name = name;
 	}
@@ -21,7 +21,7 @@ public class From implements Serializable{
 
 
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -29,7 +29,7 @@ public class From implements Serializable{
 		return name;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

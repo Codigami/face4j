@@ -49,7 +49,7 @@ public class User implements Serializable {
 
 	private String thirdPartyId;
 
-	private Long timezone;
+	private Double timezone;
 
 	private String updatedTime;
 
@@ -340,11 +340,11 @@ public class User implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Long getTimezone() {
+	public Double getTimezone() {
 		return timezone;
 	}
 
-	public void setTimezone(Long timezone) {
+	public void setTimezone(Double timezone) {
 		this.timezone = timezone;
 	}
 
