@@ -1,6 +1,8 @@
 package com.face4j.facebook.util;
 
 import java.lang.reflect.Type;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.face4j.facebook.entity.Post;
 import com.face4j.facebook.entity.User;
@@ -19,6 +21,9 @@ import com.google.gson.GsonBuilder;
  */
 public class JSONToObjectTransformer {
 
+	
+	private static Logger logger = Logger.getLogger(JSONToObjectTransformer.class.getName());
+	
 	/**
 	 * Gson would be singleton. Please take care not to include rules in the builder that aren't common for the entire
 	 * API.
@@ -41,7 +46,13 @@ public class JSONToObjectTransformer {
 	public static <E> E getObject(String json, Class<E> e) throws FacebookException {
 		//If facebook returns an error then throw the error
 		errorCheck(json);
-		return gson.fromJson(json, e);
+		
+		try {
+			return gson.fromJson(json, e);
+		} catch(Exception exception){
+			logger.log(Level.SEVERE, "Data received from Facebook for class "+e.getName()+" is "+json,exception);
+			throw new FacebookException("Error while converting object. Send this to nischal@grabinbox.com : "+json, exception);
+		}
 	}
 
 	public static <E> E getObject(String json, Type type) throws FacebookException {
