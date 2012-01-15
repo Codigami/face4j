@@ -13,6 +13,9 @@ public class Location implements Serializable {
 	private String state;
 	private String country;
 	private String zip;
+	
+	private String latitude;
+	private String longitude;
 
 	public String getId() {
 		return id;
@@ -61,7 +64,33 @@ public class Location implements Serializable {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	
-	
 
+	public Double getLatitude() {
+		if(this.latitude != null && !this.latitude.equals("")){
+			return Double.parseDouble(this.latitude);
+		}
+		
+		return null;
+	}
+
+	public void setLatitude(Double latitude) {
+		if(latitude != null){
+			this.latitude = ""+latitude;
+		}
+	}
+
+	public Double getLongitude() {
+		if(this.longitude != null && !this.longitude.equals("")){
+			return Double.parseDouble(this.longitude);
+		}
+		
+		return null;
+	}
+
+	public void setLongitude(Double longitude) {
+		if(longitude != null){
+			this.longitude = ""+longitude;
+		}
+	}
+	
 }
