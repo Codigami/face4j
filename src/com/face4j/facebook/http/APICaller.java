@@ -1,8 +1,20 @@
 package com.face4j.facebook.http;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Properties;
 
-import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -30,9 +42,69 @@ public class APICaller implements APICallerInterface {
 			connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 15);
 			connectionManager.getParams().setMaxTotalConnections(15);
 			httpClient = new HttpClient(connectionManager);
+			
+			String username = null;
+			String password = null;
+			String host = null;
+			int port = -1;
+			Credentials credentials = null;
+			
+			//Check if username and password exists in any resource file
+			try {
+				InputStream inputStream = ClassLoader.getSystemResourceAsStream("face4j.properties");
+				Properties properties = new Properties();
+				properties.load(inputStream);
+				inputStream.close();
+				
+				username = properties.getProperty("client.proxy.username");
+				password = properties.getProperty("client.proxy.password");
+				host = properties.getProperty("client.proxy.host");
+				if(properties.getProperty("client.proxy.port") != null){
+					port = Integer.parseInt(properties.getProperty("client.proxy.port"));
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(username != null || password != null){
+				credentials = new UsernamePasswordCredentials(username, password);
+				httpClient.getState().setCredentials(AuthScope.ANY, credentials);
+			}
+			
+			if(username != null || password != null || host != null || port > -1){
+				try {
+					httpClient.getState().setCredentials( new AuthScope(host, port), credentials);
+	      } finally {
+	      }
+			}
+			
 		}
 		return httpClient;
 	}
+	
+	/*public static void main(String[] args) {
+	 InputStream inputStream = ClassLoader.getSystemResourceAsStream("face4j.properties");
+	 
+	 try {
+			Properties properties = new Properties();
+			properties.load(inputStream);
+			inputStream.close();
+
+			Enumeration enuKeys = properties.keys();
+			while (enuKeys.hasMoreElements()) {
+				String key = (String) enuKeys.nextElement();
+				String value = properties.getProperty(key);
+				System.out.println(key + " : " + value);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	 
+	}*/
 	
 	public static APICaller getInstance(){
 		return caller;
