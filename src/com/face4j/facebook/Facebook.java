@@ -416,9 +416,12 @@ public class Facebook implements Serializable {
 	 * Comment on the given object (if it has a /comments connection)
 	 * @param message
 	 * @param objectId
+	 * 
+	 * @return The new ID of the comment
+	 * 
 	 * @throws FacebookException
 	 */
-	public void comment(String message, String objectId) throws FacebookException{
+	public CommonReturnObject comment(String message, String objectId) throws FacebookException{
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
 		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
@@ -426,7 +429,9 @@ public class Facebook implements Serializable {
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
-		caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_COMMENTS.replaceFirst(Constants.REPLACE_OBJECT_ID, objectId), nameValuePairs);
+		String response =  caller.postData(Constants.FACEBOOK_GRAPH_URL + Constants.POST_COMMENTS.replaceFirst(Constants.REPLACE_OBJECT_ID, objectId), nameValuePairs);
+		
+		return JSONToObjectTransformer.getObject(response, CommonReturnObject.class);
 	}
 	
 	/**
