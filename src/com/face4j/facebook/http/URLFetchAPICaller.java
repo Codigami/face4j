@@ -6,13 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
-
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.util.JSONToObjectTransformer;
 import com.google.appengine.api.urlfetch.*;
+import org.apache.http.HttpException;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 
 public class URLFetchAPICaller implements APICallerInterface {
 
@@ -48,9 +47,7 @@ public class URLFetchAPICaller implements APICallerInterface {
 				throw new FacebookException(JSONToObjectTransformer.getError(responseString, statusCode));
 			}
 			responseString = new String(response.getContent());
-		} catch (HttpException e) {
-			throw new FacebookException("Http Exception while calling facebook!", e);
-		} catch (IOException e) {
+		}  catch (IOException e) {
 			throw new FacebookException("IO Exception while calling facebook!", e);
 		}
 
