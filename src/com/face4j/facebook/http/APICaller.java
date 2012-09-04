@@ -19,6 +19,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -42,9 +43,9 @@ public class APICaller implements APICallerInterface {
 	private synchronized static HttpClient getHttpClient() {
 		if(null==httpClient){
 
-			ThreadSafeClientConnManager connectionManager = new ThreadSafeClientConnManager();
-            connectionManager.setMaxTotal(15);
-            connectionManager.setDefaultMaxPerRoute(15);
+			PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
+            connectionManager.setMaxTotal(50);
+            connectionManager.setDefaultMaxPerRoute(20);
 			httpClient = new DefaultHttpClient(connectionManager);
 			
 			String username = null;
