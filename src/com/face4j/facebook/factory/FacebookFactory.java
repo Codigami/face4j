@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.Client;
 import com.face4j.facebook.Facebook;
@@ -18,6 +17,8 @@ import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.http.APICallerFactory;
 import com.face4j.facebook.http.APICallerInterface;
 import com.face4j.facebook.util.Constants;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * You can create a singleton instance of this class. This class is thread safe and you can have 
@@ -127,10 +128,10 @@ public class FacebookFactory extends OAuthFactory implements Serializable {
 	private NameValuePair[] getAccessTokenNameValuePairs(String code, String callbackURL){
 
 	return new NameValuePair[]{
-															new NameValuePair(Constants.PARAM_CLIENT_ID,client.getClientId()),
-															new NameValuePair(Constants.PARAM_CLIENT_SECRET,client.getClientSecret()),
-															new NameValuePair(Constants.PARAM_REDIRECT_URI,callbackURL),
-															new NameValuePair(Constants.PARAM_CODE,code)
+															new BasicNameValuePair(Constants.PARAM_CLIENT_ID,client.getClientId()),
+															new BasicNameValuePair(Constants.PARAM_CLIENT_SECRET,client.getClientSecret()),
+															new BasicNameValuePair(Constants.PARAM_REDIRECT_URI,callbackURL),
+															new BasicNameValuePair(Constants.PARAM_CODE,code)
 														};
 	}
 	

@@ -1,8 +1,8 @@
 package com.face4j.facebook.http;
 
-import org.apache.commons.httpclient.NameValuePair;
 
 import com.face4j.facebook.exception.FacebookException;
+import org.apache.http.NameValuePair;
 
 public interface APICallerInterface {
 	

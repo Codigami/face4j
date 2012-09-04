@@ -2,7 +2,8 @@ package com.face4j.facebook.entity.paging;
 
 import java.io.Serializable;
 
-import org.apache.commons.httpclient.NameValuePair;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 public class Paging implements Serializable {
 
@@ -124,22 +125,22 @@ public class Paging implements Serializable {
 		int i = 0;
 		
 		if(paging.getLimit() > -1){
-			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.LIMIT.toString(),""+paging.getLimit());
+			nameValuePairs[i] = new BasicNameValuePair(Paging.PagingParam.LIMIT.toString(),""+paging.getLimit());
 			i++;
 		}
 		
 		if(paging.getSince() != null){
-			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.SINCE.toString(),""+paging.getSince());
+			nameValuePairs[i] = new BasicNameValuePair(Paging.PagingParam.SINCE.toString(),""+paging.getSince());
 			i++;
 		}
 		
 		if(paging.getUntil() != null){
-			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.UNTIL.toString(),""+paging.getUntil());
+			nameValuePairs[i] = new BasicNameValuePair(Paging.PagingParam.UNTIL.toString(),""+paging.getUntil());
 			i++;
 		}
 		
 		if(paging.getOffset() > -1){
-			nameValuePairs[i] = new NameValuePair(Paging.PagingParam.OFFSET.toString(),""+paging.getOffset());
+			nameValuePairs[i] = new BasicNameValuePair(Paging.PagingParam.OFFSET.toString(),""+paging.getOffset());
 			i++;
 		}
 	}
