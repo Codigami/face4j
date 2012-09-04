@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.lang.StringUtils;
 
 import com.face4j.facebook.criteria.ConnectionColumnCriteria;
@@ -32,6 +31,8 @@ import com.face4j.facebook.wrapper.FqlPageColumnCriteria;
 import com.face4j.facebook.wrapper.FqlUserColumnCriteria;
 import com.face4j.facebook.wrapper.StreamColumnCriteria;
 import com.google.gson.reflect.TypeToken;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * This is the main facebook class that will have methods which return facebook data as well as
@@ -83,7 +84,7 @@ public class Facebook implements Serializable {
 	 * @throws FacebookException
 	 */
 	public User getUser(String fbId) throws FacebookException {
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, User.class, nameValuePairs);
 	}
 	
@@ -97,8 +98,8 @@ public class Facebook implements Serializable {
 	public User[] getUsers(String[] fbIds) throws FacebookException {
 		
 		String concatenatedFbIds = StringUtils.join(fbIds, ",");
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()), 
-				new NameValuePair("ids",concatenatedFbIds) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()),
+				new BasicNameValuePair("ids",concatenatedFbIds) };
 		User[] users = null;
 		
 		Type type = new TypeToken<Map<String, User>>(){}.getType();
@@ -124,7 +125,7 @@ public class Facebook implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Page getPage(String fbId) throws FacebookException {
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + fbId, Page.class, nameValuePairs);
 	}
 	
@@ -138,8 +139,8 @@ public class Facebook implements Serializable {
 	public Page[] getPages(String[] fbIds) throws FacebookException {
 		
 		String concatenatedFbIds = StringUtils.join(fbIds, ",");
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()), 
-				new NameValuePair("ids",concatenatedFbIds) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()),
+				new BasicNameValuePair("ids",concatenatedFbIds) };
 		Page[] pages = null;
 		
 		Type type = new TypeToken<Map<String, Page>>(){}.getType();
@@ -298,7 +299,7 @@ public class Facebook implements Serializable {
 	}
 
 	private NameValuePair getNameValuePairAccessToken() {
-		return new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
+		return new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
 	}
 	
 	/**
@@ -321,38 +322,38 @@ public class Facebook implements Serializable {
 
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 
 		if(profileId == null){
 			profileId = Constants.ME;
 		}
 		
 		if(message !=null){
-			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+			namesValues.add(new BasicNameValuePair(Constants.MESSAGE,message));
 		}
 		
 		if(picture != null){
-			namesValues.add(new NameValuePair(Constants.PICTURE,picture));
+			namesValues.add(new BasicNameValuePair(Constants.PICTURE,picture));
 		}
 		
 		if(link != null){
-			namesValues.add(new NameValuePair(Constants.LINK,link));
+			namesValues.add(new BasicNameValuePair(Constants.LINK,link));
 		}
 		
 		if(name != null){
-			namesValues.add(new NameValuePair(Constants.NAME,name));
+			namesValues.add(new BasicNameValuePair(Constants.NAME,name));
 		}
 		
 		if(caption != null){
-			namesValues.add(new NameValuePair(Constants.CAPTION,caption));
+			namesValues.add(new BasicNameValuePair(Constants.CAPTION,caption));
 		}
 		
 		if(description != null){
-			namesValues.add(new NameValuePair(Constants.DESCRIPTION,description));
+			namesValues.add(new BasicNameValuePair(Constants.DESCRIPTION,description));
 		}
 		
 		if(source != null){
-			namesValues.add(new NameValuePair(Constants.SOURCE,source));
+			namesValues.add(new BasicNameValuePair(Constants.SOURCE,source));
 		}
 
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
@@ -376,34 +377,34 @@ public class Facebook implements Serializable {
 
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 
 		if(profileId == null){
 			profileId = Constants.ME;
 		}
 		
 		if(message !=null){
-			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+			namesValues.add(new BasicNameValuePair(Constants.MESSAGE,message));
 		}
 		
 		if(picture != null){
-			namesValues.add(new NameValuePair(Constants.PICTURE,picture));
+			namesValues.add(new BasicNameValuePair(Constants.PICTURE,picture));
 		}
 		
 		if(link != null){
-			namesValues.add(new NameValuePair(Constants.LINK,link));
+			namesValues.add(new BasicNameValuePair(Constants.LINK,link));
 		}
 		
 		if(name != null){
-			namesValues.add(new NameValuePair(Constants.NAME,name));
+			namesValues.add(new BasicNameValuePair(Constants.NAME,name));
 		}
 		
 		if(caption != null){
-			namesValues.add(new NameValuePair(Constants.CAPTION,caption));
+			namesValues.add(new BasicNameValuePair(Constants.CAPTION,caption));
 		}
 		
 		if(description != null){
-			namesValues.add(new NameValuePair(Constants.DESCRIPTION,description));
+			namesValues.add(new BasicNameValuePair(Constants.DESCRIPTION,description));
 		}
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
@@ -424,8 +425,8 @@ public class Facebook implements Serializable {
 	public CommonReturnObject comment(String message, String objectId) throws FacebookException{
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
-		namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.MESSAGE,message));
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -442,7 +443,7 @@ public class Facebook implements Serializable {
 	public void like(String objectId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -459,14 +460,14 @@ public class Facebook implements Serializable {
 	public void createNote(String message, String subject, String profileId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		if(message != null){
-			namesValues.add(new NameValuePair(Constants.MESSAGE,message));
+			namesValues.add(new BasicNameValuePair(Constants.MESSAGE,message));
 		}
 		
 		if(subject != null){
-			namesValues.add(new NameValuePair(Constants.SUBJECT, subject));
+			namesValues.add(new BasicNameValuePair(Constants.SUBJECT, subject));
 		}
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
@@ -485,22 +486,22 @@ public class Facebook implements Serializable {
 	public void createEvent(String name, String startTime, String endTime, String profileId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		if(profileId == null){
 			profileId = Constants.ME;
 		}
 		
 		if(name != null){
-			namesValues.add(new NameValuePair(Constants.NAME,name));
+			namesValues.add(new BasicNameValuePair(Constants.NAME,name));
 		}
 		
 		if(startTime != null){
-			namesValues.add(new NameValuePair(Constants.START_TIME, startTime));
+			namesValues.add(new BasicNameValuePair(Constants.START_TIME, startTime));
 		}
 		
 		if(endTime != null){
-			namesValues.add(new NameValuePair(Constants.END_TIME, endTime));
+			namesValues.add(new BasicNameValuePair(Constants.END_TIME, endTime));
 		}
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
@@ -516,7 +517,7 @@ public class Facebook implements Serializable {
 	public void eventAttending(String eventId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -531,7 +532,7 @@ public class Facebook implements Serializable {
 	public void eventMaybe(String eventId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -546,7 +547,7 @@ public class Facebook implements Serializable {
 	public void eventDeclined(String eventId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
 		namesValues.toArray(nameValuePairs);
@@ -563,18 +564,18 @@ public class Facebook implements Serializable {
 	public void createAlbum(String name, String message, String profileId) throws FacebookException {
 		List<NameValuePair> namesValues = new ArrayList<NameValuePair>();
 
-		namesValues.add(new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
+		namesValues.add(new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()));
 		
 		if(profileId == null){
 			profileId = Constants.ME;
 		}
 		
 		if(name != null){
-			namesValues.add(new NameValuePair(Constants.NAME,name));
+			namesValues.add(new BasicNameValuePair(Constants.NAME,name));
 		}
 		
 		if(message != null){
-			namesValues.add(new NameValuePair(Constants.MESSAGE, message));
+			namesValues.add(new BasicNameValuePair(Constants.MESSAGE, message));
 		}
 		
 		NameValuePair[] nameValuePairs = new NameValuePair[namesValues.size()]; 
@@ -663,8 +664,8 @@ public class Facebook implements Serializable {
 			fqlQuery += columnCriteria.toString();
 		}
 		
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new BasicNameValuePair("query", fqlQuery),
+				new BasicNameValuePair("format", "JSON") };
 
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 
@@ -692,8 +693,8 @@ public class Facebook implements Serializable {
 			+ " FROM user WHERE "
 			+ columnCriteria.toString();
 		
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new BasicNameValuePair("query", fqlQuery),
+				new BasicNameValuePair("format", "JSON") };
 		
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 		
@@ -714,8 +715,8 @@ public class Facebook implements Serializable {
 			+ " FROM page WHERE "
 			+ columnCriteria.toString();
 		
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new BasicNameValuePair("query", fqlQuery),
+				new BasicNameValuePair("format", "JSON") };
 		
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 		
@@ -832,8 +833,8 @@ public class Facebook implements Serializable {
 				+ " FROM connection WHERE source_id = me() AND "
 				+ criteria.toString();
 
-		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new NameValuePair("query", fqlQuery),
-				new NameValuePair("format", "JSON") };
+		NameValuePair[] nameValuePairs = { getNameValuePairAccessToken(), new BasicNameValuePair("query", fqlQuery),
+				new BasicNameValuePair("format", "JSON") };
 
 		String jsonResponse = caller.getData("https://api.facebook.com/method/fql.query", nameValuePairs);
 
@@ -887,7 +888,7 @@ public class Facebook implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Post getPost(String postId) throws FacebookException{
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken()) };
 		return pullData(Constants.FACEBOOK_GRAPH_URL + "/" + postId, Post.class, nameValuePairs);
 	}
 
@@ -973,7 +974,7 @@ public class Facebook implements Serializable {
 			nameValuePairs = new NameValuePair[i];
 		}
 
-		nameValuePairs[i - 1] = new NameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
+		nameValuePairs[i - 1] = new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, this.authAccessToken.getAccessToken());
 		return nameValuePairs;
 	}
 	

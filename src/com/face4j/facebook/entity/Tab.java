@@ -2,11 +2,11 @@ package com.face4j.facebook.entity;
 
 import java.io.Serializable;
 
-import org.apache.commons.httpclient.NameValuePair;
-
 import com.face4j.facebook.Facebook;
 import com.face4j.facebook.exception.FacebookException;
 import com.face4j.facebook.util.Constants;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 public class Tab implements Serializable {
 
@@ -138,7 +138,7 @@ public class Tab implements Serializable {
 	 * @throws FacebookException
 	 */
 	public Tab getTab(String pageId, String tabId, Facebook facebook) throws FacebookException {
-		NameValuePair[] nameValuePairs = { new NameValuePair(Constants.PARAM_ACCESS_TOKEN, facebook.getAuthAccessToken().getAccessToken()) };
+		NameValuePair[] nameValuePairs = { new BasicNameValuePair(Constants.PARAM_ACCESS_TOKEN, facebook.getAuthAccessToken().getAccessToken()) };
 		return facebook.pullData(Constants.FACEBOOK_GRAPH_URL + "/" + pageId + "/tabs/"+tabId, Tab.class, nameValuePairs);
 	}
 
