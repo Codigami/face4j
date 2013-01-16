@@ -57,16 +57,18 @@ public class APICaller implements APICallerInterface {
 			//Check if username and password exists in any resource file
 			try {
 				InputStream inputStream = ClassLoader.getSystemResourceAsStream("face4j.properties");
-				Properties properties = new Properties();
-				properties.load(inputStream);
-				inputStream.close();
-				
-				username = properties.getProperty("client.proxy.username");
-				password = properties.getProperty("client.proxy.password");
-				host = properties.getProperty("client.proxy.host");
-				if(properties.getProperty("client.proxy.port") != null){
-					port = Integer.parseInt(properties.getProperty("client.proxy.port"));
-				}
+                                if(inputStream != null) {
+                                        Properties properties = new Properties();
+                                        properties.load(inputStream);
+                                        inputStream.close();
+
+                                        username = properties.getProperty("client.proxy.username");
+                                        password = properties.getProperty("client.proxy.password");
+                                        host = properties.getProperty("client.proxy.host");
+                                        if(properties.getProperty("client.proxy.port") != null){
+                                                port = Integer.parseInt(properties.getProperty("client.proxy.port"));
+                                        }
+                                }
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
